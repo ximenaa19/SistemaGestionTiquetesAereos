@@ -1,4 +1,4 @@
-namespace GestionAerolineas.src.Shared.Contracts;
+namespace GestionAerolineas.src.shared.Contracts;
 
 public interface IUnitOfWork
 {

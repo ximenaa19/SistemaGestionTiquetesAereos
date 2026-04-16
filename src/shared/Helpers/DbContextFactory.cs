@@ -1,10 +1,10 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using GestionAerolineas.src.Shared.Helpers;
-using GestionAerolineas.src.Shared.Context;
+using GestionAerolineas.src.shared.Helpers;
+using GestionAerolineas.src.shared.Context;
 
-namespace GestionAerolineas.src.Shared.Helpers;
+namespace GestionAerolineas.src.shared.Helpers;
 
 public class DbContextFactory
 {

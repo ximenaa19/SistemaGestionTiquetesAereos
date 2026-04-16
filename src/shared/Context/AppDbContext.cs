@@ -4,7 +4,7 @@ using GestionAerolineas.src.Modules.Continents.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Countries.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Regions.Infrastructure.Entity;
 
-namespace GestionAerolineas.src.Shared.Context;
+namespace GestionAerolineas.src.shared.Context;
 
 public class AppDbContext : DbContext
 {

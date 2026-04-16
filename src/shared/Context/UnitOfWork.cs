@@ -1,5 +1,5 @@
-using GestionAerolineas.src.Shared.Contracts;
-using GestionAerolineas.src.Shared.Context;
+using GestionAerolineas.src.shared.Contracts;
+using GestionAerolineas.src.shared.Context;
 
 namespace GestionAerolineas.src.shared.Context;
 

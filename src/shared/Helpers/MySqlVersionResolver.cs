@@ -1,7 +1,7 @@
 using System;
 using MySqlConnector;
 
-namespace GestionAerolineas.src.Shared.Helpers;
+namespace GestionAerolineas.src.shared.Helpers;
 
 public class MySqlVersionResolver
 {
