@@ -4,7 +4,7 @@ public sealed record ContinentsId
 {
     public int Value { get; }
 
-    public ContinentsId(int value)
+    private ContinentsId(int value)
     {
         Value = value;
     }

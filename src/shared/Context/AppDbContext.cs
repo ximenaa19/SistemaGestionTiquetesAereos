@@ -9,10 +9,10 @@ namespace GestionAerolineas.src.shared.Context;
 public class AppDbContext : DbContext
 {
     public DbSet<ContinentEntity> Continents { get; set; }
-    public DbSet<CountryEntity> Countries { get; set; }
+    //public DbSet<CountryEntity> Countries { get; set; }
 
-    public DbSet<RegionEntity> Regions { get; set; }
-    public DbSet<CityEntity> Cities { get; set; }
+    //public DbSet<RegionEntity> Regions { get; set; }
+    //public DbSet<CityEntity> Cities { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }
