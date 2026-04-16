@@ -4,6 +4,7 @@ public sealed record ContinentName
 {
     public string Value { get; }
 
+
     private ContinentName(string value)
     {
         Value = value;
