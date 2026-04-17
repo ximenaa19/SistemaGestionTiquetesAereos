@@ -21,10 +21,10 @@ public class ContinentService : IContinentService
     public async Task<Continent> CreateAsync(string name, CancellationToken cancellationToken = default)
     {
         var continent = Continent.CreateNew(name);
-        await _repository.AddAsync(continent, cancellationToken);
+        var entity = await _repository.AddAsync(continent, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return continent;
-    }
+        return Continent.FromPersistence(entity.Id, continent.Name.Value);
+    } 
 
     public Task<Continent?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         => _repository.FindByIdAsync(ContinentsId.Create(id), cancellationToken);

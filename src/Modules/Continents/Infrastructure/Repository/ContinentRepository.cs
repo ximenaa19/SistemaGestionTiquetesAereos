@@ -17,10 +17,11 @@ public sealed class ContinentRepository : IContinentRepository
 
     public ContinentRepository(AppDbContext dbContext) => _dbContext = dbContext;
 
-    public async Task AddAsync(Continent continent, CancellationToken cancellationToken = default)
+    public async Task<ContinentEntity> AddAsync(Continent continent, CancellationToken cancellationToken = default)
     {
         var entity = new ContinentEntity { Name = continent.Name.Value };
         await _dbContext.Continents.AddAsync(entity, cancellationToken);
+        return entity;
     }
 
     public async Task<Continent?> FindByIdAsync(ContinentsId id, CancellationToken cancellationToken = default)

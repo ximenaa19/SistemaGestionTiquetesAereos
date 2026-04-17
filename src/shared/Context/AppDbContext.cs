@@ -8,6 +8,9 @@ namespace GestionAerolineas.src.shared.Context;
 
 public class AppDbContext : DbContext
 {
+    /// <summary>
+    /// Gets or sets the DbSet for continents.
+    /// </summary>
     public DbSet<ContinentEntity> Continents { get; set; }
     //public DbSet<CountryEntity> Countries { get; set; }
 
