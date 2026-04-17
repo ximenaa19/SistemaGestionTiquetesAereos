@@ -175,11 +175,8 @@
     <Folder Include="src\Modules\Regions\Domain\Repositories\" />
     <Folder Include="src\Modules\Regions\Infrastructure\Repository\" />
     <Folder Include="src\Modules\Regions\UI\" />
-    <Folder Include="src\Modules\RoadTypes\" />
-    <Folder Include="src\Modules\RoadTypes\Application\" />
     <Folder Include="src\Modules\RoadTypes\Application\Interfaces\" />
     <Folder Include="src\Modules\RoadTypes\Application\Services\" />
-    <Folder Include="src\Modules\RoadTypes\Application\UseCases\" />
     <Folder Include="src\Modules\RoadTypes\Domain\" />
     <Folder Include="src\Modules\RoadTypes\Domain\Aggregate\" />
     <Folder Include="src\Modules\RoadTypes\Domain\Repositories\" />

@@ -3,6 +3,7 @@ using GestionAerolineas.src.Modules.Cities.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Continents.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Countries.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Regions.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.RoadTypes.Infrastructure.Entity;
 
 namespace GestionAerolineas.src.shared.Context;
 
@@ -16,6 +17,7 @@ public class AppDbContext : DbContext
 
     //public DbSet<RegionEntity> Regions { get; set; }
     //public DbSet<CityEntity> Cities { get; set; }
+    public DbSet<RoadTypeEntity> RoadTypes { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }
