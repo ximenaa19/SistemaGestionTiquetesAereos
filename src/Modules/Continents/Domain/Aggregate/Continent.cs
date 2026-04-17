@@ -1,5 +1,5 @@
 using System;
-using GestionAerolineas.src.Modules.Continents.Domain.ValueObjet;
+using GestionAerolineas.src.Modules.Continents.Domain.ValueObject;
 
 namespace GestionAerolineas.src.Modules.Continents.Domain.Aggregate;
 
@@ -14,19 +14,27 @@ public class Continent
         Name = name ?? throw new ArgumentNullException(nameof(name));
     }
     
-
-    public static Continent Create(ContinentsId id, ContinentName name)
+    public static Continent CreateNew(string name)
     {
-        if (id is null) throw new ArgumentNullException(nameof(id));
-        if (name is null) throw new ArgumentNullException(nameof(name));
-
-        return new Continent(id, name);
+        return new Continent(
+            ContinentsId.CreateEmpty(),
+            ContinentName.Create(name)
+        );
     }
+
+    public static Continent FromPersistence(int id, string name)
+    {
+        return new Continent(
+            ContinentsId.Create(id),
+            ContinentName.Create(name)
+        );
+    }
+
 
     public void ChangeName(ContinentName name)
     {
-        if (name is null) throw new ArgumentNullException(nameof(name));
-        Name = name;
+        Name = name ?? throw new ArgumentNullException(nameof(name));
     }
 }
+
 

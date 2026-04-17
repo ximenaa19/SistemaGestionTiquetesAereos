@@ -7,3 +7,4 @@ public class CityEntity
     public int RegionId { get; set; }
 }
 
+

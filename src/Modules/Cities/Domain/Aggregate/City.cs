@@ -1,4 +1,4 @@
-using GestionAerolineas.src.Modules.Cities.Domain.ValueObjet;
+using GestionAerolineas.src.Modules.Cities.Domain.ValueObject;
 
 namespace GestionAerolineas.src.Modules.Cities.Domain.Aggregate;
 
@@ -20,4 +20,5 @@ public class City
         return new City(id, name, regionId);
     }
 }
+
 

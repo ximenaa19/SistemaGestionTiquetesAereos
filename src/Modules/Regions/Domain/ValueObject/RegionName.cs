@@ -1,4 +1,4 @@
-namespace GestionAerolineas.src.Modules.Regions.Domain.ValueObjet;
+namespace GestionAerolineas.src.Modules.Regions.Domain.ValueObject;
 
 public class RegionName
 {
@@ -24,4 +24,5 @@ public class RegionName
         return new RegionName(value.Trim());
     }
 }
+
 

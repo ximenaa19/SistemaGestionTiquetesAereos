@@ -1,4 +1,4 @@
-namespace GestionAerolineas.src.Modules.Cities.Domain.ValueObjet
+namespace GestionAerolineas.src.Modules.Cities.Domain.ValueObject
 {
     public sealed record CityName
     {
@@ -25,4 +25,5 @@ namespace GestionAerolineas.src.Modules.Cities.Domain.ValueObjet
         }
     }
 }
+
 

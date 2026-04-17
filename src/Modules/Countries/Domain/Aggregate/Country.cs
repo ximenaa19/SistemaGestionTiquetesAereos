@@ -1,4 +1,4 @@
-using GestionAerolineas.src.Modules.Countries.Domain.ValueObjet;
+using GestionAerolineas.src.Modules.Countries.Domain.ValueObject;
 
 namespace GestionAerolineas.src.Modules.Countries.Domain.Aggregate;
 
@@ -20,4 +20,5 @@ public class Country
         return new Country(id, name, continentId);
     }
 }
+
 

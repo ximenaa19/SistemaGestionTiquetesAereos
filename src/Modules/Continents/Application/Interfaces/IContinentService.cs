@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.Continents.Domain.Aggregate;
-using GestionAerolineas.src.Modules.Continents.Domain.ValueObjet;
+using GestionAerolineas.src.Modules.Continents.Domain.ValueObject;
 
 namespace GestionAerolineas.src.Modules.Continents.Application.Interfaces;
 
 public interface IContinentService
 {
-    Task<List<Continent>> GetAllAsync();
-    Task<Continent?> GetByIdAsync(ContinentsId id);
-    Task CreateAsync(ContinentsId id, ContinentName name);
-    Task UpdateAsync(ContinentsId id, ContinentName name);
-    Task DeleteAsync(ContinentsId id);
+    Task<Continent> CreateAsync(string name, CancellationToken cancellationToken = default);
+    Task<Continent?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    Task<IReadOnlyCollection<Continent>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<Continent> UpdateAsync(int id, string name, CancellationToken cancellationToken = default);
+    Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
 }
+

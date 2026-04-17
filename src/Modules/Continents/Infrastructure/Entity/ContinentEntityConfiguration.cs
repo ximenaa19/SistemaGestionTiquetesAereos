@@ -9,20 +9,19 @@ public sealed class ContinentEntityConfiguration : IEntityTypeConfiguration<Cont
     public void Configure(EntityTypeBuilder<ContinentEntity> builder)
     {
         builder.ToTable("continents");
-
         builder.HasKey(x => x.Id);
-        builder
-            .Property(x => x.Id)
-            .HasColumnName("id")
-            .HasColumnType("int")
-            .ValueGeneratedOnAdd()
-            .IsRequired();
+        builder.Property(x => x.Id)
+        .HasColumnName("id")
+        .ValueGeneratedOnAdd()
+        .IsRequired();
 
-        builder
-            .Property(x => x.Name)
-            .HasColumnName("name")
-            .HasColumnType("varchar(50)")
-            .IsRequired();
+        builder.Property(x => x.Name)
+        .HasColumnName("name")
+        .HasMaxLength(50)
+        .IsRequired();
+
+        builder.HasIndex(x => x.Name)
+        .IsUnique();
 
         builder.HasData(
             new ContinentEntity { Id = 1, Name = "América" },
@@ -33,4 +32,5 @@ public sealed class ContinentEntityConfiguration : IEntityTypeConfiguration<Cont
         );
     }
 }
+
 

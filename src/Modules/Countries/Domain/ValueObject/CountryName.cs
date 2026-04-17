@@ -1,4 +1,4 @@
-namespace GestionAerolineas.src.Modules.Countries.Domain.ValueObjet;
+namespace GestionAerolineas.src.Modules.Countries.Domain.ValueObject;
 
 public sealed record CountryName
 {
@@ -24,4 +24,5 @@ public sealed record CountryName
         return new CountryName(value);
     }
 }
+
 
