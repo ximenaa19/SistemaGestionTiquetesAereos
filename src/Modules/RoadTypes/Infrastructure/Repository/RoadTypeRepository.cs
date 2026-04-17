@@ -51,10 +51,18 @@ public class RoadTypeRepository : IRoadTypeRepository
     }
 
     public async Task UpdateAsync(RoadType roadType)
-    {
-        _context.RoadTypes.Update(MapToEntity(roadType));
-        await _context.SaveChangesAsync();
-    }
+{
+    var existing = await _context.RoadTypes
+        .FirstOrDefaultAsync(e => e.Id == roadType.Id.Value);
+
+    if (existing is null)
+        return;
+
+    // 🔥 Actualizar la misma instancia (no crear una nueva)
+    existing.Name = roadType.Name.Value;
+
+    await _context.SaveChangesAsync();
+}
 
     public async Task DeleteAsync(RoadType roadType)
     {
