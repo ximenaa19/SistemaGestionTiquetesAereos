@@ -1,11 +1,15 @@
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.RoadTypes.Application.UseCases;
+using GestionAerolineas.src.shared.Ui;
 
 namespace GestionAerolineas.src.Modules.RoadTypes.UI;
 
-public class RoadTypeMenu
+public class RoadTypeMenu : IModuleUI
 {
+    public string Key => "1";
+    public string Title => "Tipos de vía";
+
     private readonly CreateRoadTypeUseCase _create;
     private readonly GetAllRoadTypesUseCase _getAll;
     private readonly GetRoadTypeByIdUseCase _getById;
@@ -29,7 +33,7 @@ public class RoadTypeMenu
         _delete = delete;
     }
 
-    public async Task StartAsync()
+    public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var menu = new ConsoleMenu(new[]
         {
@@ -40,7 +44,6 @@ public class RoadTypeMenu
             "Update a road type",
             "Delete a road type",
             "Exit"
-           
         });
 
         while (true)
@@ -54,62 +57,42 @@ public class RoadTypeMenu
                     case 0:
                         Console.Write("Ingrese el ID: ");
                         int id = int.Parse(Console.ReadLine()!);
-
                         Console.Write("Ingrese el nombre: ");
                         string name = Console.ReadLine()!;
-
                         await _create.ExecuteAsync(id, name);
                         Console.WriteLine("✔ Creado");
                         break;
-
                     case 1:
                         var list = await _getAll.ExecuteAsync();
-
                         foreach (var item in list)
                             Console.WriteLine($"{item.Id.Value} - {item.Name.Value}");
                         break;
-
                     case 2:
                         Console.Write("Ingrese el ID: ");
                         int searchId = int.Parse(Console.ReadLine()!);
-
                         var result = await _getById.ExecuteAsync(searchId);
-
-                        Console.WriteLine(result == null
-                            ? "No encontrado"
-                            : $"{result.Id.Value} - {result.Name.Value}");
+                        Console.WriteLine(result == null ? "No encontrado" : $"{result.Id.Value} - {result.Name.Value}");
                         break;
-
                     case 3:
                         Console.Write("Ingrese el nombre: ");
                         string searchName = Console.ReadLine()!;
-
                         var resultByName = await _getByName.ExecuteAsync(searchName);
-
-                        Console.WriteLine(resultByName == null
-                            ? "No encontrado"
-                            : $"{resultByName.Id.Value} - {resultByName.Name.Value}");
+                        Console.WriteLine(resultByName == null ? "No encontrado" : $"{resultByName.Id.Value} - {resultByName.Name.Value}");
                         break;
-
                     case 4:
                         Console.Write("Ingrese el ID: ");
                         int updateId = int.Parse(Console.ReadLine()!);
-
                         Console.Write("Ingrese el nuevo nombre: ");
                         string newName = Console.ReadLine()!;
-
                         await _update.ExecuteAsync(updateId, newName);
                         Console.WriteLine("✔ Actualizado");
                         break;
-
                     case 5:
                         Console.Write("Ingrese el ID: ");
                         int deleteId = int.Parse(Console.ReadLine()!);
-
                         await _delete.ExecuteAsync(deleteId);
                         Console.WriteLine("✔ Eliminado");
                         break;
-
                     case 6:
                         return;
                 }
