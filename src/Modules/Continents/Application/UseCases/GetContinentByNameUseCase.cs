@@ -4,18 +4,18 @@ using GestionAerolineas.src.Modules.Continents.Domain.ValueObject;
 
 namespace GestionAerolineas.src.Modules.Continents.Application.UseCases;
 
-public class GetContinentByIdUseCase
+public class GetContinentByNameUseCase
 {
     private readonly IContinentRepository _repository;
 
-    public GetContinentByIdUseCase(IContinentRepository repository)
+    public GetContinentByNameUseCase(IContinentRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<Continent?> ExecuteAsync(int id)
+    public async Task<Continent?> ExecuteAsync(string name)
     {
-        var idVO = ContinentId.Create(id);
-        return await _repository.GetByIdAsync(idVO);
+        var nameVO = ContinentName.Create(name);
+        return await _repository.GetByNameAsync(nameVO);
     }
 }

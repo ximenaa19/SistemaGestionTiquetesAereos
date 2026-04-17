@@ -1,12 +1,32 @@
 using GestionAerolineas.src.Modules.Continents.Application.Interfaces;
+using GestionAerolineas.src.Modules.Continents.Domain.Aggregate;
+using GestionAerolineas.src.Modules.Continents.Domain.Repositories;
+using GestionAerolineas.src.Modules.Continents.Domain.ValueObject;
 
 namespace GestionAerolineas.src.Modules.Continents.Application.UseCases;
 
-public sealed class CreateContinentUseCase
+public class CreateContinentUseCase
 {
-    private readonly IContinentService _service;
-    public CreateContinentUseCase(IContinentService service) => _service = service;
-    public Task HandleAsync(string name, CancellationToken ct = default) =>
-        _service.CreateAsync(name, ct);
-}
+    private readonly IContinentRepository _repository;
+    private readonly IContinentValidator _validator;
 
+    public CreateContinentUseCase(
+        IContinentRepository repository,
+        IContinentValidator validator)
+    {
+        _repository = repository;
+        _validator = validator;
+    }
+
+    public async Task ExecuteAsync(int id, string name)
+    {
+        var idVO = ContinentId.Create(id);
+        var nameVO = ContinentName.Create(name);
+
+        await _validator.ValidateAsync(nameVO);
+
+        var entity = Continent.Create(idVO, nameVO);
+
+        await _repository.AddAsync(entity);
+    }
+}
