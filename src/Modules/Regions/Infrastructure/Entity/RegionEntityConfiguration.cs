@@ -43,3 +43,4 @@ public class RegionEntityConfiguration : IEntityTypeConfiguration<RegionEntity>
     }
 }
 
+

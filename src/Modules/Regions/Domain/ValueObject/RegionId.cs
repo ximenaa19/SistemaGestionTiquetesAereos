@@ -1,4 +1,4 @@
-namespace GestionAerolineas.src.Modules.Regions.Domain.ValueObjet;
+namespace GestionAerolineas.src.Modules.Regions.Domain.ValueObject;
 
 public class RegionId
 {
@@ -17,4 +17,5 @@ public class RegionId
         return new RegionId(value);
     }
 }
+
 

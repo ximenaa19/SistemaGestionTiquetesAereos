@@ -1,10 +1,10 @@
-namespace GestionAerolineas.src.Modules.Continents.Domain.ValueObjet;
+namespace GestionAerolineas.src.Modules.Continents.Domain.ValueObject;
 
 public sealed record ContinentsId
 {
     public int Value { get; }
 
-    public ContinentsId(int value)
+    private ContinentsId(int value)
     {
         Value = value;
     }
@@ -18,5 +18,8 @@ public sealed record ContinentsId
 
         return new ContinentsId(value);
     }
+
+    public static ContinentsId CreateEmpty() => new ContinentsId(0);
 }
+
 

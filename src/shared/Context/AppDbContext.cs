@@ -9,7 +9,10 @@ namespace GestionAerolineas.src.shared.Context;
 
 public class AppDbContext : DbContext
 {
-    //public DbSet<ContinentEntity> Continents { get; set; }
+    /// <summary>
+    /// Gets or sets the DbSet for continents.
+    /// </summary>
+    public DbSet<ContinentEntity> Continents { get; set; }
     //public DbSet<CountryEntity> Countries { get; set; }
 
     //public DbSet<RegionEntity> Regions { get; set; }
@@ -25,4 +28,5 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 }
+
 

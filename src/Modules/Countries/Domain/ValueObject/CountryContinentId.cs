@@ -1,4 +1,4 @@
-namespace GestionAerolineas.src.Modules.Countries.Domain.ValueObjet;
+namespace GestionAerolineas.src.Modules.Countries.Domain.ValueObject;
 
 public class CountryContinentId
 {
@@ -17,4 +17,5 @@ public class CountryContinentId
         return new CountryContinentId(value);
     }
 }
+
 

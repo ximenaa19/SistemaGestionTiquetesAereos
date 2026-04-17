@@ -1,4 +1,4 @@
-namespace GestionAerolineas.src.Modules.Countries.Domain.ValueObjet;
+namespace GestionAerolineas.src.Modules.Countries.Domain.ValueObject;
 
 public sealed record CountryCodigoIso
 {
@@ -24,4 +24,5 @@ public sealed record CountryCodigoIso
         return new CountryCodigoIso(value);
     }
 }
+
 

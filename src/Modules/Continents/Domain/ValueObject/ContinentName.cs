@@ -1,10 +1,11 @@
-namespace GestionAerolineas.src.Modules.Continents.Domain.ValueObjet;
+namespace GestionAerolineas.src.Modules.Continents.Domain.ValueObject;
 
 public sealed record ContinentName
 {
     public string Value { get; }
 
-    public ContinentName(string value)
+
+    private ContinentName(string value)
     {
         Value = value;
     }
@@ -13,7 +14,7 @@ public sealed record ContinentName
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException("El valor no puede estar vacío.");
+            throw new ArgumentException("El nombre del continente no puede estar vacío.");
         }
 
         if (value.Length > 50)
@@ -28,4 +29,5 @@ public sealed record ContinentName
 
     public override string ToString() => Value;
 }
+
 

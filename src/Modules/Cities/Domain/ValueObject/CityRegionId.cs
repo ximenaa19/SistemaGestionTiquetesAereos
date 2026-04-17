@@ -1,23 +1,24 @@
-namespace GestionAerolineas.src.Modules.Cities.Domain.ValueObjet
+namespace GestionAerolineas.src.Modules.Cities.Domain.ValueObject
 {
-    public sealed record CityId
+    public class CityRegionId
     {
         public int Value { get; }
 
-        public CityId(int value)
+        public CityRegionId(int value)
         {
             Value = value;
         }
 
-        public static CityId Create(int value)
+        public static CityRegionId Create(int value)
         {
             if (value <= 0)
             {
                 throw new ArgumentException("El valor no puede ser menor a 1");
             }
 
-            return new CityId(value);
+            return new CityRegionId(value);
         }
     }
 }
+
 

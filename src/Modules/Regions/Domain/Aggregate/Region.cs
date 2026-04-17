@@ -1,4 +1,4 @@
-using GestionAerolineas.src.Modules.Regions.Domain.ValueObjet;
+using GestionAerolineas.src.Modules.Regions.Domain.ValueObject;
 
 namespace GestionAerolineas.src.Modules.Regions.Domain.Aggregate
 {
@@ -28,4 +28,5 @@ namespace GestionAerolineas.src.Modules.Regions.Domain.Aggregate
         }
     }
 }
+
 

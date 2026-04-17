@@ -1,22 +1,23 @@
-namespace GestionAerolineas.src.Modules.Countries.Domain.ValueObjet;
+namespace GestionAerolineas.src.Modules.Regions.Domain.ValueObject;
 
-public sealed record CountryId
+public class RegionCuntryId
 {
     public string Value { get; }
 
-    public CountryId(string value)
+    public RegionCuntryId(string value)
     {
         Value = value;
     }
 
-    public static CountryId Create(string value)
+    public static RegionCuntryId Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
             throw new ArgumentException("El valor no puede ser nulo ni vacío");
         }
 
-        return new CountryId(value.Trim());
+        return new RegionCuntryId(value);
     }
 }
+
 
