@@ -76,10 +76,6 @@
     <Folder Include="src\Modules\Clients\Infrastructure\Entity\" />
     <Folder Include="src\Modules\Clients\Infrastructure\Repository\" />
     <Folder Include="src\Modules\Clients\UI\" />
-    <Folder Include="src\Modules\Continents\Application\" />
-    <Folder Include="src\Modules\Continents\Application\Interfaces\" />
-    <Folder Include="src\Modules\Continents\Application\Services\" />
-    <Folder Include="src\Modules\Continents\Application\UseCases\" />
     <Folder Include="src\Modules\Continents\Domain\Repositories\" />
     <Folder Include="src\Modules\Continents\Infrastructure\Repository\" />
     <Folder Include="src\Modules\Continents\UI\" />

@@ -19,7 +19,6 @@ public sealed record ContinentsId
         return new ContinentsId(value);
     }
 
-    public static ContinentsId CreateEmpty() => new ContinentsId(0);
 }
 
 
