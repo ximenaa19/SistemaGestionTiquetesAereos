@@ -2,6 +2,7 @@ using GestionAerolineas.src.Modules.Continents;
 using GestionAerolineas.src.Modules.DocumentTypes;
 using GestionAerolineas.src.Modules.EmailDomains;
 using GestionAerolineas.src.Modules.FlightRoles;
+using GestionAerolineas.src.Modules.PhoneCodes;
 using GestionAerolineas.src.Modules.RoadTypes;
 using GestionAerolineas.src.shared.Helpers;
 
@@ -22,6 +23,7 @@ try
     var roadTypeMenu = RoadTypeModule.Build(context);
     var documentTypeMenu = DocumentTypeModule.Build(context);
     var flightRoleMenu = FlightRoleModule.Build(context);
+    var phoneCodeMenu = PhoneCodeModule.Build(context);
 
     while (true)
     {
@@ -30,8 +32,9 @@ try
         Console.WriteLine("1. Continents");
         Console.WriteLine("2. EmailDomains");
         Console.WriteLine("3. FlightRoles");
-        Console.WriteLine("4. RoadTypes");
-        Console.WriteLine("5. DocumenTypes");
+        Console.WriteLine("4. PhoneCodes");
+        Console.WriteLine("5. RoadTypes");
+        Console.WriteLine("6. DocumenTypes");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -51,10 +54,14 @@ try
                 break;
 
             case "4":
-                await roadTypeMenu.StartAsync();
+                await phoneCodeMenu.StartAsync();
                 break;
 
             case "5":
+                await roadTypeMenu.StartAsync();
+                break;
+
+            case "6":
                 await documentTypeMenu.StartAsync();
                 break;
 
