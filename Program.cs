@@ -12,6 +12,7 @@ using GestionAerolineas.src.Modules.PaymentStates;
 using GestionAerolineas.src.Modules.ReservationStatuses;
 using GestionAerolineas.src.Modules.RoadTypes;
 using GestionAerolineas.src.Modules.SeatLocationTypes;
+using GestionAerolineas.src.Modules.SystemRoles;
 using GestionAerolineas.src.Modules.TicketStatuses;
 using GestionAerolineas.src.shared.Helpers;
 using GestionAerolineas.src.Modules.PassengerTypes;
@@ -41,6 +42,7 @@ try
     var phoneCodeMenu = PhoneCodeModule.Build(context);
     var reservationStatusMenu = ReservationStatusModule.Build(context);
     var seatLocationTypeMenu = SeatLocationTypeModule.Build(context);
+    var systemRoleMenu = SystemRoleModule.Build(context);
     var ticketStatusMenu = TicketStatusModule.Build(context);
     var CabinTypeMenu = CabinTypeModule.Build(context);
     var PassengerTypeMenu = PassengerTypeModule.Build(context);
@@ -65,6 +67,7 @@ try
         Console.WriteLine("14. FlightStates");
         Console.WriteLine("15. PaymentStates");
         Console.WriteLine("16. TicketStatuses");
+        Console.WriteLine("17. SystemRoles");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -129,6 +132,9 @@ try
                 break;
             case "16":
                 await ticketStatusMenu.StartAsync();
+                break;
+            case "17":
+                await systemRoleMenu.StartAsync();
                 break;
 
             case "0":
