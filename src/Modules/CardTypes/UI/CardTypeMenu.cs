@@ -1,8 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.CardTypes.Application.UseCases;
-using GestionAerolineas.src.Modules.CardTypes.Domain.ValueObject;
-
 namespace GestionAerolineas.src.Modules.CardTypes.UI;
 
 public class CardTypeMenu
@@ -52,7 +50,6 @@ public class CardTypeMenu
                 switch (option)
                 {
                     case 0:
-                        Console.WriteLine($"Valores permitidos: {CardTypeName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nombre: ");
                         string name = Console.ReadLine()!;
 
@@ -79,7 +76,6 @@ public class CardTypeMenu
                         break;
 
                     case 3:
-                        Console.WriteLine($"Valores permitidos: {CardTypeName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nombre: ");
                         string searchName = Console.ReadLine()!;
 
@@ -94,7 +90,6 @@ public class CardTypeMenu
                         Console.Write("Ingrese el ID: ");
                         int updateId = int.Parse(Console.ReadLine()!);
 
-                        Console.WriteLine($"Valores permitidos: {CardTypeName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nuevo nombre: ");
                         string newName = Console.ReadLine()!;
 
