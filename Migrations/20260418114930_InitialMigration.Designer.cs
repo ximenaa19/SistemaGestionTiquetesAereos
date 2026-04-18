@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionAerolineas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260418005046_AddDocumentTypesModule")]
-    partial class AddDocumentTypesModule
+    [Migration("20260418114930_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,6 +122,50 @@ namespace GestionAerolineas.Migrations
                         .IsUnique();
 
                     b.ToTable("DocumentTypes", (string)null);
+                });
+
+            modelBuilder.Entity("GestionAerolineas.src.Modules.EmailDomains.Infrastructure.Entity.EmailDomainEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("domain");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Domain")
+                        .IsUnique();
+
+                    b.ToTable("emaildomains", (string)null);
+                });
+
+            modelBuilder.Entity("GestionAerolineas.src.Modules.FlightRoles.Infrastructure.Entity.FlightRoleEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("nombre");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("fligthroles", (string)null);
                 });
 
             modelBuilder.Entity("GestionAerolineas.src.Modules.Regions.Infrastructure.Entity.RegionEntity", b =>

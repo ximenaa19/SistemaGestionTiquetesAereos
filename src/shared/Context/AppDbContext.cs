@@ -4,6 +4,7 @@ using GestionAerolineas.src.Modules.Continents.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Countries.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.DocumentTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.EmailDomains.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.FlightRoles.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Regions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.RoadTypes.Infrastructure.Entity;
 
@@ -16,6 +17,7 @@ public class AppDbContext : DbContext
     /// </summary>
     public DbSet<ContinentEntity> Continents { get; set; }
     public DbSet<EmailDomainEntity> EmailDomains { get; set; }
+    public DbSet<FlightRoleEntity> FlightRoles { get; set; }
     //public DbSet<CountryEntity> Countries { get; set; }
 
     //public DbSet<RegionEntity> Regions { get; set; }
