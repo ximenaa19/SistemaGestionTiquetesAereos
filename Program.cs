@@ -1,3 +1,4 @@
+using GestionAerolineas.src.Modules.CabinTypes;
 using GestionAerolineas.src.Modules.Continents;
 using GestionAerolineas.src.Modules.DocumentTypes;
 using GestionAerolineas.src.Modules.EmailDomains;
@@ -26,6 +27,7 @@ try
     var flightRoleMenu = FlightRoleModule.Build(context);
     var phoneCodeMenu = PhoneCodeModule.Build(context);
     var seatLocationTypeMenu = SeatLocationTypeModule.Build(context);
+    var CabinTypeMenu = CabinTypeModule.Build(context);
 
     while (true)
     {
@@ -38,6 +40,7 @@ try
         Console.WriteLine("5. SeatLocationTypes");
         Console.WriteLine("6. RoadTypes");
         Console.WriteLine("7. DocumenTypes");
+        Console.WriteLine("8. CabinTypes");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -70,6 +73,10 @@ try
 
             case "7":
                 await documentTypeMenu.StartAsync();
+                break;
+
+            case "8":
+                await CabinTypeMenu.StartAsync();
                 break;
 
             case "0":
