@@ -18,7 +18,10 @@ public class PaymentStateRepository : IPaymentStateRepository
 
     public async Task<IEnumerable<PaymentState>> GetAllAsync()
     {
-        var entities = await _context.PaymentStates.AsNoTracking().ToListAsync();
+        var entities = await _context.PaymentStates
+            .AsNoTracking()
+            .ToListAsync();
+
         return entities.Select(MapToDomain).ToList();
     }
 
@@ -33,12 +36,11 @@ public class PaymentStateRepository : IPaymentStateRepository
 
     public async Task<PaymentState?> GetByNameAsync(PaymentStateName name)
     {
-        var normalized = PaymentStateName.Normalize(name.Value);
-        var entities = await _context.PaymentStates.AsNoTracking().ToListAsync();
+        var entity = await _context.PaymentStates
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Name == name.Value);
 
-        var match = entities.FirstOrDefault(e => PaymentStateName.Normalize(e.Name ?? string.Empty) == normalized);
-
-        return match is null ? null : MapToDomain(match);
+        return entity is null ? null : MapToDomain(entity);
     }
 
     public async Task AddAsync(PaymentState paymentState)

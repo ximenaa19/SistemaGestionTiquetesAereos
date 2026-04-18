@@ -1,8 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.ReservationStatuses.Application.UseCases;
-using GestionAerolineas.src.Modules.ReservationStatuses.Domain.ValueObject;
-
 namespace GestionAerolineas.src.Modules.ReservationStatuses.UI;
 
 public class ReservationStatusMenu
@@ -52,7 +50,6 @@ public class ReservationStatusMenu
                 switch (option)
                 {
                     case 0:
-                        Console.WriteLine($"Valores permitidos: {ReservationStatusName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nombre: ");
                         string name = Console.ReadLine()!;
 
@@ -79,7 +76,6 @@ public class ReservationStatusMenu
                         break;
 
                     case 3:
-                        Console.WriteLine($"Valores permitidos: {ReservationStatusName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nombre: ");
                         string searchName = Console.ReadLine()!;
 
@@ -94,7 +90,6 @@ public class ReservationStatusMenu
                         Console.Write("Ingrese el ID: ");
                         int updateId = int.Parse(Console.ReadLine()!);
 
-                        Console.WriteLine($"Valores permitidos: {ReservationStatusName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nuevo nombre: ");
                         string newName = Console.ReadLine()!;
 

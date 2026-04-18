@@ -18,7 +18,10 @@ public class TicketStatusRepository : ITicketStatusRepository
 
     public async Task<IEnumerable<TicketStatus>> GetAllAsync()
     {
-        var entities = await _context.TicketStatuses.AsNoTracking().ToListAsync();
+        var entities = await _context.TicketStatuses
+            .AsNoTracking()
+            .ToListAsync();
+
         return entities.Select(MapToDomain).ToList();
     }
 
@@ -33,12 +36,11 @@ public class TicketStatusRepository : ITicketStatusRepository
 
     public async Task<TicketStatus?> GetByNameAsync(TicketStatusName name)
     {
-        var normalized = TicketStatusName.Normalize(name.Value);
-        var entities = await _context.TicketStatuses.AsNoTracking().ToListAsync();
+        var entity = await _context.TicketStatuses
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Name == name.Value);
 
-        var match = entities.FirstOrDefault(e => TicketStatusName.Normalize(e.Name ?? string.Empty) == normalized);
-
-        return match is null ? null : MapToDomain(match);
+        return entity is null ? null : MapToDomain(entity);
     }
 
     public async Task AddAsync(TicketStatus ticketStatus)
