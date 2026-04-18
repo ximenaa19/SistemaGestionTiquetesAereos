@@ -1,4 +1,5 @@
 using GestionAerolineas.src.Modules.CabinTypes;
+using GestionAerolineas.src.Modules.CardTypes;
 using GestionAerolineas.src.Modules.Continents;
 using GestionAerolineas.src.Modules.DocumentTypes;
 using GestionAerolineas.src.Modules.EmailDomains;
@@ -26,6 +27,7 @@ try
     Console.WriteLine("Conexion exitosa\n");
 
     var continentMenu = ContinentModule.Build(context);
+    var cardTypeMenu = CardTypeModule.Build(context);
     var emailDomainMenu = EmailDomainModule.Build(context);
     var roadTypeMenu = RoadTypeModule.Build(context);
     var documentTypeMenu = DocumentTypeModule.Build(context);
@@ -44,18 +46,19 @@ try
         Console.Clear();
         Console.WriteLine("=== SISTEMA ===");
         Console.WriteLine("1. Continents");
-        Console.WriteLine("2. EmailDomains");
-        Console.WriteLine("3. FlightRoles");
-        Console.WriteLine("4. ReservationStatuses");
-        Console.WriteLine("5. PhoneCodes");
-        Console.WriteLine("6. SeatLocationTypes");
-        Console.WriteLine("7. RoadTypes");
-        Console.WriteLine("8. DocumenTypes");
-        Console.WriteLine("9. CabinTypes");
-        Console.WriteLine("10. PassengerTypes");
-        Console.WriteLine("11. FlightStates");
-        Console.WriteLine("12. PaymentStates");
-        Console.WriteLine("13. TicketStatuses");
+        Console.WriteLine("2. CardTypes");
+        Console.WriteLine("3. EmailDomains");
+        Console.WriteLine("4. FlightRoles");
+        Console.WriteLine("5. ReservationStatuses");
+        Console.WriteLine("6. PhoneCodes");
+        Console.WriteLine("7. SeatLocationTypes");
+        Console.WriteLine("8. RoadTypes");
+        Console.WriteLine("9. DocumenTypes");
+        Console.WriteLine("10. CabinTypes");
+        Console.WriteLine("11. PassengerTypes");
+        Console.WriteLine("12. FlightStates");
+        Console.WriteLine("13. PaymentStates");
+        Console.WriteLine("14. TicketStatuses");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -67,46 +70,50 @@ try
                 break;
 
             case "2":
-                await emailDomainMenu.StartAsync();
+                await cardTypeMenu.StartAsync();
                 break;
 
             case "3":
-                await flightRoleMenu.StartAsync();
+                await emailDomainMenu.StartAsync();
                 break;
 
             case "4":
-                await reservationStatusMenu.StartAsync();
+                await flightRoleMenu.StartAsync();
                 break;
 
             case "5":
-                await phoneCodeMenu.StartAsync();
+                await reservationStatusMenu.StartAsync();
                 break;
 
             case "6":
-                await seatLocationTypeMenu.StartAsync();
+                await phoneCodeMenu.StartAsync();
                 break;
 
             case "7":
-                await roadTypeMenu.StartAsync();
+                await seatLocationTypeMenu.StartAsync();
                 break;
 
             case "8":
-                await documentTypeMenu.StartAsync();
+                await roadTypeMenu.StartAsync();
                 break;
 
             case "9":
+                await documentTypeMenu.StartAsync();
+                break;
+
+            case "10":
                 await CabinTypeMenu.StartAsync();
                 break;
-            case "10":
+            case "11":
                 await PassengerTypeMenu.StartAsync();
                 break;
-            case "11":
+            case "12":
                 await flightStateMenu.StartAsync();
                 break;
-            case "12":
+            case "13":
                 await paymentStateMenu.StartAsync();
                 break;
-            case "13":
+            case "14":
                 await ticketStatusMenu.StartAsync();
                 break;
 
