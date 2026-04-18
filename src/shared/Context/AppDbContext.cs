@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using GestionAerolineas.src.Modules.CardTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Cities.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Continents.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Countries.Infrastructure.Entity;
@@ -24,6 +25,7 @@ public class AppDbContext : DbContext
     /// Gets or sets the DbSet for continents.
     /// </summary>
     public DbSet<ContinentEntity> Continents { get; set; }
+    public DbSet<CardTypeEntity> CardTypes { get; set; }
     public DbSet<EmailDomainEntity> EmailDomains { get; set; }
     public DbSet<FlightRoleEntity> FlightRoles { get; set; }
     public DbSet<FlightStateEntity> FlightStates { get; set; }
