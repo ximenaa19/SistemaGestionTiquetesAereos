@@ -23,7 +23,11 @@ public class CreateContinentUseCase
         var idVO = ContinentId.Create(id);
         var nameVO = ContinentName.Create(name);
 
-        await _validator.ValidateAsync(nameVO);
+        var idExists = await _repository.ExistsAsync(idVO);
+        if (idExists)
+            throw new Exception("Ya existe un continente con ese ID");
+
+        await _validator.ValidateNameAsync(nameVO);
 
         var entity = Continent.Create(idVO, nameVO);
 

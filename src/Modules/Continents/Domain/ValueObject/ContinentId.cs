@@ -1,24 +1,22 @@
 namespace GestionAerolineas.src.Modules.Continents.Domain.ValueObject;
 
-public sealed record ContinentsId
+public sealed record ContinentId
 {
     public int Value { get; }
 
-    private ContinentsId(int value)
+    private ContinentId(int value)
     {
         Value = value;
     }
 
-    public static ContinentsId Create(int value)
+    public static ContinentId Create(int value)
     {
         if (value <= 0)
         {
             throw new ArgumentException("El valor no puede ser menor a 1");
         }
 
-        return new ContinentsId(value);
+        return new ContinentId(value);
     }
-
 }
-
 

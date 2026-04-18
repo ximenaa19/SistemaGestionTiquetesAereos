@@ -4,5 +4,5 @@ namespace GestionAerolineas.src.Modules.Continents.Application.Interfaces;
 
 public interface IContinentValidator
 {
-    Task ValidateAsync(ContinentName name);
+    Task ValidateNameAsync(ContinentName name);
 }

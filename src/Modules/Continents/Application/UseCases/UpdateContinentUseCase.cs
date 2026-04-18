@@ -29,10 +29,10 @@ public class UpdateContinentUseCase
 
         var nameVO = ContinentName.Create(newName);
 
-        await _validator.ValidateAsync(nameVO);
+        await _validator.ValidateNameAsync(nameVO);
 
-        existing.UpdateName(nameVO);
+        var updated = Continent.Create(idVO, nameVO);
 
-        await _repository.UpdateAsync(existing);
+        await _repository.UpdateAsync(updated);
     }
 }

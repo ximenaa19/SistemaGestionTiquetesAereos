@@ -14,13 +14,14 @@ public class DeleteContinentUseCase
 
     public async Task ExecuteAsync(int id)
     {
-        var idVO = ContinentId.Create(id);
+        var continentId = ContinentId.Create(id);
+        var continent = await _repository.GetByIdAsync(continentId);
 
-        var exists = await _repository.ExistsAsync(idVO);
+        if (continent is null)
+        {
+            throw new KeyNotFoundException($"Continent con id '{continentId.Value}' no existe.");
+        }
 
-        if (!exists)
-            throw new Exception("El continente no existe");
-
-        await _repository.DeleteAsync(idVO);
+        await _repository.DeleteAsync(continent);
     }
 }

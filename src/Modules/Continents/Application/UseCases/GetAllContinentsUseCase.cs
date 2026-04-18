@@ -3,11 +3,11 @@ using GestionAerolineas.src.Modules.Continents.Domain.Repositories;
 
 namespace GestionAerolineas.src.Modules.Continents.Application.UseCases;
 
-public class GetAllContinentUseCase
+public class GetAllContinentsUseCase
 {
     private readonly IContinentRepository _repository;
 
-    public GetAllContinentUseCase(IContinentRepository repository)
+    public GetAllContinentsUseCase(IContinentRepository repository)
     {
         _repository = repository;
     }
