@@ -18,7 +18,10 @@ public class PassengerTypeRepository : IPassengerTypeRepository
 
     public async Task<IEnumerable<PassengerType>> GetAllAsync()
     {
-        var entities = await _context.PassengerTypes.AsNoTracking().ToListAsync();
+        var entities = await _context.PassengerTypes
+            .AsNoTracking()
+            .ToListAsync();
+
         return entities.Select(MapToDomain).ToList();
     }
 
@@ -33,12 +36,11 @@ public class PassengerTypeRepository : IPassengerTypeRepository
 
     public async Task<PassengerType?> GetByNameAsync(PassengerTypeName name)
     {
-        var normalized = PassengerTypeName.Normalize(name.Value);
-        var entities = await _context.PassengerTypes.AsNoTracking().ToListAsync();
+        var entity = await _context.PassengerTypes
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Name == name.Value);
 
-        var match = entities.FirstOrDefault(e => PassengerTypeName.Normalize(e.Name ?? string.Empty) == normalized);
-
-        return match is null ? null : MapToDomain(match);
+        return entity is null ? null : MapToDomain(entity);
     }
 
     public async Task AddAsync(PassengerType passengerType)
@@ -99,4 +101,3 @@ public class PassengerTypeRepository : IPassengerTypeRepository
         };
     }
 }
-

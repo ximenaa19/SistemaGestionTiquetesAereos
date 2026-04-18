@@ -18,7 +18,10 @@ public class FlightStateRepository : IFlightStateRepository
 
     public async Task<IEnumerable<FlightState>> GetAllAsync()
     {
-        var entities = await _context.FlightStates.AsNoTracking().ToListAsync();
+        var entities = await _context.FlightStates
+            .AsNoTracking()
+            .ToListAsync();
+
         return entities.Select(MapToDomain).ToList();
     }
 
@@ -33,12 +36,11 @@ public class FlightStateRepository : IFlightStateRepository
 
     public async Task<FlightState?> GetByNameAsync(FlightStateName name)
     {
-        var normalized = FlightStateName.Normalize(name.Value);
-        var entities = await _context.FlightStates.AsNoTracking().ToListAsync();
+        var entity = await _context.FlightStates
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Name == name.Value);
 
-        var match = entities.FirstOrDefault(e => FlightStateName.Normalize(e.Name ?? string.Empty) == normalized);
-
-        return match is null ? null : MapToDomain(match);
+        return entity is null ? null : MapToDomain(entity);
     }
 
     public async Task AddAsync(FlightState flightState)

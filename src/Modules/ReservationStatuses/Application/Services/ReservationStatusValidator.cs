@@ -15,16 +15,9 @@ public class ReservationStatusValidator : IReservationStatusValidator
 
     public async Task ValidateNameAsync(ReservationStatusName name, ReservationStatusId? currentId = null)
     {
-        var normalizedCandidate = ReservationStatusName.Normalize(name.Value);
-        var all = await _repository.GetAllAsync();
+        var existingByName = await _repository.GetByNameAsync(name);
 
-        foreach (var item in all)
-        {
-            if (currentId != null && item.Id.Value == currentId.Value)
-                continue;
-
-            if (ReservationStatusName.Normalize(item.Name.Value) == normalizedCandidate)
-                throw new Exception("Ya existe un estado de reserva con ese nombre");
-        }
+        if (existingByName is not null && existingByName.Id != currentId)
+            throw new Exception("Ya existe un estado de reserva con ese nombre");
     }
 }

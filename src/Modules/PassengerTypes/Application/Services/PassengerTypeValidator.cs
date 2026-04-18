@@ -15,17 +15,9 @@ public class PassengerTypeValidator : IPassengerTypeValidator
 
     public async Task ValidateNameAsync(PassengerTypeName name, PassengerTypeId? currentId = null)
     {
-        var normalizedCandidate = PassengerTypeName.Normalize(name.Value);
-        var all = await _repository.GetAllAsync();
+        var existingByName = await _repository.GetByNameAsync(name);
 
-        foreach (var item in all)
-        {
-            if (currentId != null && item.Id.Value == currentId.Value)
-                continue;
-
-            if (PassengerTypeName.Normalize(item.Name.Value) == normalizedCandidate)
-                throw new Exception("Ya existe un tipo de pasajero con ese nombre");
-        }
+        if (existingByName is not null && existingByName.Id != currentId)
+            throw new Exception("Ya existe un tipo de pasajero con ese nombre");
     }
 }
-

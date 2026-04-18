@@ -1,19 +1,9 @@
-using System.Globalization;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace GestionAerolineas.src.Modules.PassengerTypes.Domain.ValueObject;
 
 public sealed record PassengerTypeName
 {
-    private static readonly string[] AllowedCanonicalNames =
-    {
-        "Bebé",
-        "Niño",
-        "Joven",
-        "Adulto",
-        "Adulto mayor"
-    };
-
     public string Value { get; }
 
     private PassengerTypeName(string value)
@@ -21,86 +11,21 @@ public sealed record PassengerTypeName
         Value = value;
     }
 
-    public static IReadOnlyCollection<string> AllowedNames => AllowedCanonicalNames;
-
-    public static string AllowedNamesDisplay => string.Join(", ", AllowedCanonicalNames);
-
     public static PassengerTypeName Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException($"El nombre no puede estar vacío. Valores permitidos: {AllowedNamesDisplay}");
+            throw new ArgumentException("El nombre no puede estar vacio");
 
-        var canonical = Canonicalize(value);
+        if (value.Length > 50)
+            throw new ArgumentException("El nombre no puede superar 50 caracteres");
 
-        if (canonical is null)
-            throw new ArgumentException($"Nombre inválido. Valores permitidos: {AllowedNamesDisplay}");
+        var regex = new Regex("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$");
 
-        return new PassengerTypeName(canonical);
-    }
+        if (!regex.IsMatch(value))
+            throw new ArgumentException("El nombre solo puede contener letras y espacios");
 
-    public static string Normalize(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-            return string.Empty;
-
-        var trimmed = value.Trim();
-        var withoutDiacritics = RemoveDiacritics(trimmed);
-        var collapsedSpaces = CollapseSpaces(withoutDiacritics);
-        return collapsedSpaces.ToLowerInvariant();
-    }
-
-    private static string? Canonicalize(string input)
-    {
-        var normalized = Normalize(input);
-
-        foreach (var canonical in AllowedCanonicalNames)
-        {
-            if (Normalize(canonical) == normalized)
-                return canonical;
-        }
-
-        return null;
-    }
-
-    private static string RemoveDiacritics(string text)
-    {
-        var normalizedFormD = text.Normalize(NormalizationForm.FormD);
-        var stringBuilder = new StringBuilder(normalizedFormD.Length);
-
-        foreach (var c in normalizedFormD)
-        {
-            var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-            if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                stringBuilder.Append(c);
-        }
-
-        return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
-    }
-
-    private static string CollapseSpaces(string text)
-    {
-        var stringBuilder = new StringBuilder(text.Length);
-        bool lastWasSpace = false;
-
-        foreach (var c in text)
-        {
-            var isSpace = char.IsWhiteSpace(c);
-            if (isSpace)
-            {
-                if (!lastWasSpace)
-                    stringBuilder.Append(' ');
-                lastWasSpace = true;
-            }
-            else
-            {
-                stringBuilder.Append(c);
-                lastWasSpace = false;
-            }
-        }
-
-        return stringBuilder.ToString().Trim();
+        return new PassengerTypeName(value.Trim());
     }
 
     public override string ToString() => Value;
 }
-

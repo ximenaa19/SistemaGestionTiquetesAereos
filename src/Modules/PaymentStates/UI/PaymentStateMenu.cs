@@ -1,8 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.PaymentStates.Application.UseCases;
-using GestionAerolineas.src.Modules.PaymentStates.Domain.ValueObject;
-
 namespace GestionAerolineas.src.Modules.PaymentStates.UI;
 
 public class PaymentStateMenu
@@ -52,7 +50,6 @@ public class PaymentStateMenu
                 switch (option)
                 {
                     case 0:
-                        Console.WriteLine($"Valores permitidos: {PaymentStateName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nombre: ");
                         string name = Console.ReadLine()!;
 
@@ -79,7 +76,6 @@ public class PaymentStateMenu
                         break;
 
                     case 3:
-                        Console.WriteLine($"Valores permitidos: {PaymentStateName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nombre: ");
                         string searchName = Console.ReadLine()!;
 
@@ -94,7 +90,6 @@ public class PaymentStateMenu
                         Console.Write("Ingrese el ID: ");
                         int updateId = int.Parse(Console.ReadLine()!);
 
-                        Console.WriteLine($"Valores permitidos: {PaymentStateName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nuevo nombre: ");
                         string newName = Console.ReadLine()!;
 

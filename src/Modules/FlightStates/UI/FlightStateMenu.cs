@@ -1,8 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.FlightStates.Application.UseCases;
-using GestionAerolineas.src.Modules.FlightStates.Domain.ValueObject;
-
 namespace GestionAerolineas.src.Modules.FlightStates.UI;
 
 public class FlightStateMenu
@@ -52,7 +50,6 @@ public class FlightStateMenu
                 switch (option)
                 {
                     case 0:
-                        Console.WriteLine($"Valores permitidos: {FlightStateName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nombre: ");
                         string name = Console.ReadLine()!;
 
@@ -79,7 +76,6 @@ public class FlightStateMenu
                         break;
 
                     case 3:
-                        Console.WriteLine($"Valores permitidos: {FlightStateName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nombre: ");
                         string searchName = Console.ReadLine()!;
 
@@ -94,7 +90,6 @@ public class FlightStateMenu
                         Console.Write("Ingrese el ID: ");
                         int updateId = int.Parse(Console.ReadLine()!);
 
-                        Console.WriteLine($"Valores permitidos: {FlightStateName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nuevo nombre: ");
                         string newName = Console.ReadLine()!;
 

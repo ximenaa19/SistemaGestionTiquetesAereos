@@ -1,8 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.PassengerTypes.Application.UseCases;
-using GestionAerolineas.src.Modules.PassengerTypes.Domain.ValueObject;
-
 namespace GestionAerolineas.src.Modules.PassengerTypes.UI;
 
 public class PassengerTypeMenu
@@ -52,7 +50,6 @@ public class PassengerTypeMenu
                 switch (option)
                 {
                     case 0:
-                        Console.WriteLine($"Valores permitidos: {PassengerTypeName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nombre: ");
                         string name = Console.ReadLine()!;
 
@@ -82,7 +79,6 @@ public class PassengerTypeMenu
                         break;
 
                     case 3:
-                        Console.WriteLine($"Valores permitidos: {PassengerTypeName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nombre: ");
                         string searchName = Console.ReadLine()!;
 
@@ -97,7 +93,6 @@ public class PassengerTypeMenu
                         Console.Write("Ingrese el ID: ");
                         int updateId = int.Parse(Console.ReadLine()!);
 
-                        Console.WriteLine($"Valores permitidos: {PassengerTypeName.AllowedNamesDisplay}");
                         Console.Write("Ingrese el nuevo nombre: ");
                         string newName = Console.ReadLine()!;
 
