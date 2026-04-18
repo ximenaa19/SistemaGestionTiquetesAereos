@@ -7,6 +7,7 @@ using GestionAerolineas.src.Modules.PhoneCodes;
 using GestionAerolineas.src.Modules.RoadTypes;
 using GestionAerolineas.src.Modules.SeatLocationTypes;
 using GestionAerolineas.src.shared.Helpers;
+using GestionAerolineas.src.Modules.PassengerTypes;
 
 try
 {
@@ -28,6 +29,7 @@ try
     var phoneCodeMenu = PhoneCodeModule.Build(context);
     var seatLocationTypeMenu = SeatLocationTypeModule.Build(context);
     var CabinTypeMenu = CabinTypeModule.Build(context);
+    var PassengerTypeMenu = PassengerTypeModule.Build(context);
 
     while (true)
     {
@@ -41,6 +43,7 @@ try
         Console.WriteLine("6. RoadTypes");
         Console.WriteLine("7. DocumenTypes");
         Console.WriteLine("8. CabinTypes");
+        Console.WriteLine("9. PassengerTypes");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -77,6 +80,9 @@ try
 
             case "8":
                 await CabinTypeMenu.StartAsync();
+                break;
+            case "9":
+                await PassengerTypeMenu.StartAsync();
                 break;
 
             case "0":
