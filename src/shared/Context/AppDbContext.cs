@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using GestionAerolineas.src.Modules.AvailabilityStatuses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.CheckinStatuses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.CardTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Cities.Infrastructure.Entity;
@@ -26,6 +27,7 @@ public class AppDbContext : DbContext
     /// Gets or sets the DbSet for continents.
     /// </summary>
     public DbSet<ContinentEntity> Continents { get; set; }
+    public DbSet<AvailabilityStatusEntity> AvailabilityStatuses { get; set; }
     public DbSet<CardTypeEntity> CardTypes { get; set; }
     public DbSet<CheckinStatusEntity> CheckinStatuses { get; set; }
     public DbSet<EmailDomainEntity> EmailDomains { get; set; }
