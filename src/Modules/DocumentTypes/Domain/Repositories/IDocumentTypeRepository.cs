@@ -7,11 +7,12 @@ public interface IDocumentTypeRepository
 {
     Task<IEnumerable<DocumentType>> GetAllAsync();
     Task<DocumentType?> GetByIdAsync(DocumentTypeId id);
+    Task<DocumentType?> GetByNameAsync(DocumentTypeName name);
     Task<DocumentType?> GetByCodeAsync(DocumentTypeCode code);
 
-    Task AddAsync(DocumentType entity);
-    Task UpdateAsync(DocumentType entity);
-    Task DeleteAsync(DocumentTypeId id);
+    Task AddAsync(DocumentType documentType);
+    Task UpdateAsync(DocumentType documentType);
+    Task DeleteAsync(DocumentType documentType);
 
     Task<bool> ExistsAsync(DocumentTypeId id);
 }

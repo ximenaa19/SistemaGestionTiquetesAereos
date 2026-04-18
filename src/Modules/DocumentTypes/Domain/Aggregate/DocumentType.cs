@@ -26,6 +26,13 @@ public class DocumentType
         return new DocumentType(id, name, code);
     }
 
+    public static DocumentType Create(
+        DocumentTypeName name,
+        DocumentTypeCode code)
+    {
+        return new DocumentType(DocumentTypeId.CreateNew(), name, code);
+    }
+
     public void UpdateName(DocumentTypeName name)
     {
         Name = name;

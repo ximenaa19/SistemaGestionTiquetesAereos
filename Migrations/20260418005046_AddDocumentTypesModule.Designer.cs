@@ -3,6 +3,7 @@ using GestionAerolineas.src.shared.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionAerolineas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260418005046_AddDocumentTypesModule")]
+    partial class AddDocumentTypesModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,26 +122,6 @@ namespace GestionAerolineas.Migrations
                         .IsUnique();
 
                     b.ToTable("DocumentTypes", (string)null);
-            modelBuilder.Entity("GestionAerolineas.src.Modules.EmailDomains.Infrastructure.Entity.EmailDomainEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Domain")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("domain");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Domain")
-                        .IsUnique();
-
-                    b.ToTable("emaildomains", (string)null);
                 });
 
             modelBuilder.Entity("GestionAerolineas.src.Modules.Regions.Infrastructure.Entity.RegionEntity", b =>
