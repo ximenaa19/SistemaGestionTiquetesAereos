@@ -8,6 +8,7 @@ using GestionAerolineas.src.Modules.FlightRoles.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.PhoneCodes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Regions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.RoadTypes.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.CabinTypes.Infrastructure.Entity;
 
 namespace GestionAerolineas.src.shared.Context;
 
@@ -26,6 +27,7 @@ public class AppDbContext : DbContext
     //public DbSet<CityEntity> Cities { get; set; }
     public DbSet<RoadTypeEntity> RoadTypes { get; set; }
     public DbSet<DocumentTypeEntity> DocumentTypes { get; set; }
+    public DbSet<CabinTypeEntity> CabinTypes { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }
