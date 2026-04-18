@@ -3,6 +3,7 @@ using GestionAerolineas.src.shared.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionAerolineas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260418004553_AddEmailDomains")]
+    partial class AddEmailDomains
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,31 +97,6 @@ namespace GestionAerolineas.Migrations
                     b.ToTable("countries", (string)null);
                 });
 
-            modelBuilder.Entity("GestionAerolineas.src.Modules.DocumentTypes.Infrastructure.Entity.DocumentTypeEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Code")
-                        .IsUnique();
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("DocumentTypes", (string)null);
             modelBuilder.Entity("GestionAerolineas.src.Modules.EmailDomains.Infrastructure.Entity.EmailDomainEntity", b =>
                 {
                     b.Property<int>("Id")
