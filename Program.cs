@@ -3,6 +3,7 @@ using GestionAerolineas.src.Modules.Continents;
 using GestionAerolineas.src.Modules.DocumentTypes;
 using GestionAerolineas.src.Modules.EmailDomains;
 using GestionAerolineas.src.Modules.FlightRoles;
+using GestionAerolineas.src.Modules.FlightStates;
 using GestionAerolineas.src.Modules.PhoneCodes;
 using GestionAerolineas.src.Modules.ReservationStatuses;
 using GestionAerolineas.src.Modules.RoadTypes;
@@ -27,6 +28,7 @@ try
     var roadTypeMenu = RoadTypeModule.Build(context);
     var documentTypeMenu = DocumentTypeModule.Build(context);
     var flightRoleMenu = FlightRoleModule.Build(context);
+    var flightStateMenu = FlightStateModule.Build(context);
     var phoneCodeMenu = PhoneCodeModule.Build(context);
     var reservationStatusMenu = ReservationStatusModule.Build(context);
     var seatLocationTypeMenu = SeatLocationTypeModule.Build(context);
@@ -47,6 +49,7 @@ try
         Console.WriteLine("8. DocumenTypes");
         Console.WriteLine("9. CabinTypes");
         Console.WriteLine("10. PassengerTypes");
+        Console.WriteLine("11. FlightStates");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -90,6 +93,9 @@ try
                 break;
             case "10":
                 await PassengerTypeMenu.StartAsync();
+                break;
+            case "11":
+                await flightStateMenu.StartAsync();
                 break;
 
             case "0":
