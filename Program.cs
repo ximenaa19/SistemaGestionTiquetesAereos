@@ -1,4 +1,5 @@
 using GestionAerolineas.src.Modules.Continents;
+using GestionAerolineas.src.Modules.DocumentTypes;
 using GestionAerolineas.src.Modules.RoadTypes;
 using GestionAerolineas.src.shared.Helpers;
 
@@ -16,6 +17,7 @@ try
 
     var continentMenu = ContinentModule.Build(context);
     var roadTypeMenu = RoadTypeModule.Build(context);
+    var documentTypeMenu = DocumentTypeModule.Build(context);
 
     while (true)
     {
@@ -23,6 +25,7 @@ try
         Console.WriteLine("=== SISTEMA ===");
         Console.WriteLine("1. Continents");
         Console.WriteLine("2. RoadTypes");
+        Console.WriteLine("3. DocumentTypes");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -35,6 +38,10 @@ try
 
             case "2":
                 await roadTypeMenu.StartAsync();
+                break;
+
+            case "3":
+                await documentTypeMenu.StartAsync();
                 break;
 
             case "0":
