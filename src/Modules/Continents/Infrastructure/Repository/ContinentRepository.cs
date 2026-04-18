@@ -40,21 +40,28 @@ public class ContinentRepository : IContinentRepository
         return entity is null ? null : MapToDomain(entity);
     }
 
-    public async Task AddAsync(Continent entity)
+    public async Task AddAsync(Continent continent)
     {
-        await _context.Continents.AddAsync(MapToEntity(entity));
+        await _context.Continents.AddAsync(MapToEntity(continent));
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Continent entity)
+    public async Task UpdateAsync(Continent continent)
     {
-        _context.Continents.Update(MapToEntity(entity));
+        var existing = await _context.Continents
+            .FirstOrDefaultAsync(e => e.Id == continent.Id.Value);
+
+        if (existing is null)
+            return;
+
+        existing.Name = continent.Name.Value;
+
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(ContinentId id)
+    public async Task DeleteAsync(Continent continent)
     {
-        var entity = await _context.Continents.FindAsync(id.Value);
+        var entity = await _context.Continents.FindAsync(continent.Id.Value);
 
         if (entity is null) return;
 

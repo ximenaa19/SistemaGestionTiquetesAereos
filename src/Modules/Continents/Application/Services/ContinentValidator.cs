@@ -13,7 +13,7 @@ public class ContinentValidator : IContinentValidator
         _repository = repository;
     }
 
-    public async Task ValidateAsync(ContinentName name)
+    public async Task ValidateNameAsync(ContinentName name)
     {
         var existing = await _repository.GetByNameAsync(name);
 

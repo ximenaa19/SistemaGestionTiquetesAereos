@@ -7,7 +7,7 @@ public class ContinentEntityConfiguration : IEntityTypeConfiguration<ContinentEn
 {
     public void Configure(EntityTypeBuilder<ContinentEntity> builder)
     {
-        builder.ToTable("continentes");
+        builder.ToTable("continents");
 
         builder.HasKey(e => e.Id);
 
