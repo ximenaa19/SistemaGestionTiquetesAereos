@@ -8,6 +8,7 @@ using GestionAerolineas.src.Modules.FlightRoles.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.FlightStates.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.PassengerTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.PhoneCodes.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.ReservationStatuses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Regions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.RoadTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.CabinTypes.Infrastructure.Entity;
@@ -26,6 +27,7 @@ public class AppDbContext : DbContext
     public DbSet<FlightStateEntity> FlightStates { get; set; }
     public DbSet<PassengerTypeEntity> PassengerTypes { get; set; }
     public DbSet<PhoneCodeEntity> PhoneCodes { get; set; }
+    public DbSet<ReservationStatusEntity> ReservationStatuses { get; set; }
     public DbSet<SeatLocationTypeEntity> SeatLocationTypes { get; set; }
     //public DbSet<CountryEntity> Countries { get; set; }
 
