@@ -9,6 +9,7 @@ using GestionAerolineas.src.Modules.EmailDomains;
 using GestionAerolineas.src.Modules.FlightRoles;
 using GestionAerolineas.src.Modules.FlightStates;
 using GestionAerolineas.src.Modules.InvoiceItemTypes;
+using GestionAerolineas.src.Modules.PaymentMethodTypes;
 using GestionAerolineas.src.Modules.PhoneCodes;
 using GestionAerolineas.src.Modules.PaymentStates;
 using GestionAerolineas.src.Modules.Permissions;
@@ -45,6 +46,7 @@ try
     var flightRoleMenu = FlightRoleModule.Build(context);
     var flightStateMenu = FlightStateModule.Build(context);
     var invoiceItemTypeMenu = InvoiceItemTypeModule.Build(context);
+    var paymentMethodTypeMenu = PaymentMethodTypeModule.Build(context);
     var paymentStateMenu = PaymentStateModule.Build(context);
     var permissionMenu = PermissionModule.Build(context);
     var phoneCodeMenu = PhoneCodeModule.Build(context);
@@ -83,6 +85,7 @@ try
         Console.WriteLine("20. StaffRoles");
         Console.WriteLine("21. Seasons");
         Console.WriteLine("22. InvoiceItemTypes");
+        Console.WriteLine("23. PaymentMethodTypes");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -166,6 +169,10 @@ try
                 break;
             case "22":
                 await invoiceItemTypeMenu.StartAsync();
+                break;
+
+            case "23":
+                await paymentMethodTypeMenu.StartAsync();
                 break;
 
             case "0":
