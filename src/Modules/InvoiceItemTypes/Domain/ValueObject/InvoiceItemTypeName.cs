@@ -27,5 +27,13 @@ public sealed record InvoiceItemTypeName
         return new InvoiceItemTypeName(value.Trim());
     }
 
+    public static InvoiceItemTypeName FromPersistence(string value)
+    {
+        if (value is null)
+            throw new ArgumentException("El nombre no puede ser nulo");
+
+        return new InvoiceItemTypeName(value.Trim());
+    }
+
     public override string ToString() => Value;
 }

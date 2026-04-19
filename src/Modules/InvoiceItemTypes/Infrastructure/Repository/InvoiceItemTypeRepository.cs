@@ -82,7 +82,7 @@ public class InvoiceItemTypeRepository : IInvoiceItemTypeRepository
     {
         return InvoiceItemType.Create(
             InvoiceItemTypeId.Create(entity.Id),
-            InvoiceItemTypeName.Create(entity.Name ?? string.Empty)
+            InvoiceItemTypeName.FromPersistence(entity.Name ?? string.Empty)
         );
     }
 
