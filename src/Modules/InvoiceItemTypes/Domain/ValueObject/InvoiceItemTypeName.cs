@@ -19,10 +19,10 @@ public sealed record InvoiceItemTypeName
         if (value.Length > 100)
             throw new ArgumentException("El nombre no puede superar 100 caracteres");
 
-        var regex = new Regex("^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]+$");
+        var regex = new Regex("^[a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ±Ã‘ ]+$");
 
         if (!regex.IsMatch(value))
-            throw new ArgumentException("El nombre solo puede contener letras, numeros y espacios");
+            throw new ArgumentException("El nombre solo puede contener letras y espacios");
 
         return new InvoiceItemTypeName(value.Trim());
     }
