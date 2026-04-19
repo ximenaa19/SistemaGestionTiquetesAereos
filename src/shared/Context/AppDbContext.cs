@@ -18,6 +18,7 @@ using GestionAerolineas.src.Modules.ReservationStatuses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Regions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.RoadTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.CabinTypes.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.CardIssuers.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Seasons.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.SeatLocationTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.StaffRoles.Infrastructure.Entity;
@@ -34,6 +35,7 @@ public class AppDbContext : DbContext
     public DbSet<ContinentEntity> Continents { get; set; }
     public DbSet<AvailabilityStatusEntity> AvailabilityStatuses { get; set; }
     public DbSet<CardTypeEntity> CardTypes { get; set; }
+    public DbSet<CardIssuerEntity> CardIssuers { get; set; }
     public DbSet<CheckinStatusEntity> CheckinStatuses { get; set; }
     public DbSet<EmailDomainEntity> EmailDomains { get; set; }
     public DbSet<FlightRoleEntity> FlightRoles { get; set; }

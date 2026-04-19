@@ -1,6 +1,7 @@
 using GestionAerolineas.src.Modules.CabinTypes;
 using GestionAerolineas.src.Modules.AvailabilityStatuses;
 using GestionAerolineas.src.Modules.CardTypes;
+using GestionAerolineas.src.Modules.CardIssuers;
 using GestionAerolineas.src.Modules.CheckinStatuses;
 using GestionAerolineas.src.Modules.Continents;
 using GestionAerolineas.src.Modules.DocumentTypes;
@@ -36,6 +37,7 @@ try
     var continentMenu = ContinentModule.Build(context);
     var availabilityStatusMenu = AvailabilityStatusModule.Build(context);
     var cardTypeMenu = CardTypeModule.Build(context);
+    var cardIssuerMenu = CardIssuerModule.Build(context);
     var checkinStatusMenu = CheckinStatusModule.Build(context);
     var emailDomainMenu = EmailDomainModule.Build(context);
     var roadTypeMenu = RoadTypeModule.Build(context);
@@ -63,23 +65,24 @@ try
         Console.WriteLine("2. AvailabilityStatuses");
         Console.WriteLine("3. CardTypes");
         Console.WriteLine("4. CheckinStatuses");
-        Console.WriteLine("5. EmailDomains");
-        Console.WriteLine("6. FlightRoles");
-        Console.WriteLine("7. ReservationStatuses");
-        Console.WriteLine("8. PhoneCodes");
-        Console.WriteLine("9. SeatLocationTypes");
-        Console.WriteLine("10. RoadTypes");
-        Console.WriteLine("11. DocumenTypes");
-        Console.WriteLine("12. CabinTypes");
-        Console.WriteLine("13. PassengerTypes");
-        Console.WriteLine("14. FlightStates");
-        Console.WriteLine("15. PaymentStates");
-        Console.WriteLine("16. TicketStatuses");
-        Console.WriteLine("17. SystemRoles");
-        Console.WriteLine("18. Permissions");
-        Console.WriteLine("19. StaffRoles");
-        Console.WriteLine("20. Seasons");
-        Console.WriteLine("21. InvoiceItemTypes");
+        Console.WriteLine("5. CardIssuers");
+        Console.WriteLine("6. EmailDomains");
+        Console.WriteLine("7. FlightRoles");
+        Console.WriteLine("8. ReservationStatuses");
+        Console.WriteLine("9. PhoneCodes");
+        Console.WriteLine("10. SeatLocationTypes");
+        Console.WriteLine("11. RoadTypes");
+        Console.WriteLine("12. DocumenTypes");
+        Console.WriteLine("13. CabinTypes");
+        Console.WriteLine("14. PassengerTypes");
+        Console.WriteLine("15. FlightStates");
+        Console.WriteLine("16. PaymentStates");
+        Console.WriteLine("17. TicketStatuses");
+        Console.WriteLine("18. SystemRoles");
+        Console.WriteLine("19. Permissions");
+        Console.WriteLine("20. StaffRoles");
+        Console.WriteLine("21. Seasons");
+        Console.WriteLine("22. InvoiceItemTypes");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -103,61 +106,65 @@ try
                 break;
 
             case "5":
-                await emailDomainMenu.StartAsync();
+                await cardIssuerMenu.StartAsync();
                 break;
 
             case "6":
-                await flightRoleMenu.StartAsync();
+                await emailDomainMenu.StartAsync();
                 break;
 
             case "7":
-                await reservationStatusMenu.StartAsync();
+                await flightRoleMenu.StartAsync();
                 break;
 
             case "8":
-                await phoneCodeMenu.StartAsync();
+                await reservationStatusMenu.StartAsync();
                 break;
 
             case "9":
-                await seatLocationTypeMenu.StartAsync();
+                await phoneCodeMenu.StartAsync();
                 break;
 
             case "10":
-                await roadTypeMenu.StartAsync();
+                await seatLocationTypeMenu.StartAsync();
                 break;
 
             case "11":
-                await documentTypeMenu.StartAsync();
+                await roadTypeMenu.StartAsync();
                 break;
 
             case "12":
+                await documentTypeMenu.StartAsync();
+                break;
+
+            case "13":
                 await CabinTypeMenu.StartAsync();
                 break;
-            case "13":
+            case "14":
                 await PassengerTypeMenu.StartAsync();
                 break;
-            case "14":
+            case "15":
                 await flightStateMenu.StartAsync();
                 break;
-            case "15":
+            case "16":
                 await paymentStateMenu.StartAsync();
                 break;
-            case "16":
+            case "17":
                 await ticketStatusMenu.StartAsync();
                 break;
-            case "17":
+            case "18":
                 await systemRoleMenu.StartAsync();
                 break;
-            case "18":
+            case "19":
                 await permissionMenu.StartAsync();
                 break;
-            case "19":
+            case "20":
                 await staffRoleMenu.StartAsync();
                 break;
-            case "20":
+            case "21":
                 await seasonMenu.StartAsync();
                 break;
-            case "21":
+            case "22":
                 await invoiceItemTypeMenu.StartAsync();
                 break;
 
