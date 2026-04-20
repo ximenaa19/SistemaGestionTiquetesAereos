@@ -25,6 +25,8 @@ using GestionAerolineas.src.Modules.SeatLocationTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.StaffRoles.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.SystemRoles.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.TicketStatuses.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.ReservationStatusTransitions.Infrastructure.Entity;
+
 
 namespace GestionAerolineas.src.shared.Context;
 
@@ -53,6 +55,8 @@ public class AppDbContext : DbContext
     public DbSet<StaffRoleEntity> StaffRoles { get; set; }
     public DbSet<SystemRoleEntity> SystemRoles { get; set; }
     public DbSet<TicketStatusEntity> TicketStatuses { get; set; }
+    public DbSet<ReservationStatusTransitionEntity> ReservationStatusTransitions { get; set; }
+
     //public DbSet<CountryEntity> Countries { get; set; }
 
     //public DbSet<RegionEntity> Regions { get; set; }

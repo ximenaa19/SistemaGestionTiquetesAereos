@@ -22,6 +22,8 @@ using GestionAerolineas.src.Modules.SystemRoles;
 using GestionAerolineas.src.Modules.TicketStatuses;
 using GestionAerolineas.src.shared.Helpers;
 using GestionAerolineas.src.Modules.PassengerTypes;
+using GestionAerolineas.src.Modules.ReservationStatusTransitions;
+
 
 try
 {
@@ -58,6 +60,8 @@ try
     var ticketStatusMenu = TicketStatusModule.Build(context);
     var CabinTypeMenu = CabinTypeModule.Build(context);
     var PassengerTypeMenu = PassengerTypeModule.Build(context);
+    var reservationStatusTransitionMenu = ReservationStatusTransitionModule.Build(context);
+
 
     while (true)
     {
@@ -86,6 +90,7 @@ try
         Console.WriteLine("21. Seasons");
         Console.WriteLine("22. InvoiceItemTypes");
         Console.WriteLine("23. PaymentMethodTypes");
+        Console.WriteLine("24. ReservationStatusTransitions");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -173,6 +178,9 @@ try
 
             case "23":
                 await paymentMethodTypeMenu.StartAsync();
+                break;
+            case "24":
+                await reservationStatusTransitionMenu.StartAsync();
                 break;
 
             case "0":
