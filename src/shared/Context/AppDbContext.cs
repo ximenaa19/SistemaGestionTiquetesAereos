@@ -37,6 +37,7 @@ using GestionAerolineas.src.Modules.TicketStatuses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.ReservationStatusTransitions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.RolePermissions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.People.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.Routes.Infrastructure.Entity;
 
 
 namespace GestionAerolineas.src.shared.Context;
@@ -79,6 +80,7 @@ public class AppDbContext : DbContext
     public DbSet<AirlineEntity> Airlines { get; set; }
     public DbSet<AircraftEntity> Aircraft { get; set; }
     public DbSet<PersonEntity> People { get; set; }
+    public DbSet<RouteEntity> Routes { get; set; }
 
     public DbSet<RegionEntity> Regions { get; set; }
     public DbSet<CityEntity> Cities { get; set; }
