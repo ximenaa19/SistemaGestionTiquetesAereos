@@ -14,6 +14,7 @@ using GestionAerolineas.src.Modules.InvoiceItemTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.PassengerTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.PaymentMethodTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.PaymentStates.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.PaymentMethods.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Permissions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.PhoneCodes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.ReservationStatuses.Infrastructure.Entity;
@@ -50,6 +51,7 @@ public class AppDbContext : DbContext
     public DbSet<PassengerTypeEntity> PassengerTypes { get; set; }
     public DbSet<PaymentMethodTypeEntity> PaymentMethodTypes { get; set; }
     public DbSet<PaymentStateEntity> PaymentStates { get; set; }
+    public DbSet<PaymentMethodEntity> PaymentMethods { get; set; }
     public DbSet<PermissionEntity> Permissions { get; set; }
     public DbSet<PhoneCodeEntity> PhoneCodes { get; set; }
     public DbSet<ReservationStatusEntity> ReservationStatuses { get; set; }

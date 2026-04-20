@@ -11,6 +11,7 @@ using GestionAerolineas.src.Modules.FlightStates;
 using GestionAerolineas.src.Modules.FlightStatusTransitions;
 using GestionAerolineas.src.Modules.InvoiceItemTypes;
 using GestionAerolineas.src.Modules.PaymentMethodTypes;
+using GestionAerolineas.src.Modules.PaymentMethods;
 using GestionAerolineas.src.Modules.PhoneCodes;
 using GestionAerolineas.src.Modules.PaymentStates;
 using GestionAerolineas.src.Modules.Permissions;
@@ -52,6 +53,7 @@ try
     var flightStatusTransitionMenu = FlightStatusTransitionModule.Build(context);
     var invoiceItemTypeMenu = InvoiceItemTypeModule.Build(context);
     var paymentMethodTypeMenu = PaymentMethodTypeModule.Build(context);
+    var paymentMethodMenu = PaymentMethodModule.Build(context);
     var paymentStateMenu = PaymentStateModule.Build(context);
     var permissionMenu = PermissionModule.Build(context);
     var phoneCodeMenu = PhoneCodeModule.Build(context);
@@ -97,6 +99,7 @@ try
         Console.WriteLine("24. PaymentMethodTypes");
         Console.WriteLine("25. ReservationStatusTransitions");
         Console.WriteLine("26. RolePermissions");
+        Console.WriteLine("27. PaymentMethods");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -193,6 +196,9 @@ try
                 break;
             case "26":
                 await rolePermissionMenu.StartAsync();
+                break;
+            case "27":
+                await paymentMethodMenu.StartAsync();
                 break;
 
             case "0":
