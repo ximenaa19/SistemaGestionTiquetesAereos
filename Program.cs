@@ -34,6 +34,7 @@ using GestionAerolineas.src.shared.Helpers;
 using GestionAerolineas.src.Modules.PassengerTypes;
 using GestionAerolineas.src.Modules.ReservationStatusTransitions;
 using GestionAerolineas.src.Modules.RolePermissions;
+using GestionAerolineas.src.Modules.People;
 
 
 try
@@ -79,6 +80,7 @@ try
     var staffRoleMenu = StaffRoleModule.Build(context);
     var systemRoleMenu = SystemRoleModule.Build(context);
     var ticketStatusMenu = TicketStatusModule.Build(context);
+    var personMenu = PersonModule.Build(context);
     var CabinTypeMenu = CabinTypeModule.Build(context);
     var PassengerTypeMenu = PassengerTypeModule.Build(context);
     var reservationStatusTransitionMenu = ReservationStatusTransitionModule.Build(context);
@@ -124,6 +126,7 @@ try
         Console.WriteLine("33. Addresses");
         Console.WriteLine("34. Airports");
         Console.WriteLine("35. Airlines");
+        Console.WriteLine("36. People");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -248,6 +251,10 @@ try
 
             case "35":
                 await airlineMenu.StartAsync();
+                break;
+
+            case "36":
+                await personMenu.StartAsync();
                 break;
 
             case "0":
