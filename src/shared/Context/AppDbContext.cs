@@ -5,6 +5,7 @@ using GestionAerolineas.src.Modules.CardTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Cities.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Continents.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Countries.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.Airlines.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.AircraftManufacturers.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.AircraftModels.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Airports.Infrastructure.Entity;
@@ -71,6 +72,7 @@ public class AppDbContext : DbContext
     public DbSet<AircraftManufacturerEntity> AircraftManufacturers { get; set; }
     public DbSet<AircraftModelEntity> AircraftModels { get; set; }
     public DbSet<AirportEntity> Airports { get; set; }
+    public DbSet<AirlineEntity> Airlines { get; set; }
 
     public DbSet<RegionEntity> Regions { get; set; }
     public DbSet<CityEntity> Cities { get; set; }
