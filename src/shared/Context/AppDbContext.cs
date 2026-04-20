@@ -7,6 +7,7 @@ using GestionAerolineas.src.Modules.Continents.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Countries.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.AircraftManufacturers.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.AircraftModels.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.Airports.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Addresses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.DocumentTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.EmailDomains.Infrastructure.Entity;
@@ -69,6 +70,7 @@ public class AppDbContext : DbContext
     public DbSet<CountryEntity> Countries { get; set; }
     public DbSet<AircraftManufacturerEntity> AircraftManufacturers { get; set; }
     public DbSet<AircraftModelEntity> AircraftModels { get; set; }
+    public DbSet<AirportEntity> Airports { get; set; }
 
     public DbSet<RegionEntity> Regions { get; set; }
     public DbSet<CityEntity> Cities { get; set; }
