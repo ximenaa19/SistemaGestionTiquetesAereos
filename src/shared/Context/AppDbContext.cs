@@ -63,7 +63,7 @@ public class AppDbContext : DbContext
     public DbSet<ReservationStatusTransitionEntity> ReservationStatusTransitions { get; set; }
     public DbSet<RolePermissionEntity> RolePermissions { get; set; }
 
-    //public DbSet<CountryEntity> Countries { get; set; }
+    public DbSet<CountryEntity> Countries { get; set; }
 
     //public DbSet<RegionEntity> Regions { get; set; }
     //public DbSet<CityEntity> Cities { get; set; }

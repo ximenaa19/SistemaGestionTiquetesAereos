@@ -4,7 +4,7 @@ public sealed record CountryName
 {
     public string Value { get; }
 
-    public CountryName(string value)
+    private CountryName(string value)
     {
         Value = value;
     }
@@ -12,17 +12,16 @@ public sealed record CountryName
     public static CountryName Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("El valor no puede ser nulo ni vacío");
-        }
+            throw new ArgumentException("El nombre no puede estar vacío");
 
-        if (value.Length > 100)
-        {
-            throw new ArgumentException("El valor no puede tener más de 100 caracteres");
-        }
+        var trimmed = value.Trim();
 
-        return new CountryName(value);
+        if (trimmed.Length > 100)
+            throw new ArgumentException("Máximo 100 caracteres");
+
+        return new CountryName(trimmed);
     }
-}
 
+    public override string ToString() => Value;
+}
 

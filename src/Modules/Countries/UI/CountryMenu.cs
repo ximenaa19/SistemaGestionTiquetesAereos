@@ -1,0 +1,162 @@
+using GestionAerolineas.src.Modules.Continents.Application.UseCases;
+using GestionAerolineas.src.Modules.Countries.Application.UseCases;
+
+namespace GestionAerolineas.src.Modules.Countries.UI;
+
+public class CountryMenu
+{
+    private readonly CreateCountryUseCase _create;
+    private readonly GetAllCountriesUseCase _getAll;
+    private readonly GetCountryByIdUseCase _getById;
+    private readonly GetCountryByNameUseCase _getByName;
+    private readonly GetCountryByIsoCodeUseCase _getByIso;
+    private readonly UpdateCountryUseCase _update;
+    private readonly DeleteCountryUseCase _delete;
+
+    private readonly GetAllContinentsUseCase _getAllContinents;
+
+    public CountryMenu(
+        CreateCountryUseCase create,
+        GetAllCountriesUseCase getAll,
+        GetCountryByIdUseCase getById,
+        GetCountryByNameUseCase getByName,
+        GetCountryByIsoCodeUseCase getByIso,
+        UpdateCountryUseCase update,
+        DeleteCountryUseCase delete,
+        GetAllContinentsUseCase getAllContinents)
+    {
+        _create = create;
+        _getAll = getAll;
+        _getById = getById;
+        _getByName = getByName;
+        _getByIso = getByIso;
+        _update = update;
+        _delete = delete;
+        _getAllContinents = getAllContinents;
+    }
+
+    public async Task StartAsync()
+    {
+        var menu = new ConsoleMenu(new[]
+        {
+            "Create a new country",
+            "List all countries",
+            "Get country by ID",
+            "Get country by name",
+            "Get country by ISO code",
+            "Update a country",
+            "Delete a country",
+            "Exit"
+        });
+
+        while (true)
+        {
+            int option = menu.Show();
+
+            try
+            {
+                switch (option)
+                {
+                    case 0:
+                        await PrintContinentsAsync();
+
+                        Console.Write("\nIngrese el nombre: ");
+                        string name = Console.ReadLine()!;
+
+                        Console.Write("Ingrese el código ISO (3 letras): ");
+                        string isoCode = Console.ReadLine()!;
+
+                        Console.Write("Ingrese el ID del continente: ");
+                        int continentId = int.Parse(Console.ReadLine()!);
+
+                        await _create.ExecuteAsync(name, isoCode, continentId);
+                        Console.WriteLine("✔ Creado");
+                        break;
+
+                    case 1:
+                        var list = await _getAll.ExecuteAsync();
+                        foreach (var item in list)
+                            Console.WriteLine($"{item.Id.Value} - {item.Name.Value} - ISO={item.IsoCode.Value} - continente_id={item.ContinentId.Value}");
+                        break;
+
+                    case 2:
+                        Console.Write("Ingrese el ID: ");
+                        int searchId = int.Parse(Console.ReadLine()!);
+
+                        var byId = await _getById.ExecuteAsync(searchId);
+                        Console.WriteLine(byId == null
+                            ? "No encontrado"
+                            : $"{byId.Id.Value} - {byId.Name.Value} - ISO={byId.IsoCode.Value} - continente_id={byId.ContinentId.Value}");
+                        break;
+
+                    case 3:
+                        Console.Write("Ingrese el nombre: ");
+                        string searchName = Console.ReadLine()!;
+
+                        var byName = await _getByName.ExecuteAsync(searchName);
+                        Console.WriteLine(byName == null
+                            ? "No encontrado"
+                            : $"{byName.Id.Value} - {byName.Name.Value} - ISO={byName.IsoCode.Value} - continente_id={byName.ContinentId.Value}");
+                        break;
+
+                    case 4:
+                        Console.Write("Ingrese el código ISO: ");
+                        string searchIso = Console.ReadLine()!;
+
+                        var byIso = await _getByIso.ExecuteAsync(searchIso);
+                        Console.WriteLine(byIso == null
+                            ? "No encontrado"
+                            : $"{byIso.Id.Value} - {byIso.Name.Value} - ISO={byIso.IsoCode.Value} - continente_id={byIso.ContinentId.Value}");
+                        break;
+
+                    case 5:
+                        await PrintContinentsAsync();
+
+                        Console.Write("\nIngrese el ID: ");
+                        int updateId = int.Parse(Console.ReadLine()!);
+
+                        Console.Write("Ingrese el nuevo nombre: ");
+                        string newName = Console.ReadLine()!;
+
+                        Console.Write("Ingrese el nuevo código ISO (3 letras): ");
+                        string newIso = Console.ReadLine()!;
+
+                        Console.Write("Ingrese el nuevo ID del continente: ");
+                        int newContinentId = int.Parse(Console.ReadLine()!);
+
+                        await _update.ExecuteAsync(updateId, newName, newIso, newContinentId);
+                        Console.WriteLine("✔ Actualizado");
+                        break;
+
+                    case 6:
+                        Console.Write("Ingrese el ID: ");
+                        int deleteId = int.Parse(Console.ReadLine()!);
+
+                        await _delete.ExecuteAsync(deleteId);
+                        Console.WriteLine("✔ Eliminado");
+                        break;
+
+                    case 7:
+                        return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+            }
+
+            Console.WriteLine("\nPresiona una tecla para continuar...");
+            Console.ReadKey();
+            Console.Clear();
+        }
+    }
+
+    private async Task PrintContinentsAsync()
+    {
+        Console.WriteLine("Continentes disponibles:");
+        var continents = await _getAllContinents.ExecuteAsync();
+        foreach (var c in continents)
+            Console.WriteLine($"{c.Id.Value} - {c.Name.Value}");
+    }
+}
+
