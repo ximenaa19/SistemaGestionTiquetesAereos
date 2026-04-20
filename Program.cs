@@ -1,4 +1,5 @@
 using GestionAerolineas.src.Modules.CabinTypes;
+using GestionAerolineas.src.Modules.Cities;
 using GestionAerolineas.src.Modules.AvailabilityStatuses;
 using GestionAerolineas.src.Modules.CardTypes;
 using GestionAerolineas.src.Modules.CardIssuers;
@@ -49,6 +50,7 @@ try
     var aircraftManufacturerMenu = AircraftManufacturerModule.Build(context);
     var aircraftModelMenu = AircraftModelModule.Build(context);
     var regionMenu = RegionModule.Build(context);
+    var cityMenu = CityModule.Build(context);
     var availabilityStatusMenu = AvailabilityStatusModule.Build(context);
     var cardTypeMenu = CardTypeModule.Build(context);
     var cardIssuerMenu = CardIssuerModule.Build(context);
@@ -112,6 +114,7 @@ try
         Console.WriteLine("29. AircraftManufacturers");
         Console.WriteLine("30. AircraftModels");
         Console.WriteLine("31. Regions");
+        Console.WriteLine("32. Cities");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -223,6 +226,9 @@ try
                 break;
             case "31":
                 await regionMenu.StartAsync();
+                break;
+            case "32":
+                await cityMenu.StartAsync();
                 break;
 
             case "0":
