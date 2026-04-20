@@ -3,6 +3,7 @@ using GestionAerolineas.src.shared.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionAerolineas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260420062937_AddFlightStatusTransitions")]
+    partial class AddFlightStatusTransitions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -558,33 +561,6 @@ namespace GestionAerolineas.Migrations
                     b.ToTable("RoadTypes", (string)null);
                 });
 
-            modelBuilder.Entity("GestionAerolineas.src.Modules.RolePermissions.Infrastructure.Entity.RolePermissionEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("int")
-                        .HasColumnName("permiso_id");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int")
-                        .HasColumnName("rol_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PermissionId");
-
-                    b.HasIndex("RoleId", "PermissionId")
-                        .IsUnique();
-
-                    b.ToTable("rolepermissions", (string)null);
-                });
-
             modelBuilder.Entity("GestionAerolineas.src.Modules.Seasons.Infrastructure.Entity.SeasonEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -760,21 +736,6 @@ namespace GestionAerolineas.Migrations
                     b.HasOne("GestionAerolineas.src.Modules.ReservationStatuses.Infrastructure.Entity.ReservationStatusEntity", null)
                         .WithMany()
                         .HasForeignKey("OriginStatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GestionAerolineas.src.Modules.RolePermissions.Infrastructure.Entity.RolePermissionEntity", b =>
-                {
-                    b.HasOne("GestionAerolineas.src.Modules.Permissions.Infrastructure.Entity.PermissionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("GestionAerolineas.src.Modules.SystemRoles.Infrastructure.Entity.SystemRoleEntity", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

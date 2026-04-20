@@ -8,6 +8,7 @@ using GestionAerolineas.src.Modules.DocumentTypes;
 using GestionAerolineas.src.Modules.EmailDomains;
 using GestionAerolineas.src.Modules.FlightRoles;
 using GestionAerolineas.src.Modules.FlightStates;
+using GestionAerolineas.src.Modules.FlightStatusTransitions;
 using GestionAerolineas.src.Modules.InvoiceItemTypes;
 using GestionAerolineas.src.Modules.PaymentMethodTypes;
 using GestionAerolineas.src.Modules.PhoneCodes;
@@ -23,6 +24,7 @@ using GestionAerolineas.src.Modules.TicketStatuses;
 using GestionAerolineas.src.shared.Helpers;
 using GestionAerolineas.src.Modules.PassengerTypes;
 using GestionAerolineas.src.Modules.ReservationStatusTransitions;
+using GestionAerolineas.src.Modules.RolePermissions;
 
 
 try
@@ -47,6 +49,7 @@ try
     var documentTypeMenu = DocumentTypeModule.Build(context);
     var flightRoleMenu = FlightRoleModule.Build(context);
     var flightStateMenu = FlightStateModule.Build(context);
+    var flightStatusTransitionMenu = FlightStatusTransitionModule.Build(context);
     var invoiceItemTypeMenu = InvoiceItemTypeModule.Build(context);
     var paymentMethodTypeMenu = PaymentMethodTypeModule.Build(context);
     var paymentStateMenu = PaymentStateModule.Build(context);
@@ -61,6 +64,7 @@ try
     var CabinTypeMenu = CabinTypeModule.Build(context);
     var PassengerTypeMenu = PassengerTypeModule.Build(context);
     var reservationStatusTransitionMenu = ReservationStatusTransitionModule.Build(context);
+    var rolePermissionMenu = RolePermissionModule.Build(context);
 
 
     while (true)
@@ -82,15 +86,17 @@ try
         Console.WriteLine("13. CabinTypes");
         Console.WriteLine("14. PassengerTypes");
         Console.WriteLine("15. FlightStates");
-        Console.WriteLine("16. PaymentStates");
-        Console.WriteLine("17. TicketStatuses");
-        Console.WriteLine("18. SystemRoles");
-        Console.WriteLine("19. Permissions");
-        Console.WriteLine("20. StaffRoles");
-        Console.WriteLine("21. Seasons");
-        Console.WriteLine("22. InvoiceItemTypes");
-        Console.WriteLine("23. PaymentMethodTypes");
-        Console.WriteLine("24. ReservationStatusTransitions");
+        Console.WriteLine("16. FlightStatusTransitions");
+        Console.WriteLine("17. PaymentStates");
+        Console.WriteLine("18. TicketStatuses");
+        Console.WriteLine("19. SystemRoles");
+        Console.WriteLine("20. Permissions");
+        Console.WriteLine("21. StaffRoles");
+        Console.WriteLine("22. Seasons");
+        Console.WriteLine("23. InvoiceItemTypes");
+        Console.WriteLine("24. PaymentMethodTypes");
+        Console.WriteLine("25. ReservationStatusTransitions");
+        Console.WriteLine("26. RolePermissions");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -155,32 +161,38 @@ try
                 await flightStateMenu.StartAsync();
                 break;
             case "16":
-                await paymentStateMenu.StartAsync();
+                await flightStatusTransitionMenu.StartAsync();
                 break;
             case "17":
-                await ticketStatusMenu.StartAsync();
+                await paymentStateMenu.StartAsync();
                 break;
             case "18":
-                await systemRoleMenu.StartAsync();
+                await ticketStatusMenu.StartAsync();
                 break;
             case "19":
-                await permissionMenu.StartAsync();
+                await systemRoleMenu.StartAsync();
                 break;
             case "20":
-                await staffRoleMenu.StartAsync();
+                await permissionMenu.StartAsync();
                 break;
             case "21":
-                await seasonMenu.StartAsync();
+                await staffRoleMenu.StartAsync();
                 break;
             case "22":
+                await seasonMenu.StartAsync();
+                break;
+            case "23":
                 await invoiceItemTypeMenu.StartAsync();
                 break;
 
-            case "23":
+            case "24":
                 await paymentMethodTypeMenu.StartAsync();
                 break;
-            case "24":
+            case "25":
                 await reservationStatusTransitionMenu.StartAsync();
+                break;
+            case "26":
+                await rolePermissionMenu.StartAsync();
                 break;
 
             case "0":
