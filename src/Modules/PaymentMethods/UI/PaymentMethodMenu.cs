@@ -78,9 +78,13 @@ public class PaymentMethodMenu
                         break;
 
                     case 1:
+                        var methodTypeMap = await GetPaymentMethodTypeDisplayMapAsync();
+                        var cardTypeMap = await GetCardTypeDisplayMapAsync();
+                        var issuerMap = await GetCardIssuerDisplayMapAsync();
+
                         var list = await _getAll.ExecuteAsync();
                         foreach (var item in list)
-                            Console.WriteLine($"{item.Id.Value} - tipo_medio_pago_id={item.PaymentMethodTypeId.Value} - tipo_tarjeta_id={item.CardTypeId?.Value.ToString() ?? "null"} - emisor_tarjeta_id={item.CardIssuerId?.Value.ToString() ?? "null"} - nombre_comercial={item.CommercialName.Value}");
+                            Console.WriteLine(Format(item.Id.Value, item.PaymentMethodTypeId.Value, item.CardTypeId?.Value, item.CardIssuerId?.Value, item.CommercialName.Value, methodTypeMap, cardTypeMap, issuerMap));
                         break;
 
                     case 2:
@@ -88,9 +92,17 @@ public class PaymentMethodMenu
                         int searchId = int.Parse(Console.ReadLine()!);
 
                         var result = await _getById.ExecuteAsync(searchId);
-                        Console.WriteLine(result == null
-                            ? "No encontrado"
-                            : $"{result.Id.Value} - tipo_medio_pago_id={result.PaymentMethodTypeId.Value} - tipo_tarjeta_id={result.CardTypeId?.Value.ToString() ?? "null"} - emisor_tarjeta_id={result.CardIssuerId?.Value.ToString() ?? "null"} - nombre_comercial={result.CommercialName.Value}");
+                        if (result is null)
+                        {
+                            Console.WriteLine("No encontrado");
+                            break;
+                        }
+
+                        var methodTypeMapById = await GetPaymentMethodTypeDisplayMapAsync();
+                        var cardTypeMapById = await GetCardTypeDisplayMapAsync();
+                        var issuerMapById = await GetCardIssuerDisplayMapAsync();
+
+                        Console.WriteLine(Format(result.Id.Value, result.PaymentMethodTypeId.Value, result.CardTypeId?.Value, result.CardIssuerId?.Value, result.CommercialName.Value, methodTypeMapById, cardTypeMapById, issuerMapById));
                         break;
 
                     case 3:
@@ -98,9 +110,17 @@ public class PaymentMethodMenu
                         string searchName = Console.ReadLine()!;
 
                         var resultByName = await _getByCommercialName.ExecuteAsync(searchName);
-                        Console.WriteLine(resultByName == null
-                            ? "No encontrado"
-                            : $"{resultByName.Id.Value} - tipo_medio_pago_id={resultByName.PaymentMethodTypeId.Value} - tipo_tarjeta_id={resultByName.CardTypeId?.Value.ToString() ?? "null"} - emisor_tarjeta_id={resultByName.CardIssuerId?.Value.ToString() ?? "null"} - nombre_comercial={resultByName.CommercialName.Value}");
+                        if (resultByName is null)
+                        {
+                            Console.WriteLine("No encontrado");
+                            break;
+                        }
+
+                        var methodTypeMapByName = await GetPaymentMethodTypeDisplayMapAsync();
+                        var cardTypeMapByName = await GetCardTypeDisplayMapAsync();
+                        var issuerMapByName = await GetCardIssuerDisplayMapAsync();
+
+                        Console.WriteLine(Format(resultByName.Id.Value, resultByName.PaymentMethodTypeId.Value, resultByName.CardTypeId?.Value, resultByName.CardIssuerId?.Value, resultByName.CommercialName.Value, methodTypeMapByName, cardTypeMapByName, issuerMapByName));
                         break;
 
                     case 4:
@@ -161,6 +181,46 @@ public class PaymentMethodMenu
         var issuers = await _getAllCardIssuers.ExecuteAsync();
         foreach (var item in issuers)
             Console.WriteLine($"{item.Id.Value} - {item.Name.Value}");
+    }
+
+    private async Task<Dictionary<int, string>> GetPaymentMethodTypeDisplayMapAsync()
+    {
+        var items = await _getAllPaymentMethodTypes.ExecuteAsync();
+        return items.ToDictionary(x => x.Id.Value, x => x.Name.Value);
+    }
+
+    private async Task<Dictionary<int, string>> GetCardTypeDisplayMapAsync()
+    {
+        var items = await _getAllCardTypes.ExecuteAsync();
+        return items.ToDictionary(x => x.Id.Value, x => x.Name.Value);
+    }
+
+    private async Task<Dictionary<int, string>> GetCardIssuerDisplayMapAsync()
+    {
+        var items = await _getAllCardIssuers.ExecuteAsync();
+        return items.ToDictionary(x => x.Id.Value, x => x.Name.Value);
+    }
+
+    private static string Format(
+        int id,
+        int paymentMethodTypeId,
+        int? cardTypeId,
+        int? cardIssuerId,
+        string commercialName,
+        Dictionary<int, string> methodTypeMap,
+        Dictionary<int, string> cardTypeMap,
+        Dictionary<int, string> issuerMap)
+    {
+        var methodTypeDisplay = GetDisplay(methodTypeMap, paymentMethodTypeId);
+        var cardTypeDisplay = cardTypeId is null ? "null" : GetDisplay(cardTypeMap, cardTypeId.Value);
+        var issuerDisplay = cardIssuerId is null ? "null" : GetDisplay(issuerMap, cardIssuerId.Value);
+
+        return $"{id} - tipo_medio_pago={methodTypeDisplay} - tipo_tarjeta={cardTypeDisplay} - emisor_tarjeta={issuerDisplay} - nombre_comercial={commercialName}";
+    }
+
+    private static string GetDisplay(Dictionary<int, string> map, int id)
+    {
+        return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 
     private static int? ReadNullableInt(string prompt)
