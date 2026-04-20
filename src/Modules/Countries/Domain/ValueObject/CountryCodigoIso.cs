@@ -4,7 +4,7 @@ public sealed record CountryCodigoIso
 {
     public string Value { get; }
 
-    public CountryCodigoIso(string value)
+    private CountryCodigoIso(string value)
     {
         Value = value;
     }
@@ -12,17 +12,27 @@ public sealed record CountryCodigoIso
     public static CountryCodigoIso Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("El valor no puede ser nulo ni vacío");
-        }
+            throw new ArgumentException("El código ISO no puede estar vacío");
 
-        if (value.Length > 3)
-        {
-            throw new ArgumentException("El valor no puede tener más de 3 caracteres");
-        }
+        var trimmed = value.Trim().ToUpperInvariant();
 
-        return new CountryCodigoIso(value);
+        if (trimmed.Length != 3)
+            throw new ArgumentException("El código ISO debe tener exactamente 3 caracteres");
+
+        if (!trimmed.All(char.IsLetter))
+            throw new ArgumentException("El código ISO solo puede contener letras");
+
+        return new CountryCodigoIso(trimmed);
     }
-}
 
+    public static string Normalize(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return string.Empty;
+
+        return value.Trim().ToUpperInvariant();
+    }
+
+    public override string ToString() => Value;
+}
 

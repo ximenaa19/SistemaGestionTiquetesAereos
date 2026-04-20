@@ -1,10 +1,10 @@
+using GestionAerolineas.src.Modules.Continents.Infrastructure.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using GestionAerolineas.src.Modules.Continents.Infrastructure.Entity;
 
 namespace GestionAerolineas.src.Modules.Countries.Infrastructure.Entity;
 
-public class CountryEntityConfiguration : IEntityTypeConfiguration<CountryEntity>
+public sealed class CountryEntityConfiguration : IEntityTypeConfiguration<CountryEntity>
 {
     public void Configure(EntityTypeBuilder<CountryEntity> builder)
     {
@@ -19,28 +19,30 @@ public class CountryEntityConfiguration : IEntityTypeConfiguration<CountryEntity
             .IsRequired();
 
         builder
-            .Property(x => x.name)
-            .HasColumnName("name")
+            .Property(x => x.Name)
+            .HasColumnName("nombre")
             .HasColumnType("varchar(100)")
             .IsRequired();
 
         builder
-            .Property(x => x.codeIso)
-            .HasColumnName("code_iso")
+            .Property(x => x.IsoCode)
+            .HasColumnName("codigo_iso")
             .HasColumnType("varchar(3)")
             .IsRequired();
 
         builder
-            .Property(x => x.continentId)
-            .HasColumnName("continent_id")
+            .Property(x => x.ContinentId)
+            .HasColumnName("continente_id")
             .HasColumnType("int")
             .IsRequired();
+
+        builder.HasIndex(x => x.IsoCode).IsUnique();
+
         builder
             .HasOne<ContinentEntity>()
             .WithMany()
-            .HasForeignKey(x => x.continentId)
+            .HasForeignKey(x => x.ContinentId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
-
 
