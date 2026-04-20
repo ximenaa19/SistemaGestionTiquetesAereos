@@ -8,6 +8,7 @@ using GestionAerolineas.src.Modules.Continents;
 using GestionAerolineas.src.Modules.Countries;
 using GestionAerolineas.src.Modules.AircraftManufacturers;
 using GestionAerolineas.src.Modules.AircraftModels;
+using GestionAerolineas.src.Modules.Addresses;
 using GestionAerolineas.src.Modules.Regions;
 using GestionAerolineas.src.Modules.DocumentTypes;
 using GestionAerolineas.src.Modules.EmailDomains;
@@ -51,6 +52,7 @@ try
     var aircraftModelMenu = AircraftModelModule.Build(context);
     var regionMenu = RegionModule.Build(context);
     var cityMenu = CityModule.Build(context);
+    var addressMenu = AddressModule.Build(context);
     var availabilityStatusMenu = AvailabilityStatusModule.Build(context);
     var cardTypeMenu = CardTypeModule.Build(context);
     var cardIssuerMenu = CardIssuerModule.Build(context);
@@ -115,6 +117,7 @@ try
         Console.WriteLine("30. AircraftModels");
         Console.WriteLine("31. Regions");
         Console.WriteLine("32. Cities");
+        Console.WriteLine("33. Addresses");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -229,6 +232,9 @@ try
                 break;
             case "32":
                 await cityMenu.StartAsync();
+                break;
+            case "33":
+                await addressMenu.StartAsync();
                 break;
 
             case "0":
