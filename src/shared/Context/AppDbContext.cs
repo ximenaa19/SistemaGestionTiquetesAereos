@@ -32,7 +32,6 @@ using GestionAerolineas.src.Modules.SystemRoles.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.TicketStatuses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.ReservationStatusTransitions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.RolePermissions.Infrastructure.Entity;
-using GestionAerolineas.src.Modules.Addresses.Infrastructure.Entity;
 
 
 namespace GestionAerolineas.src.shared.Context;
