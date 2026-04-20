@@ -19,6 +19,11 @@ public class City
     {
         return new City(id, name, regionId);
     }
+
+    public static City CreateNew(CityName name, CityRegionId regionId)
+    {
+        return new City(CityId.CreateEmpty(), name, regionId);
+    }
 }
 
 

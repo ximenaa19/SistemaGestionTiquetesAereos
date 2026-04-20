@@ -1,10 +1,10 @@
 namespace GestionAerolineas.src.Modules.Cities.Domain.ValueObject
 {
-    public class CityRegionId
+    public sealed record CityRegionId
     {
         public int Value { get; }
 
-        public CityRegionId(int value)
+        private CityRegionId(int value)
         {
             Value = value;
         }
