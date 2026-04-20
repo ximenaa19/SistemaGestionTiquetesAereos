@@ -1,10 +1,10 @@
 namespace GestionAerolineas.src.Modules.Regions.Domain.ValueObject;
 
-public class RegionType
+public sealed record RegionType
 {
     public string Value { get; }
 
-    public RegionType(string value)
+    private RegionType(string value)
     {
         Value = value;
     }
@@ -22,6 +22,11 @@ public class RegionType
         }
 
         return new RegionType(value.Trim());
+    }
+
+    public static string Normalize(string value)
+    {
+        return (value ?? string.Empty).Trim().ToUpperInvariant();
     }
 }
 

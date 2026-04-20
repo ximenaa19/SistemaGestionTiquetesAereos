@@ -1,10 +1,10 @@
 namespace GestionAerolineas.src.Modules.Regions.Domain.ValueObject;
 
-public class RegionName
+public sealed record RegionName
 {
     public string Value { get; }
 
-    public RegionName(string value)
+    private RegionName(string value)
     {
         Value = value;
     }
@@ -16,13 +16,30 @@ public class RegionName
             throw new ArgumentException("El valor no puede ser nulo ni vacío");
         }
 
+        value = value.Trim();
+
+        var letterCount = value.Count(char.IsLetter);
+
+        if (letterCount < 3)
+        {
+            throw new ArgumentException("El nombre debe tener al menos 3 letras");
+        }
+
+        if (value.Any(char.IsDigit))
+        {
+            throw new ArgumentException("El nombre no puede contener números");
+        }
+
         if (value.Length > 100)
         {
             throw new ArgumentException("El valor no puede tener más de 100 caracteres");
         }
 
-        return new RegionName(value.Trim());
+        return new RegionName(value);
+    }
+
+    public static string Normalize(string value)
+    {
+        return (value ?? string.Empty).Trim().ToUpperInvariant();
     }
 }
-
-

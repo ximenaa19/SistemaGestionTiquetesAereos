@@ -1,26 +1,20 @@
 namespace GestionAerolineas.src.Modules.Regions.Domain.ValueObject;
 
-public sealed record RegionId
+public sealed record RegionCountryId
 {
     public int Value { get; }
 
-    private RegionId(int value)
+    private RegionCountryId(int value)
     {
         Value = value;
     }
 
-    public static RegionId Create(int value)
+    public static RegionCountryId Create(int value)
     {
         if (value <= 0)
             throw new ArgumentException("El valor no puede ser menor a 1");
 
-        return new RegionId(value);
-    }
-
-    public static RegionId CreateEmpty()
-    {
-        return new RegionId(0);
+        return new RegionCountryId(value);
     }
 }
-
 

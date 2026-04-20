@@ -69,7 +69,7 @@ public class AppDbContext : DbContext
     public DbSet<AircraftManufacturerEntity> AircraftManufacturers { get; set; }
     public DbSet<AircraftModelEntity> AircraftModels { get; set; }
 
-    //public DbSet<RegionEntity> Regions { get; set; }
+    public DbSet<RegionEntity> Regions { get; set; }
     //public DbSet<CityEntity> Cities { get; set; }
     public DbSet<RoadTypeEntity> RoadTypes { get; set; }
     public DbSet<DocumentTypeEntity> DocumentTypes { get; set; }

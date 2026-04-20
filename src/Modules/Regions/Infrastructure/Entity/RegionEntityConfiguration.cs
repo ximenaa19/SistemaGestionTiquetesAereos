@@ -1,10 +1,10 @@
+using GestionAerolineas.src.Modules.Countries.Infrastructure.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using GestionAerolineas.src.Modules.Countries.Infrastructure.Entity;
 
 namespace GestionAerolineas.src.Modules.Regions.Infrastructure.Entity;
 
-public class RegionEntityConfiguration : IEntityTypeConfiguration<RegionEntity>
+public sealed class RegionEntityConfiguration : IEntityTypeConfiguration<RegionEntity>
 {
     public void Configure(EntityTypeBuilder<RegionEntity> builder)
     {
@@ -20,19 +20,19 @@ public class RegionEntityConfiguration : IEntityTypeConfiguration<RegionEntity>
 
         builder
             .Property(x => x.Name)
-            .HasColumnName("name")
+            .HasColumnName("nombre")
             .HasColumnType("varchar(100)")
             .IsRequired();
 
         builder
             .Property(x => x.Type)
-            .HasColumnName("type")
+            .HasColumnName("tipo")
             .HasColumnType("varchar(30)")
             .IsRequired();
 
         builder
             .Property(x => x.CountryId)
-            .HasColumnName("Country_id")
+            .HasColumnName("pais_id")
             .HasColumnType("int")
             .IsRequired();
         builder
