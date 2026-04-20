@@ -4,7 +4,7 @@ namespace GestionAerolineas.src.Modules.Cities.Domain.ValueObject
     {
         public string Value { get; }
 
-        public CityName(string value)
+        private CityName(string value)
         {
             Value = value;
         }
@@ -22,6 +22,11 @@ namespace GestionAerolineas.src.Modules.Cities.Domain.ValueObject
             }
 
             return new CityName(value.Trim());
+        }
+
+        public static string Normalize(string value)
+        {
+            return (value ?? string.Empty).Trim().ToUpperInvariant();
         }
     }
 }

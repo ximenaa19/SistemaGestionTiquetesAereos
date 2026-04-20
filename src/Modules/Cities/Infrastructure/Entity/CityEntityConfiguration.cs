@@ -20,7 +20,7 @@ public sealed class CityEntityConfiguration : IEntityTypeConfiguration<CityEntit
 
         builder
             .Property(x => x.Name)
-            .HasColumnName("name")
+            .HasColumnName("nombre")
             .HasColumnType("varchar(100)")
             .IsRequired();
 

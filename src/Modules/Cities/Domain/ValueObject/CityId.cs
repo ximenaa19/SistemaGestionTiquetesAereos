@@ -4,7 +4,7 @@ namespace GestionAerolineas.src.Modules.Cities.Domain.ValueObject
     {
         public int Value { get; }
 
-        public CityId(int value)
+        private CityId(int value)
         {
             Value = value;
         }
@@ -17,6 +17,11 @@ namespace GestionAerolineas.src.Modules.Cities.Domain.ValueObject
             }
 
             return new CityId(value);
+        }
+
+        public static CityId CreateEmpty()
+        {
+            return new CityId(0);
         }
     }
 }
