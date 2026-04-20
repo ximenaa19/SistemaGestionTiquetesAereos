@@ -69,10 +69,11 @@ public class FlightStatusTransitionMenu
                         break;
 
                     case 1:
+                        var stateMap = await GetStateDisplayMapAsync();
                         var list = await _getAll.ExecuteAsync();
 
                         foreach (var item in list)
-                            Console.WriteLine($"{item.Id.Value} - origen={item.OriginStateId.Value} -> destino={item.DestinationStateId.Value}");
+                            Console.WriteLine($"{item.Id.Value} - origen={GetDisplay(stateMap, item.OriginStateId.Value)} -> destino={GetDisplay(stateMap, item.DestinationStateId.Value)}");
                         break;
 
                     case 2:
@@ -80,10 +81,14 @@ public class FlightStatusTransitionMenu
                         int searchId = int.Parse(Console.ReadLine()!);
 
                         var result = await _getById.ExecuteAsync(searchId);
+                        if (result is null)
+                        {
+                            Console.WriteLine("No encontrado");
+                            break;
+                        }
 
-                        Console.WriteLine(result == null
-                            ? "No encontrado"
-                            : $"{result.Id.Value} - origen={result.OriginStateId.Value} -> destino={result.DestinationStateId.Value}");
+                        var stateMapById = await GetStateDisplayMapAsync();
+                        Console.WriteLine($"{result.Id.Value} - origen={GetDisplay(stateMapById, result.OriginStateId.Value)} -> destino={GetDisplay(stateMapById, result.DestinationStateId.Value)}");
                         break;
 
                     case 3:
@@ -99,10 +104,14 @@ public class FlightStatusTransitionMenu
                         int searchDestinationId = int.Parse(Console.ReadLine()!);
 
                         var resultByPair = await _getByPair.ExecuteAsync(searchOriginId, searchDestinationId);
+                        if (resultByPair is null)
+                        {
+                            Console.WriteLine("No encontrado");
+                            break;
+                        }
 
-                        Console.WriteLine(resultByPair == null
-                            ? "No encontrado"
-                            : $"{resultByPair.Id.Value} - origen={resultByPair.OriginStateId.Value} -> destino={resultByPair.DestinationStateId.Value}");
+                        var stateMapByPair = await GetStateDisplayMapAsync();
+                        Console.WriteLine($"{resultByPair.Id.Value} - origen={GetDisplay(stateMapByPair, resultByPair.OriginStateId.Value)} -> destino={GetDisplay(stateMapByPair, resultByPair.DestinationStateId.Value)}");
                         break;
 
                     case 4:
@@ -122,10 +131,14 @@ public class FlightStatusTransitionMenu
                         }
 
                         var resultByPairName = await _getByPair.ExecuteAsync(origin.Id.Value, destination.Id.Value);
+                        if (resultByPairName is null)
+                        {
+                            Console.WriteLine("No encontrado");
+                            break;
+                        }
 
-                        Console.WriteLine(resultByPairName == null
-                            ? "No encontrado"
-                            : $"{resultByPairName.Id.Value} - origen={resultByPairName.OriginStateId.Value} -> destino={resultByPairName.DestinationStateId.Value}");
+                        var stateMapByPairName = await GetStateDisplayMapAsync();
+                        Console.WriteLine($"{resultByPairName.Id.Value} - origen={GetDisplay(stateMapByPairName, resultByPairName.OriginStateId.Value)} -> destino={GetDisplay(stateMapByPairName, resultByPairName.DestinationStateId.Value)}");
                         break;
 
                     case 5:
@@ -163,6 +176,17 @@ public class FlightStatusTransitionMenu
             Console.ReadKey();
             Console.Clear();
         }
+    }
+
+    private async Task<Dictionary<int, string>> GetStateDisplayMapAsync()
+    {
+        var states = await _getAllFlightStates.ExecuteAsync();
+        return states.ToDictionary(s => s.Id.Value, s => s.Name.Value);
+    }
+
+    private static string GetDisplay(Dictionary<int, string> map, int id)
+    {
+        return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
 

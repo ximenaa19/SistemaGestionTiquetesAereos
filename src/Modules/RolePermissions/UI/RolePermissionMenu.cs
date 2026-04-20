@@ -67,10 +67,12 @@ public class RolePermissionMenu
                         break;
 
                     case 1:
-                        var list = await _getAll.ExecuteAsync();
+                        var roleMap = await GetRoleDisplayMapAsync();
+                        var permissionMap = await GetPermissionDisplayMapAsync();
 
+                        var list = await _getAll.ExecuteAsync();
                         foreach (var item in list)
-                            Console.WriteLine($"{item.Id.Value} - rol_id={item.RoleId.Value} - permiso_id={item.PermissionId.Value}");
+                            Console.WriteLine($"{item.Id.Value} - rol={GetDisplay(roleMap, item.RoleId.Value)} - permiso={GetDisplay(permissionMap, item.PermissionId.Value)}");
                         break;
 
                     case 2:
@@ -78,10 +80,15 @@ public class RolePermissionMenu
                         int searchId = int.Parse(Console.ReadLine()!);
 
                         var result = await _getById.ExecuteAsync(searchId);
+                        if (result is null)
+                        {
+                            Console.WriteLine("No encontrado");
+                            break;
+                        }
 
-                        Console.WriteLine(result == null
-                            ? "No encontrado"
-                            : $"{result.Id.Value} - rol_id={result.RoleId.Value} - permiso_id={result.PermissionId.Value}");
+                        var roleMapById = await GetRoleDisplayMapAsync();
+                        var permissionMapById = await GetPermissionDisplayMapAsync();
+                        Console.WriteLine($"{result.Id.Value} - rol={GetDisplay(roleMapById, result.RoleId.Value)} - permiso={GetDisplay(permissionMapById, result.PermissionId.Value)}");
                         break;
 
                     case 3:
@@ -134,6 +141,23 @@ public class RolePermissionMenu
         var permissions = await _getAllPermissions.ExecuteAsync();
         foreach (var p in permissions)
             Console.WriteLine($"{p.Id.Value} - {p.Name.Value}");
+    }
+
+    private async Task<Dictionary<int, string>> GetRoleDisplayMapAsync()
+    {
+        var roles = await _getAllSystemRoles.ExecuteAsync();
+        return roles.ToDictionary(r => r.Id.Value, r => r.Name.Value);
+    }
+
+    private async Task<Dictionary<int, string>> GetPermissionDisplayMapAsync()
+    {
+        var permissions = await _getAllPermissions.ExecuteAsync();
+        return permissions.ToDictionary(p => p.Id.Value, p => p.Name.Value);
+    }
+
+    private static string GetDisplay(Dictionary<int, string> map, int id)
+    {
+        return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
 

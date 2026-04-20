@@ -1,3 +1,4 @@
+using GestionAerolineas.src.Modules.ReservationStatuses.Application.UseCases;
 using GestionAerolineas.src.Modules.ReservationStatusTransitions.Application.UseCases;
 
 namespace GestionAerolineas.src.Modules.ReservationStatusTransitions.UI;
@@ -11,13 +12,16 @@ public class ReservationStatusTransitionMenu
     private readonly UpdateReservationStatusTransitionUseCase _update;
     private readonly DeleteReservationStatusTransitionUseCase _delete;
 
+    private readonly GetAllReservationStatusesUseCase _getAllStatuses;
+
     public ReservationStatusTransitionMenu(
         CreateReservationStatusTransitionUseCase create,
         GetAllReservationStatusTransitionsUseCase getAll,
         GetReservationStatusTransitionByIdUseCase getById,
         GetReservationStatusTransitionByPairUseCase getByPair,
         UpdateReservationStatusTransitionUseCase update,
-        DeleteReservationStatusTransitionUseCase delete)
+        DeleteReservationStatusTransitionUseCase delete,
+        GetAllReservationStatusesUseCase getAllStatuses)
     {
         _create = create;
         _getAll = getAll;
@@ -25,6 +29,7 @@ public class ReservationStatusTransitionMenu
         _getByPair = getByPair;
         _update = update;
         _delete = delete;
+        _getAllStatuses = getAllStatuses;
     }
 
     public async Task StartAsync()
@@ -60,10 +65,11 @@ public class ReservationStatusTransitionMenu
                         break;
 
                     case 1:
+                        var statusMap = await GetStatusDisplayMapAsync();
                         var list = await _getAll.ExecuteAsync();
 
                         foreach (var item in list)
-                            Console.WriteLine($"{item.Id.Value} - origen={item.OriginStatusId.Value} -> destino={item.DestinationStatusId.Value}");
+                            Console.WriteLine($"{item.Id.Value} - origen={GetDisplay(statusMap, item.OriginStatusId.Value)} -> destino={GetDisplay(statusMap, item.DestinationStatusId.Value)}");
                         break;
 
                     case 2:
@@ -71,10 +77,14 @@ public class ReservationStatusTransitionMenu
                         int searchId = int.Parse(Console.ReadLine()!);
 
                         var result = await _getById.ExecuteAsync(searchId);
+                        if (result is null)
+                        {
+                            Console.WriteLine("No encontrado");
+                            break;
+                        }
 
-                        Console.WriteLine(result == null
-                            ? "No encontrado"
-                            : $"{result.Id.Value} - origen={result.OriginStatusId.Value} -> destino={result.DestinationStatusId.Value}");
+                        var statusMapById = await GetStatusDisplayMapAsync();
+                        Console.WriteLine($"{result.Id.Value} - origen={GetDisplay(statusMapById, result.OriginStatusId.Value)} -> destino={GetDisplay(statusMapById, result.DestinationStatusId.Value)}");
                         break;
 
                     case 3:
@@ -85,10 +95,14 @@ public class ReservationStatusTransitionMenu
                         int searchDestinationId = int.Parse(Console.ReadLine()!);
 
                         var resultByPair = await _getByPair.ExecuteAsync(searchOriginId, searchDestinationId);
+                        if (resultByPair is null)
+                        {
+                            Console.WriteLine("No encontrado");
+                            break;
+                        }
 
-                        Console.WriteLine(resultByPair == null
-                            ? "No encontrado"
-                            : $"{resultByPair.Id.Value} - origen={resultByPair.OriginStatusId.Value} -> destino={resultByPair.DestinationStatusId.Value}");
+                        var statusMapByPair = await GetStatusDisplayMapAsync();
+                        Console.WriteLine($"{resultByPair.Id.Value} - origen={GetDisplay(statusMapByPair, resultByPair.OriginStatusId.Value)} -> destino={GetDisplay(statusMapByPair, resultByPair.DestinationStatusId.Value)}");
                         break;
 
                     case 4:
@@ -127,4 +141,16 @@ public class ReservationStatusTransitionMenu
             Console.Clear();
         }
     }
+
+    private async Task<Dictionary<int, string>> GetStatusDisplayMapAsync()
+    {
+        var statuses = await _getAllStatuses.ExecuteAsync();
+        return statuses.ToDictionary(s => s.Id.Value, s => s.Name.Value);
+    }
+
+    private static string GetDisplay(Dictionary<int, string> map, int id)
+    {
+        return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
+    }
 }
+

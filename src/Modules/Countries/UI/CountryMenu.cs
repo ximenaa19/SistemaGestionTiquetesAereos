@@ -74,9 +74,11 @@ public class CountryMenu
                         break;
 
                     case 1:
+                        var continentMap = await GetContinentDisplayMapAsync();
                         var list = await _getAll.ExecuteAsync();
+
                         foreach (var item in list)
-                            Console.WriteLine($"{item.Id.Value} - {item.Name.Value} - ISO={item.IsoCode.Value} - continente_id={item.ContinentId.Value}");
+                            Console.WriteLine($"{item.Id.Value} - {item.Name.Value} - ISO={item.IsoCode.Value} - continente={GetDisplay(continentMap, item.ContinentId.Value)}");
                         break;
 
                     case 2:
@@ -84,9 +86,14 @@ public class CountryMenu
                         int searchId = int.Parse(Console.ReadLine()!);
 
                         var byId = await _getById.ExecuteAsync(searchId);
-                        Console.WriteLine(byId == null
-                            ? "No encontrado"
-                            : $"{byId.Id.Value} - {byId.Name.Value} - ISO={byId.IsoCode.Value} - continente_id={byId.ContinentId.Value}");
+                        if (byId is null)
+                        {
+                            Console.WriteLine("No encontrado");
+                            break;
+                        }
+
+                        var continentMapById = await GetContinentDisplayMapAsync();
+                        Console.WriteLine($"{byId.Id.Value} - {byId.Name.Value} - ISO={byId.IsoCode.Value} - continente={GetDisplay(continentMapById, byId.ContinentId.Value)}");
                         break;
 
                     case 3:
@@ -94,9 +101,14 @@ public class CountryMenu
                         string searchName = Console.ReadLine()!;
 
                         var byName = await _getByName.ExecuteAsync(searchName);
-                        Console.WriteLine(byName == null
-                            ? "No encontrado"
-                            : $"{byName.Id.Value} - {byName.Name.Value} - ISO={byName.IsoCode.Value} - continente_id={byName.ContinentId.Value}");
+                        if (byName is null)
+                        {
+                            Console.WriteLine("No encontrado");
+                            break;
+                        }
+
+                        var continentMapByName = await GetContinentDisplayMapAsync();
+                        Console.WriteLine($"{byName.Id.Value} - {byName.Name.Value} - ISO={byName.IsoCode.Value} - continente={GetDisplay(continentMapByName, byName.ContinentId.Value)}");
                         break;
 
                     case 4:
@@ -104,9 +116,14 @@ public class CountryMenu
                         string searchIso = Console.ReadLine()!;
 
                         var byIso = await _getByIso.ExecuteAsync(searchIso);
-                        Console.WriteLine(byIso == null
-                            ? "No encontrado"
-                            : $"{byIso.Id.Value} - {byIso.Name.Value} - ISO={byIso.IsoCode.Value} - continente_id={byIso.ContinentId.Value}");
+                        if (byIso is null)
+                        {
+                            Console.WriteLine("No encontrado");
+                            break;
+                        }
+
+                        var continentMapByIso = await GetContinentDisplayMapAsync();
+                        Console.WriteLine($"{byIso.Id.Value} - {byIso.Name.Value} - ISO={byIso.IsoCode.Value} - continente={GetDisplay(continentMapByIso, byIso.ContinentId.Value)}");
                         break;
 
                     case 5:
@@ -157,6 +174,17 @@ public class CountryMenu
         var continents = await _getAllContinents.ExecuteAsync();
         foreach (var c in continents)
             Console.WriteLine($"{c.Id.Value} - {c.Name.Value}");
+    }
+
+    private async Task<Dictionary<int, string>> GetContinentDisplayMapAsync()
+    {
+        var continents = await _getAllContinents.ExecuteAsync();
+        return continents.ToDictionary(c => c.Id.Value, c => c.Name.Value);
+    }
+
+    private static string GetDisplay(Dictionary<int, string> map, int id)
+    {
+        return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
 

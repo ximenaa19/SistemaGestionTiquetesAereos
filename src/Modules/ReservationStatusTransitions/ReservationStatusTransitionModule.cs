@@ -3,6 +3,8 @@ using GestionAerolineas.src.Modules.ReservationStatusTransitions.Application.Ser
 using GestionAerolineas.src.Modules.ReservationStatusTransitions.Application.UseCases;
 using GestionAerolineas.src.Modules.ReservationStatusTransitions.Infrastructure.Repository;
 using GestionAerolineas.src.Modules.ReservationStatusTransitions.UI;
+using GestionAerolineas.src.Modules.ReservationStatuses.Application.UseCases;
+using GestionAerolineas.src.Modules.ReservationStatuses.Infrastructure.Repository;
 using GestionAerolineas.src.shared.Context;
 
 namespace GestionAerolineas.src.Modules.ReservationStatusTransitions;
@@ -21,13 +23,17 @@ public static class ReservationStatusTransitionModule
         var update = new UpdateReservationStatusTransitionUseCase(repository, validator);
         var delete = new DeleteReservationStatusTransitionUseCase(repository);
 
+        var statusRepository = new ReservationStatusRepository(context);
+        var getAllStatuses = new GetAllReservationStatusesUseCase(statusRepository);
+
         return new ReservationStatusTransitionMenu(
             create,
             getAll,
             getById,
             getByPair,
             update,
-            delete
+            delete,
+            getAllStatuses
         );
     }
 }
