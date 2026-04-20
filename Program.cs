@@ -11,6 +11,7 @@ using GestionAerolineas.src.Modules.AircraftManufacturers;
 using GestionAerolineas.src.Modules.AircraftModels;
 using GestionAerolineas.src.Modules.Aircraft;
 using GestionAerolineas.src.Modules.Airports;
+using GestionAerolineas.src.Modules.AirportAirline;
 using GestionAerolineas.src.Modules.Addresses;
 using GestionAerolineas.src.Modules.Regions;
 using GestionAerolineas.src.Modules.DocumentTypes;
@@ -56,6 +57,7 @@ try
     var aircraftModelMenu = AircraftModelModule.Build(context);
     var aircraftMenu = AircraftModule.Build(context);
     var airportMenu = AirportModule.Build(context);
+    var airportAirlineMenu = AirportAirlineModule.Build(context);
     var airlineMenu = AirlineModule.Build(context);
     var regionMenu = RegionModule.Build(context);
     var cityMenu = CityModule.Build(context);
@@ -130,6 +132,7 @@ try
         Console.WriteLine("35. Airlines");
         Console.WriteLine("36. People");
         Console.WriteLine("37. Aircraft");
+        Console.WriteLine("38. AirportAirline");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -262,6 +265,10 @@ try
 
             case "37":
                 await aircraftMenu.StartAsync();
+                break;
+
+            case "38":
+                await airportAirlineMenu.StartAsync();
                 break;
 
             case "0":

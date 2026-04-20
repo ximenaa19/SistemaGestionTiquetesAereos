@@ -9,6 +9,7 @@ using GestionAerolineas.src.Modules.Airlines.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Aircraft.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.AircraftManufacturers.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.AircraftModels.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.AirportAirline.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Airports.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Addresses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.DocumentTypes.Infrastructure.Entity;
@@ -74,6 +75,7 @@ public class AppDbContext : DbContext
     public DbSet<AircraftManufacturerEntity> AircraftManufacturers { get; set; }
     public DbSet<AircraftModelEntity> AircraftModels { get; set; }
     public DbSet<AirportEntity> Airports { get; set; }
+    public DbSet<AirportAirlineEntity> AirportAirlines { get; set; }
     public DbSet<AirlineEntity> Airlines { get; set; }
     public DbSet<AircraftEntity> Aircraft { get; set; }
     public DbSet<PersonEntity> People { get; set; }
