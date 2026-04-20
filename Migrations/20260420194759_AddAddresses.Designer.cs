@@ -3,6 +3,7 @@ using GestionAerolineas.src.shared.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionAerolineas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260420194759_AddAddresses")]
+    partial class AddAddresses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,49 +23,6 @@ namespace GestionAerolineas.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
-            modelBuilder.Entity("GestionAerolineas.src.Modules.Addresses.Infrastructure.Entity.AddressEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int")
-                        .HasColumnName("ciudad_id");
-
-                    b.Property<string>("Complement")
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("complemento");
-
-                    b.Property<string>("Number")
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("numero");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("codigo_postal");
-
-                    b.Property<string>("RoadName")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("nombre_via");
-
-                    b.Property<int>("RoadTypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("tipo_via_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("RoadTypeId");
-
-                    b.ToTable("addresses", (string)null);
-                });
 
             modelBuilder.Entity("GestionAerolineas.src.Modules.AircraftManufacturers.Infrastructure.Entity.AircraftManufacturerEntity", b =>
                 {
@@ -864,21 +824,6 @@ namespace GestionAerolineas.Migrations
                         .IsUnique();
 
                     b.ToTable("estados_tiquete", (string)null);
-                });
-
-            modelBuilder.Entity("GestionAerolineas.src.Modules.Addresses.Infrastructure.Entity.AddressEntity", b =>
-                {
-                    b.HasOne("GestionAerolineas.src.Modules.Cities.Infrastructure.Entity.CityEntity", null)
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("GestionAerolineas.src.Modules.RoadTypes.Infrastructure.Entity.RoadTypeEntity", null)
-                        .WithMany()
-                        .HasForeignKey("RoadTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("GestionAerolineas.src.Modules.AircraftManufacturers.Infrastructure.Entity.AircraftManufacturerEntity", b =>
