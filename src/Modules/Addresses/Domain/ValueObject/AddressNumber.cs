@@ -22,4 +22,3 @@ public sealed record AddressNumber
         return new AddressNumber(value);
     }
 }
-

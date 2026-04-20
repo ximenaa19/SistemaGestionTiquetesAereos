@@ -7,6 +7,7 @@ using GestionAerolineas.src.Modules.Continents.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Countries.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.AircraftManufacturers.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.AircraftModels.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.Addresses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.DocumentTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.EmailDomains.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.FlightRoles.Infrastructure.Entity;

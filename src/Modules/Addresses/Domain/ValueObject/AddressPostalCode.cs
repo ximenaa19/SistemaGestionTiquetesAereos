@@ -22,4 +22,3 @@ public sealed record AddressPostalCode
         return new AddressPostalCode(value);
     }
 }
-
