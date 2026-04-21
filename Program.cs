@@ -25,6 +25,7 @@ using GestionAerolineas.src.Modules.Staff;
 using GestionAerolineas.src.Modules.StaffAvailability;
 using GestionAerolineas.src.Modules.FlightRoles;
 using GestionAerolineas.src.Modules.FlightStates;
+using GestionAerolineas.src.Modules.Flights;
 using GestionAerolineas.src.Modules.FlightStatusTransitions;
 using GestionAerolineas.src.Modules.InvoiceItemTypes;
 using GestionAerolineas.src.Modules.PaymentMethodTypes;
@@ -75,6 +76,7 @@ try
     var fareMenu = FareModule.Build(context);
     var staffMenu = StaffModule.Build(context);
     var staffAvailabilityMenu = StaffAvailabilityModule.Build(context);
+    var flightMenu = FlightModule.Build(context);
     var regionMenu = RegionModule.Build(context);
     var cityMenu = CityModule.Build(context);
     var addressMenu = AddressModule.Build(context);
@@ -163,6 +165,7 @@ try
         Console.WriteLine("46. Fares");
         Console.WriteLine("47. Staff");
         Console.WriteLine("48. StaffAvailability");
+        Console.WriteLine("49. Flights");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -338,6 +341,10 @@ try
 
             case "48":
                 await staffAvailabilityMenu.StartAsync();
+                break;
+
+            case "49":
+                await flightMenu.StartAsync();
                 break;
 
             case "0":
