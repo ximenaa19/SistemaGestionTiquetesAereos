@@ -53,6 +53,7 @@ using GestionAerolineas.src.Modules.People;
 using GestionAerolineas.src.Modules.Passengers;
 using GestionAerolineas.src.Modules.PersonEmails;
 using GestionAerolineas.src.Modules.PersonPhones;
+using GestionAerolineas.src.Modules.Payments;
 
 
 try
@@ -87,6 +88,7 @@ try
     var reservationMenu = ReservationModule.Build(context);
     var reservationFlightMenu = ReservationFlightModule.Build(context);
     var reservationPassengerMenu = ReservationPassengerModule.Build(context);
+    var paymentMenu = PaymentModule.Build(context);
     var regionMenu = RegionModule.Build(context);
     var cityMenu = CityModule.Build(context);
     var addressMenu = AddressModule.Build(context);
@@ -181,6 +183,7 @@ try
         Console.WriteLine("52. Reservations");
         Console.WriteLine("53. ReservationFlights");
         Console.WriteLine("54. ReservationPassengers");
+        Console.WriteLine("55. Payments");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -380,6 +383,10 @@ try
 
             case "54":
                 await reservationPassengerMenu.StartAsync();
+                break;
+
+            case "55":
+                await paymentMenu.StartAsync();
                 break;
 
             case "0":

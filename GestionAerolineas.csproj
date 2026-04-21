@@ -30,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="temp_build_output\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="src\Modules\Addresses\" />
     <Folder Include="src\Modules\Addresses\Application\" />
     <Folder Include="src\Modules\Addresses\Application\Interfaces\" />
