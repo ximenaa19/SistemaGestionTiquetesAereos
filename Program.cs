@@ -22,6 +22,7 @@ using GestionAerolineas.src.Modules.Routes;
 using GestionAerolineas.src.Modules.RouteStops;
 using GestionAerolineas.src.Modules.Fares;
 using GestionAerolineas.src.Modules.Staff;
+using GestionAerolineas.src.Modules.StaffAvailability;
 using GestionAerolineas.src.Modules.FlightRoles;
 using GestionAerolineas.src.Modules.FlightStates;
 using GestionAerolineas.src.Modules.FlightStatusTransitions;
@@ -73,6 +74,7 @@ try
     var routeStopMenu = RouteStopModule.Build(context);
     var fareMenu = FareModule.Build(context);
     var staffMenu = StaffModule.Build(context);
+    var staffAvailabilityMenu = StaffAvailabilityModule.Build(context);
     var regionMenu = RegionModule.Build(context);
     var cityMenu = CityModule.Build(context);
     var addressMenu = AddressModule.Build(context);
@@ -160,6 +162,7 @@ try
         Console.WriteLine("45. CabinConfiguration");
         Console.WriteLine("46. Fares");
         Console.WriteLine("47. Staff");
+        Console.WriteLine("48. StaffAvailability");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -331,6 +334,10 @@ try
 
             case "47":
                 await staffMenu.StartAsync();
+                break;
+
+            case "48":
+                await staffAvailabilityMenu.StartAsync();
                 break;
 
             case "0":
