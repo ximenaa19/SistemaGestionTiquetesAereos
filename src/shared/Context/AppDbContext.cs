@@ -5,6 +5,7 @@ using GestionAerolineas.src.Modules.CardTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Cities.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Continents.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Countries.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.Customers.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Airlines.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Aircraft.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.AircraftManufacturers.Infrastructure.Entity;
@@ -77,6 +78,7 @@ public class AppDbContext : DbContext
     public DbSet<RolePermissionEntity> RolePermissions { get; set; }
 
     public DbSet<CountryEntity> Countries { get; set; }
+    public DbSet<CustomerEntity> Customers { get; set; }
     public DbSet<AircraftManufacturerEntity> AircraftManufacturers { get; set; }
     public DbSet<AircraftModelEntity> AircraftModels { get; set; }
     public DbSet<AirportEntity> Airports { get; set; }
