@@ -32,6 +32,7 @@ using GestionAerolineas.src.Modules.ReservationStatuses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Regions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.RoadTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.CabinTypes.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.CabinConfiguration.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.CardIssuers.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Seasons.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.SeatLocationTypes.Infrastructure.Entity;
@@ -98,6 +99,7 @@ public class AppDbContext : DbContext
     public DbSet<RoadTypeEntity> RoadTypes { get; set; }
     public DbSet<DocumentTypeEntity> DocumentTypes { get; set; }
     public DbSet<CabinTypeEntity> CabinTypes { get; set; }
+    public DbSet<CabinConfigurationEntity> CabinConfigurations { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }

@@ -4,6 +4,7 @@ using GestionAerolineas.src.shared.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionAerolineas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260421013453_cabinConfigurationAdd")]
+    partial class cabinConfigurationAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1150,41 +1153,6 @@ namespace GestionAerolineas.Migrations
                     b.ToTable("rolepermissions", (string)null);
                 });
 
-            modelBuilder.Entity("GestionAerolineas.src.Modules.RouteStops.Infrastructure.Entity.RouteStopEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DurationMinutes")
-                        .HasColumnType("int")
-                        .HasColumnName("duracion_escala_min");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("int")
-                        .HasColumnName("orden");
-
-                    b.Property<int>("RouteId")
-                        .HasColumnType("int")
-                        .HasColumnName("ruta_id");
-
-                    b.Property<int>("StopAirportId")
-                        .HasColumnType("int")
-                        .HasColumnName("aeropuerto_escala_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StopAirportId");
-
-                    b.HasIndex("RouteId", "Order")
-                        .IsUnique();
-
-                    b.ToTable("routestops", (string)null);
-                });
-
             modelBuilder.Entity("GestionAerolineas.src.Modules.Routes.Infrastructure.Entity.RouteEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -1593,21 +1561,6 @@ namespace GestionAerolineas.Migrations
                     b.HasOne("GestionAerolineas.src.Modules.SystemRoles.Infrastructure.Entity.SystemRoleEntity", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GestionAerolineas.src.Modules.RouteStops.Infrastructure.Entity.RouteStopEntity", b =>
-                {
-                    b.HasOne("GestionAerolineas.src.Modules.Routes.Infrastructure.Entity.RouteEntity", null)
-                        .WithMany()
-                        .HasForeignKey("RouteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("GestionAerolineas.src.Modules.Airports.Infrastructure.Entity.AirportEntity", null)
-                        .WithMany()
-                        .HasForeignKey("StopAirportId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
