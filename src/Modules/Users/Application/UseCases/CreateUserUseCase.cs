@@ -1,0 +1,44 @@
+using GestionAerolineas.src.Modules.Users.Application.Interfaces;
+using GestionAerolineas.src.Modules.Users.Application.Services;
+using GestionAerolineas.src.Modules.Users.Domain.Aggregate;
+using GestionAerolineas.src.Modules.Users.Domain.Repositories;
+using GestionAerolineas.src.Modules.Users.Domain.ValueObject;
+
+namespace GestionAerolineas.src.Modules.Users.Application.UseCases;
+
+public class CreateUserUseCase
+{
+    private readonly IUserRepository _repository;
+    private readonly IUserValidator _validator;
+
+    public CreateUserUseCase(IUserRepository repository, IUserValidator validator)
+    {
+        _repository = repository;
+        _validator = validator;
+    }
+
+    public async Task ExecuteAsync(
+        string username,
+        string plainPassword,
+        int? personId,
+        int roleId,
+        bool isActive,
+        DateTime? lastAccess)
+    {
+        var usernameVO = UserUsername.Create(username);
+        var passwordHashVO = UserPasswordHasher.Hash(plainPassword);
+        var personVO = UserPersonId.Create(personId);
+        var roleVO = UserRoleId.Create(roleId);
+        var isActiveVO = UserIsActive.Create(isActive);
+        var lastAccessVO = UserLastAccess.Create(lastAccess);
+
+        await _validator.ValidateUsernameAsync(usernameVO);
+        await _validator.ValidatePersonExistsAsync(personVO);
+        await _validator.ValidatePersonIsUniqueAsync(personVO);
+        await _validator.ValidateRoleExistsAsync(roleVO);
+
+        var entity = User.CreateNew(usernameVO, passwordHashVO, personVO, roleVO, isActiveVO, lastAccessVO);
+
+        await _repository.AddAsync(entity);
+    }
+}
