@@ -36,6 +36,7 @@ using GestionAerolineas.src.Modules.CabinConfiguration.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.CardIssuers.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Seasons.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.SeatLocationTypes.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.Sessions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.StaffRoles.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.SystemRoles.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.TicketStatuses.Infrastructure.Entity;
@@ -86,6 +87,7 @@ public class AppDbContext : DbContext
     public DbSet<ReservationStatusEntity> ReservationStatuses { get; set; }
     public DbSet<SeasonEntity> Seasons { get; set; }
     public DbSet<SeatLocationTypeEntity> SeatLocationTypes { get; set; }
+    public DbSet<SessionEntity> Sessions { get; set; }
     public DbSet<StaffRoleEntity> StaffRoles { get; set; }
     public DbSet<SystemRoleEntity> SystemRoles { get; set; }
     public DbSet<TicketStatusEntity> TicketStatuses { get; set; }
