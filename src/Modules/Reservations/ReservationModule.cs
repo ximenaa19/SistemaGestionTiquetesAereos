@@ -65,7 +65,9 @@ public static class ReservationModule
             reservationFlightRepository,
             reservationRepository,
             flightRepository,
-            flightStateRepository);
+            flightStateRepository,
+            reservationStatusRepository,
+            reservationPassengerRepository);
 
         var createReservationFlight = new CreateReservationFlightUseCase(reservationFlightRepository, reservationFlightValidator, reservationRepository);
 

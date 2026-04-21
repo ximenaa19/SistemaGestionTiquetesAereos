@@ -8,5 +8,6 @@ public interface IReservationFlightValidator
     Task ValidateFlightExistsAsync(ReservationFlightFlightId flightId);
     Task ValidateUniquePairAsync(ReservationFlightReservationId reservationId, ReservationFlightFlightId flightId, ReservationFlightId? currentId = null);
     Task ValidateFlightNotInFinalStateAsync(ReservationFlightFlightId flightId);
+    Task ValidateReservationAllowsChangesAsync(ReservationFlightReservationId reservationId);
+    Task ValidateNoPassengersAsync(ReservationFlightId reservationFlightId);
 }
-

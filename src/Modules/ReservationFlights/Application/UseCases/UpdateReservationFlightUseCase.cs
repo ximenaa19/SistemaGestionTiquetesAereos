@@ -31,6 +31,7 @@ public class UpdateReservationFlightUseCase
         var partialVO = ReservationFlightPartialAmount.Create(partialAmount);
 
         await _validator.ValidateReservationExistsAsync(reservationIdVO);
+        await _validator.ValidateReservationAllowsChangesAsync(reservationIdVO);
         await _validator.ValidateFlightExistsAsync(flightIdVO);
         await _validator.ValidateFlightNotInFinalStateAsync(flightIdVO);
         await _validator.ValidateUniquePairAsync(reservationIdVO, flightIdVO, idVO);
@@ -62,4 +63,3 @@ public class UpdateReservationFlightUseCase
         await _reservationRepository.UpdateAsync(updated);
     }
 }
-

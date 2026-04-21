@@ -1,3 +1,4 @@
+using GestionAerolineas.src.Modules.ReservationFlights.Application.Interfaces;
 using GestionAerolineas.src.Modules.ReservationFlights.Domain.Repositories;
 using GestionAerolineas.src.Modules.ReservationFlights.Domain.ValueObject;
 using GestionAerolineas.src.Modules.Reservations.Domain.Repositories;
@@ -9,11 +10,16 @@ public class DeleteReservationFlightUseCase
 {
     private readonly IReservationFlightRepository _repository;
     private readonly IReservationRepository _reservationRepository;
+    private readonly IReservationFlightValidator _validator;
 
-    public DeleteReservationFlightUseCase(IReservationFlightRepository repository, IReservationRepository reservationRepository)
+    public DeleteReservationFlightUseCase(
+        IReservationFlightRepository repository,
+        IReservationRepository reservationRepository,
+        IReservationFlightValidator validator)
     {
         _repository = repository;
         _reservationRepository = reservationRepository;
+        _validator = validator;
     }
 
     public async Task ExecuteAsync(int id)
@@ -21,6 +27,9 @@ public class DeleteReservationFlightUseCase
         var entity = await _repository.GetByIdAsync(ReservationFlightId.Create(id));
         if (entity is null)
             return;
+
+        await _validator.ValidateReservationAllowsChangesAsync(entity.ReservationId);
+        await _validator.ValidateNoPassengersAsync(entity.Id);
 
         var reservationId = entity.ReservationId.Value;
 
@@ -49,4 +58,3 @@ public class DeleteReservationFlightUseCase
         await _reservationRepository.UpdateAsync(updated);
     }
 }
-
