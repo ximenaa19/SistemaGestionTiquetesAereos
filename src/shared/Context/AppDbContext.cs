@@ -21,6 +21,7 @@ using GestionAerolineas.src.Modules.FlightRoles.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.FlightStates.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.FlightStatusTransitions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.InvoiceItemTypes.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.Passengers.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.PassengerTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.PaymentMethodTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.PaymentStates.Infrastructure.Entity;
@@ -58,6 +59,7 @@ public class AppDbContext : DbContext
     public DbSet<EmailDomainEntity> EmailDomains { get; set; }
     public DbSet<PersonEmailEntity> PersonEmails { get; set; }
     public DbSet<PersonPhoneEntity> PersonPhones { get; set; }
+    public DbSet<PassengerEntity> Passengers { get; set; }
     public DbSet<FlightRoleEntity> FlightRoles { get; set; }
     public DbSet<FlightStateEntity> FlightStates { get; set; }
     public DbSet<FlightStatusTransitionEntity> FlightStatusTransitions { get; set; }
