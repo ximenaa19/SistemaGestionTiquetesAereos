@@ -49,6 +49,7 @@ using GestionAerolineas.src.Modules.Staff.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.StaffAvailability.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Flights.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.FlightSeats.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.FlightAssignments.Infrastructure.Entity;
 
 
 namespace GestionAerolineas.src.shared.Context;
@@ -102,6 +103,7 @@ public class AppDbContext : DbContext
     public DbSet<StaffAvailabilityEntity> StaffAvailability { get; set; }
     public DbSet<FlightEntity> Flights { get; set; }
     public DbSet<FlightSeatEntity> FlightSeats { get; set; }
+    public DbSet<FlightAssignmentEntity> FlightAssignments { get; set; }
 
     public DbSet<RegionEntity> Regions { get; set; }
     public DbSet<CityEntity> Cities { get; set; }
