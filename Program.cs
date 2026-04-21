@@ -28,6 +28,7 @@ using GestionAerolineas.src.Modules.FlightStates;
 using GestionAerolineas.src.Modules.Flights;
 using GestionAerolineas.src.Modules.FlightSeats;
 using GestionAerolineas.src.Modules.FlightAssignments;
+using GestionAerolineas.src.Modules.Reservations;
 using GestionAerolineas.src.Modules.FlightStatusTransitions;
 using GestionAerolineas.src.Modules.InvoiceItemTypes;
 using GestionAerolineas.src.Modules.PaymentMethodTypes;
@@ -81,6 +82,7 @@ try
     var flightMenu = FlightModule.Build(context);
     var flightSeatMenu = FlightSeatModule.Build(context);
     var flightAssignmentMenu = FlightAssignmentModule.Build(context);
+    var reservationMenu = ReservationModule.Build(context);
     var regionMenu = RegionModule.Build(context);
     var cityMenu = CityModule.Build(context);
     var addressMenu = AddressModule.Build(context);
@@ -172,6 +174,7 @@ try
         Console.WriteLine("49. Flights");
         Console.WriteLine("50. FlightSeats");
         Console.WriteLine("51. FlightAssignments");
+        Console.WriteLine("52. Reservations");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -359,6 +362,10 @@ try
 
             case "51":
                 await flightAssignmentMenu.StartAsync();
+                break;
+
+            case "52":
+                await reservationMenu.StartAsync();
                 break;
 
             case "0":

@@ -504,6 +504,7 @@ CREATE TABLE reservationstatustransitions (
 
 CREATE TABLE reservations (
     id                  INT            AUTO_INCREMENT PRIMARY KEY,
+    codigo_reserva      VARCHAR(30)    NOT NULL UNIQUE,   -- PNR / localizador
     cliente_id          INT            NOT NULL,
     fecha_reserva       DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     estado_reserva_id   INT            NOT NULL,
