@@ -43,6 +43,7 @@ using GestionAerolineas.src.Modules.ReservationStatusTransitions.Infrastructure.
 using GestionAerolineas.src.Modules.RolePermissions.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.People.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Routes.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.RouteStops.Infrastructure.Entity;
 
 
 namespace GestionAerolineas.src.shared.Context;
@@ -90,6 +91,7 @@ public class AppDbContext : DbContext
     public DbSet<AircraftEntity> Aircraft { get; set; }
     public DbSet<PersonEntity> People { get; set; }
     public DbSet<RouteEntity> Routes { get; set; }
+    public DbSet<RouteStopEntity> RouteStops { get; set; }
 
     public DbSet<RegionEntity> Regions { get; set; }
     public DbSet<CityEntity> Cities { get; set; }

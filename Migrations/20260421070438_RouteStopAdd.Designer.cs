@@ -4,6 +4,7 @@ using GestionAerolineas.src.shared.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionAerolineas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260421070438_RouteStopAdd")]
+    partial class RouteStopAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,50 +334,6 @@ namespace GestionAerolineas.Migrations
                         .IsUnique();
 
                     b.ToTable("estados_disponibilidad", (string)null);
-                });
-
-            modelBuilder.Entity("GestionAerolineas.src.Modules.CabinConfiguration.Infrastructure.Entity.CabinConfigurationEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AircraftId")
-                        .HasColumnType("int")
-                        .HasColumnName("aeronave_id");
-
-                    b.Property<int>("CabinTypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("tipo_cabina_id");
-
-                    b.Property<int>("EndRow")
-                        .HasColumnType("int")
-                        .HasColumnName("fila_fin");
-
-                    b.Property<string>("SeatLetters")
-                        .IsRequired()
-                        .HasColumnType("varchar(10)")
-                        .HasColumnName("letras_asientos");
-
-                    b.Property<int>("SeatsPerRow")
-                        .HasColumnType("int")
-                        .HasColumnName("asientos_por_fila");
-
-                    b.Property<int>("StartRow")
-                        .HasColumnType("int")
-                        .HasColumnName("fila_inicio");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CabinTypeId");
-
-                    b.HasIndex("AircraftId", "CabinTypeId")
-                        .IsUnique();
-
-                    b.ToTable("cabinconfiguration", (string)null);
                 });
 
             modelBuilder.Entity("GestionAerolineas.src.Modules.CabinTypes.Infrastructure.Entity.CabinTypeEntity", b =>
@@ -1419,21 +1378,6 @@ namespace GestionAerolineas.Migrations
                     b.HasOne("GestionAerolineas.src.Modules.Cities.Infrastructure.Entity.CityEntity", null)
                         .WithMany()
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GestionAerolineas.src.Modules.CabinConfiguration.Infrastructure.Entity.CabinConfigurationEntity", b =>
-                {
-                    b.HasOne("GestionAerolineas.src.Modules.Aircraft.Infrastructure.Entity.AircraftEntity", null)
-                        .WithMany()
-                        .HasForeignKey("AircraftId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("GestionAerolineas.src.Modules.CabinTypes.Infrastructure.Entity.CabinTypeEntity", null)
-                        .WithMany()
-                        .HasForeignKey("CabinTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
