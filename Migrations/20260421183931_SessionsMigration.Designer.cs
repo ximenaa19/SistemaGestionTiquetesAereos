@@ -4,6 +4,7 @@ using GestionAerolineas.src.shared.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionAerolineas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260421183931_SessionsMigration")]
+    partial class SessionsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1652,46 +1655,6 @@ namespace GestionAerolineas.Migrations
                     b.ToTable("tipos_ubicacion_asiento", (string)null);
                 });
 
-            modelBuilder.Entity("GestionAerolineas.src.Modules.Sessions.Infrastructure.Entity.SessionEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("EndedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("cerrada_en");
-
-                    b.Property<string>("IpAddress")
-                        .HasColumnType("varchar(45)")
-                        .HasColumnName("ip_origen");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(true)
-                        .HasColumnName("activa");
-
-                    b.Property<DateTime>("StartedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasColumnName("iniciada_en")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("usuario_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("sessions", (string)null);
-                });
-
             modelBuilder.Entity("GestionAerolineas.src.Modules.Staff.Infrastructure.Entity.StaffEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -2368,15 +2331,6 @@ namespace GestionAerolineas.Migrations
                     b.HasOne("GestionAerolineas.src.Modules.Airports.Infrastructure.Entity.AirportEntity", null)
                         .WithMany()
                         .HasForeignKey("OriginAirportId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GestionAerolineas.src.Modules.Sessions.Infrastructure.Entity.SessionEntity", b =>
-                {
-                    b.HasOne("GestionAerolineas.src.Modules.Users.Infrastructure.Entity.UserEntity", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
