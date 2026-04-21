@@ -20,6 +20,7 @@ using GestionAerolineas.src.Modules.DocumentTypes;
 using GestionAerolineas.src.Modules.EmailDomains;
 using GestionAerolineas.src.Modules.Routes;
 using GestionAerolineas.src.Modules.RouteStops;
+using GestionAerolineas.src.Modules.Fares;
 using GestionAerolineas.src.Modules.FlightRoles;
 using GestionAerolineas.src.Modules.FlightStates;
 using GestionAerolineas.src.Modules.FlightStatusTransitions;
@@ -69,6 +70,7 @@ try
     var airlineMenu = AirlineModule.Build(context);
     var routeMenu = RouteModule.Build(context);
     var routeStopMenu = RouteStopModule.Build(context);
+    var fareMenu = FareModule.Build(context);
     var regionMenu = RegionModule.Build(context);
     var cityMenu = CityModule.Build(context);
     var addressMenu = AddressModule.Build(context);
@@ -154,6 +156,7 @@ try
         Console.WriteLine("43. Passengers");
         Console.WriteLine("44. RouteStops");
         Console.WriteLine("45. CabinConfiguration");
+        Console.WriteLine("46. Fares");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -315,8 +318,12 @@ try
                 await passengerMenu.StartAsync();
                 break;
 
-            case "44":
+            case "45":
                 await cabinConfigurationMenu.StartAsync();
+                break;
+
+            case "46":
+                await fareMenu.StartAsync();
                 break;
 
             case "0":
