@@ -60,6 +60,7 @@ using GestionAerolineas.src.Modules.PersonPhones;
 using GestionAerolineas.src.Modules.Payments;
 using GestionAerolineas.src.Modules.Invoices;
 using GestionAerolineas.src.Modules.InvoiceItems;
+using GestionAerolineas.src.shared.Seed;
 
 
 try
@@ -202,6 +203,7 @@ try
         Console.WriteLine("59. InvoiceItems");
         Console.WriteLine("60. Tickets");
         Console.WriteLine("61. Checkins");
+        Console.WriteLine("62. Seed master + catalogs");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -429,6 +431,13 @@ try
 
             case "61":
                 await checkinMenu.StartAsync();
+                break;
+
+            case "62":
+                await SeedRunner.SeedMasterAndCatalogsAsync(context);
+                Console.WriteLine("✔ Seed completado");
+                Console.WriteLine("Presiona una tecla para continuar...");
+                Console.ReadKey();
                 break;
 
             case "0":
