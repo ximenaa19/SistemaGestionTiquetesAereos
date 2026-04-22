@@ -1,4 +1,5 @@
 using GestionAerolineas.src.Modules.Auth.Application.UseCases;
+using GestionAerolineas.src.Modules.Auth.Application.Models;
 using GestionAerolineas.src.Modules.SystemRoles.Application.UseCases;
 using GestionAerolineas.src.Modules.SystemRoles.Domain.Aggregate;
 
@@ -20,7 +21,7 @@ public class AuthMenu
         _getAllRolesUseCase = getAllRolesUseCase;
     }
 
-    public async Task<bool> StartAsync()
+    public async Task<AuthLoginResult?> StartAsync()
     {
         var menu = new ConsoleMenu(new[]
         {
@@ -48,10 +49,10 @@ public class AuthMenu
 
                         var result = await _login.ExecuteAsync(loginUsername, loginPassword);
                         Console.WriteLine($"✔ Login exitoso - userId={result.UserId} - roleId={result.RoleId}");
-                        return true;
+                        return result;
 
                     case 2:
-                        return false;
+                        return null;
                 }
             }
             catch (Exception ex)
