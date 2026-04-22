@@ -56,6 +56,8 @@ using GestionAerolineas.src.Modules.Passengers;
 using GestionAerolineas.src.Modules.PersonEmails;
 using GestionAerolineas.src.Modules.PersonPhones;
 using GestionAerolineas.src.Modules.Payments;
+using GestionAerolineas.src.Modules.Invoices;
+using GestionAerolineas.src.Modules.InvoiceItems;
 
 
 try
@@ -91,6 +93,8 @@ try
     var reservationFlightMenu = ReservationFlightModule.Build(context);
     var reservationPassengerMenu = ReservationPassengerModule.Build(context);
     var paymentMenu = PaymentModule.Build(context);
+    var invoiceMenu = InvoiceModule.Build(context);
+    var invoiceItemMenu = InvoiceItemModule.Build(context);
     var regionMenu = RegionModule.Build(context);
     var cityMenu = CityModule.Build(context);
     var addressMenu = AddressModule.Build(context);
@@ -122,9 +126,9 @@ try
     var userMenu = UserModule.Build(context);
     var personMenu = PersonModule.Build(context);
     var passengerMenu = PassengerModule.Build(context);
-    var CabinTypeMenu = CabinTypeModule.Build(context);
+    var cabinTypeMenu = CabinTypeModule.Build(context);
     var cabinConfigurationMenu = CabinConfigurationModule.Build(context);
-    var PassengerTypeMenu = PassengerTypeModule.Build(context);
+    var passengerTypeMenu = PassengerTypeModule.Build(context);
     var reservationStatusTransitionMenu = ReservationStatusTransitionModule.Build(context);
     var rolePermissionMenu = RolePermissionModule.Build(context);
 
@@ -144,7 +148,7 @@ try
         Console.WriteLine("9. PhoneCodes");
         Console.WriteLine("10. SeatLocationTypes");
         Console.WriteLine("11. RoadTypes");
-        Console.WriteLine("12. DocumenTypes");
+        Console.WriteLine("12. DocumentTypes");
         Console.WriteLine("13. CabinTypes");
         Console.WriteLine("14. PassengerTypes");
         Console.WriteLine("15. FlightStates");
@@ -190,6 +194,8 @@ try
         Console.WriteLine("55. Payments");
         Console.WriteLine("56. Users");
         Console.WriteLine("57. Sessions");
+        Console.WriteLine("58. Invoices");
+        Console.WriteLine("59. InvoiceItems");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -245,10 +251,10 @@ try
                 break;
 
             case "13":
-                await CabinTypeMenu.StartAsync();
+                await cabinTypeMenu.StartAsync();
                 break;
             case "14":
-                await PassengerTypeMenu.StartAsync();
+                await passengerTypeMenu.StartAsync();
                 break;
             case "15":
                 await flightStateMenu.StartAsync();
@@ -332,10 +338,6 @@ try
                 await routeMenu.StartAsync();
                 break;
 
-            case "44":
-                await routeStopMenu.StartAsync();
-                break;
-
             case "40":
                 await personEmailMenu.StartAsync();
                 break;
@@ -349,6 +351,10 @@ try
 
             case "43":
                 await passengerMenu.StartAsync();
+                break;
+
+            case "44":
+                await routeStopMenu.StartAsync();
                 break;
 
             case "45":
@@ -403,8 +409,21 @@ try
                 await sessionMenu.StartAsync();
                 break;
 
+            case "58":
+                await invoiceMenu.StartAsync();
+                break;
+
+            case "59":
+                await invoiceItemMenu.StartAsync();
+                break;
+
             case "0":
                 return;
+
+            default:
+                Console.WriteLine("Opcion invalida. Presiona una tecla para continuar...");
+                Console.ReadKey();
+                break;
         }
     }
 }

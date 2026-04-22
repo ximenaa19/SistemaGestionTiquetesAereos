@@ -56,6 +56,8 @@ using GestionAerolineas.src.Modules.Reservations.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.ReservationFlights.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.ReservationPassengers.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Payments.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.Invoices.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.InvoiceItems.Infrastructure.Entity;
 
 
 namespace GestionAerolineas.src.shared.Context;
@@ -116,6 +118,8 @@ public class AppDbContext : DbContext
     public DbSet<ReservationFlightEntity> ReservationFlights { get; set; }
     public DbSet<ReservationPassengerEntity> ReservationPassengers { get; set; }
     public DbSet<PaymentEntity> Payments { get; set; }
+    public DbSet<InvoiceEntity> Invoices { get; set; }
+    public DbSet<InvoiceItemEntity> InvoiceItems { get; set; }
 
     public DbSet<RegionEntity> Regions { get; set; }
     public DbSet<CityEntity> Cities { get; set; }
