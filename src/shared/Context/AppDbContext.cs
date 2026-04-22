@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using GestionAerolineas.src.Modules.AvailabilityStatuses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.CheckinStatuses.Infrastructure.Entity;
+using GestionAerolineas.src.Modules.Checkins.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.CardTypes.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Cities.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Continents.Infrastructure.Entity;
@@ -73,6 +74,7 @@ public class AppDbContext : DbContext
     public DbSet<CardTypeEntity> CardTypes { get; set; }
     public DbSet<CardIssuerEntity> CardIssuers { get; set; }
     public DbSet<CheckinStatusEntity> CheckinStatuses { get; set; }
+    public DbSet<CheckinEntity> Checkins { get; set; }
     public DbSet<EmailDomainEntity> EmailDomains { get; set; }
     public DbSet<PersonEmailEntity> PersonEmails { get; set; }
     public DbSet<PersonPhoneEntity> PersonPhones { get; set; }

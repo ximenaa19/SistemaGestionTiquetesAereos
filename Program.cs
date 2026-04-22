@@ -6,6 +6,7 @@ using GestionAerolineas.src.Modules.AvailabilityStatuses;
 using GestionAerolineas.src.Modules.CardTypes;
 using GestionAerolineas.src.Modules.CardIssuers;
 using GestionAerolineas.src.Modules.CheckinStatuses;
+using GestionAerolineas.src.Modules.Checkins;
 using GestionAerolineas.src.Modules.Continents;
 using GestionAerolineas.src.Modules.Countries;
 using GestionAerolineas.src.Modules.Customers;
@@ -94,6 +95,7 @@ try
     var reservationFlightMenu = ReservationFlightModule.Build(context);
     var reservationPassengerMenu = ReservationPassengerModule.Build(context);
     var ticketMenu = TicketModule.Build(context);
+    var checkinMenu = CheckinModule.Build(context);
     var paymentMenu = PaymentModule.Build(context);
     var invoiceMenu = InvoiceModule.Build(context);
     var invoiceItemMenu = InvoiceItemModule.Build(context);
@@ -199,6 +201,7 @@ try
         Console.WriteLine("58. Invoices");
         Console.WriteLine("59. InvoiceItems");
         Console.WriteLine("60. Tickets");
+        Console.WriteLine("61. Checkins");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -422,6 +425,10 @@ try
 
             case "60":
                 await ticketMenu.StartAsync();
+                break;
+
+            case "61":
+                await checkinMenu.StartAsync();
                 break;
 
             case "0":
