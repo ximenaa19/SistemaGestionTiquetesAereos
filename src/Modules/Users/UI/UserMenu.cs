@@ -12,13 +12,10 @@ public class UserMenu
     private readonly GetAllUsersUseCase _getAll;
     private readonly GetUserByIdUseCase _getById;
     private readonly GetUserByUsernameUseCase _getByUsername;
-    private readonly GetUserByPersonIdUseCase _getByPersonId;
     private readonly GetUsersByRoleIdUseCase _getByRoleId;
-    private readonly SearchUsersByPersonNameUseCase _searchByPersonName;
-    private readonly GetActiveUsersUseCase _getActive;
-    private readonly GetInactiveUsersUseCase _getInactive;
     private readonly UpdateUserUseCase _update;
-    private readonly DeleteUserUseCase _delete;
+    private readonly SetUserActiveStatusUseCase _setActive;
+    private readonly DeleteUserHardUseCase _deleteHard;
 
     private readonly GetAllPeopleUseCase _getAllPeople;
     private readonly GetAllSystemRolesUseCase _getAllRoles;
@@ -28,13 +25,10 @@ public class UserMenu
         GetAllUsersUseCase getAll,
         GetUserByIdUseCase getById,
         GetUserByUsernameUseCase getByUsername,
-        GetUserByPersonIdUseCase getByPersonId,
         GetUsersByRoleIdUseCase getByRoleId,
-        SearchUsersByPersonNameUseCase searchByPersonName,
-        GetActiveUsersUseCase getActive,
-        GetInactiveUsersUseCase getInactive,
         UpdateUserUseCase update,
-        DeleteUserUseCase delete,
+        SetUserActiveStatusUseCase setActive,
+        DeleteUserHardUseCase deleteHard,
         GetAllPeopleUseCase getAllPeople,
         GetAllSystemRolesUseCase getAllRoles)
     {
@@ -42,13 +36,10 @@ public class UserMenu
         _getAll = getAll;
         _getById = getById;
         _getByUsername = getByUsername;
-        _getByPersonId = getByPersonId;
         _getByRoleId = getByRoleId;
-        _searchByPersonName = searchByPersonName;
-        _getActive = getActive;
-        _getInactive = getInactive;
         _update = update;
-        _delete = delete;
+        _setActive = setActive;
+        _deleteHard = deleteHard;
         _getAllPeople = getAllPeople;
         _getAllRoles = getAllRoles;
     }
@@ -57,17 +48,14 @@ public class UserMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new user",
+            "Create a user",
             "List all users",
             "Get user by ID",
             "Get user by username",
-            "Get user by person_id",
-            "Get users by role_id",
-            "Search users by person name",
-            "Get active users",
-            "Get inactive users",
+            "Get users by rol_id",
             "Update a user",
-            "Delete a user",
+            "Deactivate/Activate a user (soft)",
+            "Delete a user (hard)",
             "Exit"
         });
 
@@ -80,29 +68,24 @@ public class UserMenu
                 switch (option)
                 {
                     case 0:
-                        await PrintPeopleAsync();
                         await PrintRolesAsync();
+                        await PrintPeopleAsync();
 
                         Console.Write("\nIngrese username: ");
-                        string username = Console.ReadLine()!;
+                        string username = Console.ReadLine() ?? string.Empty;
 
-                        Console.Write("Ingrese password: ");
-                        string password = Console.ReadLine()!;
+                        string password = ReadHiddenRequired("Ingrese password: ");
+                        string confirm = ReadHiddenRequired("Confirmar password: ");
+                        if (password != confirm)
+                            throw new Exception("Las contraseñas no coinciden");
 
                         Console.Write("Ingrese person_id [opcional]: ");
                         int? personId = ReadNullableInt(Console.ReadLine());
 
-                        Console.Write("Ingrese role_id: ");
+                        Console.Write("Ingrese rol_id: ");
                         int roleId = int.Parse(Console.ReadLine()!);
 
-                        Console.Write("Ingrese activo (true/false) [default=true]: ");
-                        var activeInput = Console.ReadLine();
-                        bool isActive = string.IsNullOrWhiteSpace(activeInput) ? true : bool.Parse(activeInput!);
-
-                        Console.Write("Ingrese last_access (yyyy-MM-dd HH:mm:ss) [opcional]: ");
-                        DateTime? lastAccess = ReadNullableDateTime(Console.ReadLine());
-
-                        await _create.ExecuteAsync(username, password, personId, roleId, isActive, lastAccess);
+                        await _create.ExecuteAsync(username, password, personId, roleId);
                         Console.WriteLine("✔ Creado");
                         break;
 
@@ -119,7 +102,7 @@ public class UserMenu
                         var byId = await _getById.ExecuteAsync(searchId);
                         if (byId is null)
                         {
-                            Console.WriteLine("No encontrado");
+                            Console.WriteLine("(sin registros)");
                             break;
                         }
 
@@ -128,12 +111,12 @@ public class UserMenu
 
                     case 3:
                         Console.Write("Ingrese username: ");
-                        string searchUsername = Console.ReadLine()!;
+                        string searchUsername = Console.ReadLine() ?? string.Empty;
 
                         var byUsername = await _getByUsername.ExecuteAsync(searchUsername);
                         if (byUsername is null)
                         {
-                            Console.WriteLine("No encontrado");
+                            Console.WriteLine("(sin registros)");
                             break;
                         }
 
@@ -141,103 +124,79 @@ public class UserMenu
                         break;
 
                     case 4:
-                        await PrintPeopleAsync();
+                        await PrintRolesAsync();
 
-                        Console.Write("\nIngrese person_id: ");
-                        int searchPersonId = int.Parse(Console.ReadLine()!);
+                        Console.Write("\nIngrese rol_id: ");
+                        int searchRoleId = int.Parse(Console.ReadLine()!);
 
-                        var byPersonId = await _getByPersonId.ExecuteAsync(searchPersonId);
-                        if (byPersonId is null)
-                        {
-                            Console.WriteLine("No encontrado");
-                            break;
-                        }
-
-                        await PrintOneAsync(byPersonId);
+                        await PrintListAsync(await _getByRoleId.ExecuteAsync(searchRoleId));
                         break;
 
                     case 5:
-                        await PrintRolesAsync();
-
-                        Console.Write("\nIngrese role_id: ");
-                        int searchRoleId = int.Parse(Console.ReadLine()!);
-
-                        var byRole = await _getByRoleId.ExecuteAsync(searchRoleId);
-                        await PrintListAsync(byRole);
-                        break;
-
-                    case 6:
-                        Console.Write("Ingrese texto (nombre o apellido): ");
-                        string searchText = Console.ReadLine() ?? string.Empty;
-
-                        var byName = await _searchByPersonName.ExecuteAsync(searchText);
-                        await PrintListAsync(byName);
-                        break;
-
-                    case 7:
-                        await PrintListAsync(await _getActive.ExecuteAsync());
-                        break;
-
-                    case 8:
-                        await PrintListAsync(await _getInactive.ExecuteAsync());
-                        break;
-
-                    case 9:
                         await PrintUsersForSelectionAsync();
-                        await PrintPeopleAsync();
                         await PrintRolesAsync();
+                        await PrintPeopleAsync();
 
                         Console.Write("\nIngrese el ID: ");
                         int updateId = int.Parse(Console.ReadLine()!);
 
                         Console.Write("Ingrese username: ");
-                        string newUsername = Console.ReadLine()!;
+                        string newUsername = Console.ReadLine() ?? string.Empty;
 
-                        Console.Write("Ingrese nuevo password [opcional]: ");
-                        string? newPassword = Console.ReadLine();
+                        string? newPassword = ReadHiddenOptional("Ingrese nuevo password [opcional]: ");
+                        if (!string.IsNullOrWhiteSpace(newPassword))
+                        {
+                            var confirmNew = ReadHiddenRequired("Confirmar nuevo password: ");
+                            if (newPassword != confirmNew)
+                                throw new Exception("Las contraseñas no coinciden");
+                        }
 
                         Console.Write("Ingrese person_id [opcional]: ");
                         int? newPersonId = ReadNullableInt(Console.ReadLine());
 
-                        Console.Write("Ingrese role_id: ");
+                        Console.Write("Ingrese rol_id: ");
                         int newRoleId = int.Parse(Console.ReadLine()!);
 
-                        Console.Write("Ingrese activo (true/false): ");
-                        bool newIsActive = bool.Parse(Console.ReadLine()!);
+                        await _update.ExecuteAsync(updateId, newUsername, newPassword, newPersonId, newRoleId);
+                        Console.WriteLine("✔ Actualizado");
+                        break;
 
-                        Console.Write("Ingrese last_access (yyyy-MM-dd HH:mm:ss) [opcional]: ");
-                        DateTime? newLastAccess = ReadNullableDateTime(Console.ReadLine());
+                    case 6:
+                        await PrintUsersForSelectionAsync();
+
+                        Console.Write("\nIngrese el ID: ");
+                        int toggleId = int.Parse(Console.ReadLine()!);
+
+                        Console.Write("Ingrese activo (true/false, 1/0) [default=true]: ");
+                        bool isActive = ReadBool(Console.ReadLine(), defaultValue: true);
 
                         string? actingUsername = null;
-                        if (!newIsActive)
+                        if (!isActive)
                         {
                             Console.Write("Ingrese su username actual para validar la desactivacion: ");
                             actingUsername = Console.ReadLine();
                         }
 
-                        await _update.ExecuteAsync(
-                            updateId,
-                            newUsername,
-                            newPassword,
-                            newPersonId,
-                            newRoleId,
-                            newIsActive,
-                            newLastAccess,
-                            actingUsername);
+                        await _setActive.ExecuteAsync(toggleId, isActive, actingUsername);
                         Console.WriteLine("✔ Actualizado");
                         break;
 
-                    case 10:
+                    case 7:
                         await PrintUsersForSelectionAsync();
 
                         Console.Write("\nIngrese el ID: ");
                         int deleteId = int.Parse(Console.ReadLine()!);
 
-                        await _delete.ExecuteAsync(deleteId);
+                        Console.Write("Confirmar (y/N): ");
+                        var confirmDelete = (Console.ReadLine() ?? string.Empty).Trim();
+                        if (!string.Equals(confirmDelete, "y", StringComparison.OrdinalIgnoreCase))
+                            break;
+
+                        await _deleteHard.ExecuteAsync(deleteId);
                         Console.WriteLine("✔ Eliminado");
                         break;
 
-                    case 11:
+                    case 8:
                         return;
                 }
             }
@@ -254,7 +213,7 @@ public class UserMenu
 
     private async Task PrintUsersForSelectionAsync()
     {
-        Console.WriteLine("Users disponibles (primeros 30):");
+        Console.WriteLine("Users (primeros 30):");
         var list = (await _getAll.ExecuteAsync()).Take(30).ToList();
         if (list.Count == 0)
         {
@@ -294,28 +253,57 @@ public class UserMenu
 
     private async Task PrintPeopleAsync()
     {
-        Console.WriteLine("People disponibles:");
         var people = (await _getAllPeople.ExecuteAsync()).ToList();
-
-        foreach (var person in people.Take(30))
+        Console.WriteLine("\nPeople (top 10):");
+        foreach (var person in people.Take(10))
             Console.WriteLine($"{person.Id.Value} - {person.FirstNames.Value} {person.LastNames.Value} - doc={person.DocumentNumber.Value}");
 
-        if (people.Count > 30)
-            Console.WriteLine("(Mostrando solo las primeras 30)");
+        Console.Write("Buscar persona (texto) [opcional]: ");
+        var search = (Console.ReadLine() ?? string.Empty).Trim();
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var normalized = search.ToUpperInvariant();
+            var matches = people
+                .Where(p => $"{p.FirstNames.Value} {p.LastNames.Value}".ToUpperInvariant().Contains(normalized))
+                .Take(10)
+                .ToList();
 
-        Console.WriteLine("(Dejar vacio permite crear un superadmin sin persona)");
+            Console.WriteLine("\nCoincidencias (top 10):");
+            if (matches.Count == 0)
+                Console.WriteLine("(sin registros)");
+            else
+                foreach (var person in matches)
+                    Console.WriteLine($"{person.Id.Value} - {person.FirstNames.Value} {person.LastNames.Value} - doc={person.DocumentNumber.Value}");
+        }
+
+        Console.WriteLine("(Dejar vacio person_id permite crear un user sin persona)");
     }
 
     private async Task PrintRolesAsync()
     {
-        Console.WriteLine("\nRoles disponibles:");
         var roles = (await _getAllRoles.ExecuteAsync()).ToList();
 
-        foreach (var role in roles.Take(30))
+        Console.WriteLine("SystemRoles (top 10):");
+        foreach (var role in roles.Take(10))
             Console.WriteLine($"{role.Id.Value} - {role.Name.Value}");
 
-        if (roles.Count > 30)
-            Console.WriteLine("(Mostrando solo los primeros 30)");
+        Console.Write("Buscar rol (texto) [opcional]: ");
+        var search = (Console.ReadLine() ?? string.Empty).Trim();
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var normalized = search.ToUpperInvariant();
+            var matches = roles
+                .Where(r => r.Name.Value.ToUpperInvariant().Contains(normalized))
+                .Take(10)
+                .ToList();
+
+            Console.WriteLine("\nCoincidencias (top 10):");
+            if (matches.Count == 0)
+                Console.WriteLine("(sin registros)");
+            else
+                foreach (var role in matches)
+                    Console.WriteLine($"{role.Id.Value} - {role.Name.Value}");
+        }
     }
 
     private async Task<Dictionary<int, string>> GetPersonDisplayMapAsync()
@@ -339,7 +327,7 @@ public class UserMenu
         var lastAccessDisplay = item.LastAccess.Value?.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture) ?? "NULL";
         var activeDisplay = item.IsActive.Value ? "active" : "inactive";
 
-        return $"{item.Id.Value} - username={item.Username.Value} - person={personDisplay} - role={roleDisplay} - {activeDisplay} - lastAccess={lastAccessDisplay} - createdAt={item.CreatedAt.Value:yyyy-MM-dd HH:mm:ss} - updatedAt={item.UpdatedAt.Value:yyyy-MM-dd HH:mm:ss}";
+        return $"{item.Id.Value} - username={item.Username.Value} - role={roleDisplay} - person={personDisplay} - {activeDisplay} - lastAccess={lastAccessDisplay}";
     }
 
     private static string GetDisplay(Dictionary<int, string> map, int id)
@@ -355,11 +343,73 @@ public class UserMenu
         return int.Parse(input);
     }
 
-    private static DateTime? ReadNullableDateTime(string? input)
+    private static bool ReadBool(string? input, bool defaultValue)
     {
         if (string.IsNullOrWhiteSpace(input))
-            return null;
+            return defaultValue;
 
-        return DateTime.Parse(input, CultureInfo.InvariantCulture);
+        var normalized = input.Trim().ToUpperInvariant();
+        return normalized switch
+        {
+            "1" => true,
+            "0" => false,
+            "TRUE" => true,
+            "FALSE" => false,
+            "T" => true,
+            "F" => false,
+            "Y" => true,
+            "N" => false,
+            "S" => true,
+            _ => bool.Parse(input)
+        };
+    }
+
+    private static string ReadHiddenRequired(string prompt)
+    {
+        var value = ReadHiddenLine(prompt);
+        if (string.IsNullOrWhiteSpace(value))
+            throw new Exception("El valor es obligatorio");
+        return value;
+    }
+
+    private static string? ReadHiddenOptional(string prompt)
+    {
+        var value = ReadHiddenLine(prompt);
+        return string.IsNullOrWhiteSpace(value) ? null : value;
+    }
+
+    private static string ReadHiddenLine(string prompt)
+    {
+        Console.Write(prompt);
+
+        var buffer = new List<char>();
+        while (true)
+        {
+            var key = Console.ReadKey(intercept: true);
+
+            if (key.Key == ConsoleKey.Enter)
+            {
+                Console.WriteLine();
+                break;
+            }
+
+            if (key.Key == ConsoleKey.Backspace)
+            {
+                if (buffer.Count == 0)
+                    continue;
+
+                buffer.RemoveAt(buffer.Count - 1);
+                Console.Write("\b \b");
+                continue;
+            }
+
+            if (!char.IsControl(key.KeyChar))
+            {
+                buffer.Add(key.KeyChar);
+                Console.Write("*");
+            }
+        }
+
+        return new string(buffer.ToArray());
     }
 }

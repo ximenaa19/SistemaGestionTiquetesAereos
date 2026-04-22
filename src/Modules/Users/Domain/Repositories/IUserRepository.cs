@@ -8,10 +8,7 @@ public interface IUserRepository
     Task<IEnumerable<User>> GetAllAsync();
     Task<User?> GetByIdAsync(UserId id);
     Task<User?> GetByUsernameAsync(UserUsername username);
-    Task<User?> GetByPersonIdAsync(UserPersonId personId);
     Task<IEnumerable<User>> GetByRoleIdAsync(UserRoleId roleId);
-    Task<IEnumerable<User>> GetByIsActiveAsync(UserIsActive isActive);
-    Task<IEnumerable<User>> SearchByPersonNameAsync(string searchText);
     Task AddAsync(User user);
     Task UpdateAsync(User user);
     Task DeleteAsync(User user);

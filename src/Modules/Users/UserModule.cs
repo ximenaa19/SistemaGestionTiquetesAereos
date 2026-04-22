@@ -26,13 +26,10 @@ public static class UserModule
         var getAll = new GetAllUsersUseCase(repository);
         var getById = new GetUserByIdUseCase(repository);
         var getByUsername = new GetUserByUsernameUseCase(repository);
-        var getByPersonId = new GetUserByPersonIdUseCase(repository);
         var getByRoleId = new GetUsersByRoleIdUseCase(repository);
-        var searchByPersonName = new SearchUsersByPersonNameUseCase(repository);
-        var getActive = new GetActiveUsersUseCase(repository);
-        var getInactive = new GetInactiveUsersUseCase(repository);
         var update = new UpdateUserUseCase(repository, validator);
-        var delete = new DeleteUserUseCase(repository);
+        var setActive = new SetUserActiveStatusUseCase(repository, validator);
+        var deleteHard = new DeleteUserHardUseCase(repository);
 
         var getAllPeople = new GetAllPeopleUseCase(personRepository);
         var getAllRoles = new GetAllSystemRolesUseCase(systemRoleRepository);
@@ -42,13 +39,10 @@ public static class UserModule
             getAll,
             getById,
             getByUsername,
-            getByPersonId,
             getByRoleId,
-            searchByPersonName,
-            getActive,
-            getInactive,
             update,
-            delete,
+            setActive,
+            deleteHard,
             getAllPeople,
             getAllRoles);
     }

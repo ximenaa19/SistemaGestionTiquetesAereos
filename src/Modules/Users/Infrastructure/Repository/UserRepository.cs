@@ -46,18 +46,6 @@ public class UserRepository : IUserRepository
         return entity is null ? null : MapToDomain(entity);
     }
 
-    public async Task<User?> GetByPersonIdAsync(UserPersonId personId)
-    {
-        if (!personId.Value.HasValue)
-            return null;
-
-        var entity = await _context.Users
-            .AsNoTracking()
-            .FirstOrDefaultAsync(e => e.PersonId == personId.Value.Value);
-
-        return entity is null ? null : MapToDomain(entity);
-    }
-
     public async Task<IEnumerable<User>> GetByRoleIdAsync(UserRoleId roleId)
     {
         var entities = await _context.Users
@@ -66,36 +54,6 @@ public class UserRepository : IUserRepository
             .OrderBy(e => e.Id)
             .ToListAsync();
 
-        return entities.Select(MapToDomain).ToList();
-    }
-
-    public async Task<IEnumerable<User>> GetByIsActiveAsync(UserIsActive isActive)
-    {
-        var entities = await _context.Users
-            .AsNoTracking()
-            .Where(e => e.IsActive == isActive.Value)
-            .OrderBy(e => e.Id)
-            .ToListAsync();
-
-        return entities.Select(MapToDomain).ToList();
-    }
-
-    public async Task<IEnumerable<User>> SearchByPersonNameAsync(string searchText)
-    {
-        var normalized = NormalizeSearch(searchText);
-        if (string.IsNullOrWhiteSpace(normalized))
-            return Array.Empty<User>();
-
-        var query =
-            from u in _context.Users.AsNoTracking()
-            join p in _context.People.AsNoTracking() on u.PersonId equals p.Id
-            where p.FirstNames != null && p.LastNames != null
-            let full = (p.FirstNames + " " + p.LastNames).Trim().ToUpper()
-            where full.Contains(normalized)
-            orderby u.Id
-            select u;
-
-        var entities = await query.ToListAsync();
         return entities.Select(MapToDomain).ToList();
     }
 
@@ -204,8 +162,5 @@ public class UserRepository : IUserRepository
         };
     }
 
-    private static string NormalizeSearch(string value)
-    {
-        return (value ?? string.Empty).Trim().ToUpperInvariant();
-    }
+
 }

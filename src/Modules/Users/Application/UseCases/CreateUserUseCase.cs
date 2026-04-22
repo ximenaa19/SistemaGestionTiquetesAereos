@@ -21,16 +21,14 @@ public class CreateUserUseCase
         string username,
         string plainPassword,
         int? personId,
-        int roleId,
-        bool isActive,
-        DateTime? lastAccess)
+        int roleId)
     {
         var usernameVO = UserUsername.Create(username);
         var passwordHashVO = UserPasswordHasher.Hash(plainPassword);
         var personVO = UserPersonId.Create(personId);
         var roleVO = UserRoleId.Create(roleId);
-        var isActiveVO = UserIsActive.Create(isActive);
-        var lastAccessVO = UserLastAccess.Create(lastAccess);
+        var isActiveVO = UserIsActive.Create(true);
+        var lastAccessVO = UserLastAccess.Create(null);
 
         await _validator.ValidateUsernameAsync(usernameVO);
         await _validator.ValidatePersonExistsAsync(personVO);
@@ -38,7 +36,6 @@ public class CreateUserUseCase
         await _validator.ValidateRoleExistsAsync(roleVO);
 
         var entity = User.CreateNew(usernameVO, passwordHashVO, personVO, roleVO, isActiveVO, lastAccessVO);
-
         await _repository.AddAsync(entity);
     }
 }

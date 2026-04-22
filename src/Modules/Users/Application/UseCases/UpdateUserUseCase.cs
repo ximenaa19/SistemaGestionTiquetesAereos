@@ -22,28 +22,21 @@ public class UpdateUserUseCase
         string username,
         string? newPlainPassword,
         int? personId,
-        int roleId,
-        bool isActive,
-        DateTime? lastAccess,
-        string? actingUsername)
+        int roleId)
     {
         var idVO = UserId.Create(id);
         var existing = await _repository.GetByIdAsync(idVO);
-
         if (existing is null)
             throw new Exception("El user no existe");
 
         var usernameVO = UserUsername.Create(username);
         var personVO = UserPersonId.Create(personId);
         var roleVO = UserRoleId.Create(roleId);
-        var isActiveVO = UserIsActive.Create(isActive);
-        var lastAccessVO = UserLastAccess.Create(lastAccess);
 
         await _validator.ValidateUsernameAsync(usernameVO, idVO);
         await _validator.ValidatePersonExistsAsync(personVO);
         await _validator.ValidatePersonIsUniqueAsync(personVO, idVO);
         await _validator.ValidateRoleExistsAsync(roleVO);
-        await _validator.ValidateCanDeactivateAsync(existing, isActiveVO, actingUsername);
 
         var passwordHashVO = string.IsNullOrWhiteSpace(newPlainPassword)
             ? existing.PasswordHash
@@ -55,8 +48,8 @@ public class UpdateUserUseCase
             passwordHashVO,
             personVO,
             roleVO,
-            isActiveVO,
-            lastAccessVO,
+            existing.IsActive,
+            existing.LastAccess,
             existing.CreatedAt,
             UserUpdatedAt.Create(DateTime.Now));
 
