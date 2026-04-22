@@ -3,11 +3,11 @@ using GestionAerolineas.src.Modules.Users.Domain.ValueObject;
 
 namespace GestionAerolineas.src.Modules.Users.Application.UseCases;
 
-public class DeleteUserUseCase
+public class DeleteUserHardUseCase
 {
     private readonly IUserRepository _repository;
 
-    public DeleteUserUseCase(IUserRepository repository)
+    public DeleteUserHardUseCase(IUserRepository repository)
     {
         _repository = repository;
     }
@@ -16,7 +16,7 @@ public class DeleteUserUseCase
     {
         var entity = await _repository.GetByIdAsync(UserId.Create(id));
         if (entity is null)
-            return;
+            throw new Exception("El user no existe");
 
         await _repository.DeleteAsync(entity);
     }
