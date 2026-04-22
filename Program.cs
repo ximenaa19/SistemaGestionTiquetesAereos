@@ -7,6 +7,7 @@ using GestionAerolineas.src.Modules.CardTypes;
 using GestionAerolineas.src.Modules.CardIssuers;
 using GestionAerolineas.src.Modules.CheckinStatuses;
 using GestionAerolineas.src.Modules.Checkins;
+using GestionAerolineas.src.Modules.Auth;
 using GestionAerolineas.src.Modules.Continents;
 using GestionAerolineas.src.Modules.Countries;
 using GestionAerolineas.src.Modules.Customers;
@@ -129,6 +130,7 @@ try
     var systemRoleMenu = SystemRoleModule.Build(context);
     var ticketStatusMenu = TicketStatusModule.Build(context);
     var userMenu = UserModule.Build(context);
+    var authMenu = AuthModule.Build(context);
     var personMenu = PersonModule.Build(context);
     var passengerMenu = PassengerModule.Build(context);
     var cabinTypeMenu = CabinTypeModule.Build(context);
@@ -136,6 +138,10 @@ try
     var passengerTypeMenu = PassengerTypeModule.Build(context);
     var reservationStatusTransitionMenu = ReservationStatusTransitionModule.Build(context);
     var rolePermissionMenu = RolePermissionModule.Build(context);
+
+    var loggedIn = await authMenu.StartAsync();
+    if (!loggedIn)
+        return;
 
 
     while (true)
@@ -204,6 +210,7 @@ try
         Console.WriteLine("60. Tickets");
         Console.WriteLine("61. Checkins");
         Console.WriteLine("62. Seed master + catalogs");
+        Console.WriteLine("63. Auth");
         Console.WriteLine("0. Salir");
 
         var option = Console.ReadLine();
@@ -438,6 +445,10 @@ try
                 Console.WriteLine("✔ Seed completado");
                 Console.WriteLine("Presiona una tecla para continuar...");
                 Console.ReadKey();
+                break;
+
+            case "63":
+                await authMenu.StartAsync();
                 break;
 
             case "0":
