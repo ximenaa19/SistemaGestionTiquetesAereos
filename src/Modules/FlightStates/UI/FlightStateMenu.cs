@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\FlightStates\UI\FlightStateMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.FlightStates.Application.UseCases;
@@ -32,13 +38,13 @@ public class FlightStateMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new flight state",
-            "List all flight states",
+            "Crear flight state",
+            "Listar flight states",
             "Get flight state by ID",
             "Get flight state by name",
-            "Update a flight state",
-            "Delete a flight state",
-            "Exit"
+            "Actualizar flight state",
+            "Eliminar flight state",
+            "Salir"
         });
 
         while (true)
@@ -120,3 +126,4 @@ public class FlightStateMenu
         }
     }
 }
+

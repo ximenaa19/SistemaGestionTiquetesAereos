@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\CardTypes\UI\CardTypeMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.CardTypes.Application.UseCases;
@@ -32,13 +38,13 @@ public class CardTypeMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new card type",
-            "List all card types",
+            "Crear card type",
+            "Listar card types",
             "Get card type by ID",
             "Get card type by name",
-            "Update a card type",
-            "Delete a card type",
-            "Exit"
+            "Actualizar card type",
+            "Eliminar card type",
+            "Salir"
         });
 
         while (true)
@@ -120,3 +126,4 @@ public class CardTypeMenu
         }
     }
 }
+

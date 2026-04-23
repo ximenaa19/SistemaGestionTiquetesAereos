@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\FlightStatusTransitions\UI\FlightStatusTransitionMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.FlightStates.Application.UseCases;
 using GestionAerolineas.src.Modules.FlightStatusTransitions.Application.UseCases;
 
@@ -39,14 +45,14 @@ public class FlightStatusTransitionMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new flight status transition",
-            "List all flight status transitions",
+            "Crear flight status transition",
+            "Listar flight status transitions",
             "Get transition by ID",
             "Get transition by origin/destination (IDs)",
             "Get transition by origin/destination (Names)",
-            "Update a transition",
-            "Delete a transition",
-            "Exit"
+            "Actualizar transition",
+            "Eliminar transition",
+            "Salir"
         });
 
         while (true)
@@ -65,7 +71,7 @@ public class FlightStatusTransitionMenu
                         int destinationId = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(originId, destinationId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -126,7 +132,7 @@ public class FlightStatusTransitionMenu
 
                         if (origin is null || destination is null)
                         {
-                            Console.WriteLine("No encontrado (origen o destino inválido)");
+                            Console.WriteLine("No encontrado (origen o destino invÃ¡lido)");
                             break;
                         }
 
@@ -142,7 +148,7 @@ public class FlightStatusTransitionMenu
                         break;
 
                     case 5:
-                        Console.Write("Ingrese el ID de la transición: ");
+                        Console.Write("Ingrese el ID de la transiciÃ³n: ");
                         int updateId = int.Parse(Console.ReadLine()!);
 
                         Console.Write("Ingrese el nuevo ID del estado ORIGEN: ");
@@ -152,7 +158,7 @@ public class FlightStatusTransitionMenu
                         int newDestinationId = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newOriginId, newDestinationId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 6:
@@ -160,7 +166,7 @@ public class FlightStatusTransitionMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 7:
@@ -169,7 +175,7 @@ public class FlightStatusTransitionMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -189,4 +195,5 @@ public class FlightStatusTransitionMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

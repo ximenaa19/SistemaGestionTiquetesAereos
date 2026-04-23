@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Invoices\UI\InvoiceMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System.Globalization;
 using GestionAerolineas.src.Modules.Customers.Application.UseCases;
 using GestionAerolineas.src.Modules.Invoices.Application.UseCases;
@@ -61,16 +67,16 @@ public class InvoiceMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create an invoice",
-            "List all invoices",
+            "Crear invoice",
+            "Listar invoices",
             "Get invoice by ID",
             "Get invoice by invoice number",
             "Get invoice by reserva_id",
             "Get invoices by fecha_emision range",
             "Get invoice details by ID",
-            "Update an invoice",
-            "Delete an invoice",
-            "Exit"
+            "Actualizar invoice",
+            "Eliminar invoice",
+            "Salir"
         });
 
         while (true)
@@ -94,7 +100,7 @@ public class InvoiceMenu
                             : DateTime.Parse(issuedAtInput!, CultureInfo.InvariantCulture);
 
                         var created = await _create.ExecuteAsync(reservationId, issuedAt);
-                        Console.WriteLine($"✔ Creado: id={created.Id.Value}, number={created.Number.Value}");
+                        Console.WriteLine($"âœ” Creado: id={created.Id.Value}, number={created.Number.Value}");
                         break;
 
                     case 1:
@@ -191,7 +197,7 @@ public class InvoiceMenu
                         var updateIssuedAt = DateTime.Parse(Console.ReadLine()!, CultureInfo.InvariantCulture);
 
                         await _update.ExecuteAsync(updateId, updateReservationId, updateNumber, updateIssuedAt);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 8:
@@ -200,7 +206,7 @@ public class InvoiceMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 9:
@@ -209,7 +215,7 @@ public class InvoiceMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -339,4 +345,5 @@ public class InvoiceMenu
         return $"{item.Id.Value} - number={item.Number.Value} - reserva={reservationDisplay} - issuedAt={issuedAt} - subtotal={item.Subtotal.Value:0.00} - impuestos={item.Taxes.Value:0.00} - total={item.Total.Value:0.00}";
     }
 }
+
 

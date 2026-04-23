@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\InvoiceItems\UI\InvoiceItemMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System.Globalization;
 using GestionAerolineas.src.Modules.InvoiceItemTypes.Application.UseCases;
 using GestionAerolineas.src.Modules.InvoiceItems.Application.UseCases;
@@ -68,15 +74,15 @@ public class InvoiceItemMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create an invoice item",
-            "List all invoice items",
+            "Crear invoice item",
+            "Listar invoice items",
             "Get invoice item by ID",
             "Get invoice items by factura_id",
             "Get invoice items by tipo_item_id",
             "Get invoice items by reserva_pasajero_id",
-            "Update an invoice item",
-            "Delete an invoice item",
-            "Exit"
+            "Actualizar invoice item",
+            "Eliminar invoice item",
+            "Salir"
         });
 
         while (true)
@@ -115,7 +121,7 @@ public class InvoiceItemMenu
                         if (rpId == 0) rpId = null;
 
                         await _create.ExecuteAsync(invoiceId, typeId, desc, qty, unit, rpId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -186,7 +192,7 @@ public class InvoiceItemMenu
                         if (updateRpId == 0) updateRpId = null;
 
                         await _update.ExecuteAsync(updateId, updateInvoiceId, updateTypeId, updateDesc, updateQty, updateUnit, updateRpId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 7:
@@ -194,7 +200,7 @@ public class InvoiceItemMenu
                         Console.Write("\nIngrese el ID: ");
                         int deleteId = int.Parse(Console.ReadLine()!);
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 8:
@@ -203,7 +209,7 @@ public class InvoiceItemMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -338,3 +344,4 @@ public class InvoiceItemMenu
         return $"{item.Id.Value} - factura_id={item.InvoiceId.Value} - tipo_item_id={item.ItemTypeId.Value} - desc={item.Description.Value} - qty={item.Quantity.Value} - unit={item.UnitPrice.Value:0.00} - subtotal={item.Subtotal.Value:0.00} - reserva_pasajero_id={rp}";
     }
 }
+

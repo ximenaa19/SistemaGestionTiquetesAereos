@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Customers\CustomerModule.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Customers.Application.Interfaces;
 using GestionAerolineas.src.Modules.Customers.Application.Services;
 using GestionAerolineas.src.Modules.Customers.Application.UseCases;
@@ -29,5 +35,18 @@ public static class CustomerModule
         var getAllPeople = new GetAllPeopleUseCase(personRepository);
 
         return new CustomerMenu(create, getAll, getById, getByPersonId, getByPersonName, update, delete, getAllPeople);
+    }
+
+    public static AdminCreateCustomerFlow BuildAdminCreateFlow(AppDbContext context)
+    {
+        var repository = new CustomerRepository(context);
+        var personRepository = new PersonRepository(context);
+
+        ICustomerValidator validator = new CustomerValidator(repository, personRepository);
+
+        var create = new CreateCustomerUseCase(repository, validator);
+        var getAllPeople = new GetAllPeopleUseCase(personRepository);
+
+        return new AdminCreateCustomerFlow(create, getAllPeople);
     }
 }

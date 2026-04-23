@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Permissions\UI\PermissionMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Permissions.Application.UseCases;
 
 namespace GestionAerolineas.src.Modules.Permissions.UI;
@@ -31,13 +37,13 @@ public class PermissionMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new permission",
-            "List all permissions",
+            "Crear permission",
+            "Listar permissions",
             "Get permission by ID",
             "Get permission by name",
-            "Update a permission",
-            "Delete a permission",
-            "Exit"
+            "Actualizar permission",
+            "Eliminar permission",
+            "Salir"
         });
 
         while (true)
@@ -125,3 +131,4 @@ public class PermissionMenu
         }
     }
 }
+

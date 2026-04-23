@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Checkins\UI\CheckinMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System.Globalization;
 using GestionAerolineas.src.Modules.CheckinStatuses.Application.UseCases;
 using GestionAerolineas.src.Modules.Checkins.Application.UseCases;
@@ -88,17 +94,17 @@ public class CheckinMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a check-in",
-            "List all check-ins",
+            "Crear check-in",
+            "Listar check-ins",
             "Get check-in by ID",
             "Get check-in by tiquete_id",
             "Get check-ins by passenger_id",
             "Get check-ins by vuelo_id",
             "Get check-ins by estado_checkin_id",
             "Get check-ins by fecha_checkin range",
-            "Update a check-in",
-            "Delete a check-in",
-            "Exit"
+            "Actualizar check-in",
+            "Eliminar check-in",
+            "Salir"
         });
 
         while (true)
@@ -158,7 +164,7 @@ public class CheckinMenu
                             hasBag,
                             weight);
 
-                        Console.WriteLine($"✔ Check-in creado: id={created.Id.Value}, boardingPass={created.BoardingPassNumber.Value}");
+                        Console.WriteLine($"âœ” Check-in creado: id={created.Id.Value}, boardingPass={created.BoardingPassNumber.Value}");
                         break;
 
                     case 1:
@@ -285,7 +291,7 @@ public class CheckinMenu
                             updHasBag,
                             updWeight);
 
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 9:
@@ -293,7 +299,7 @@ public class CheckinMenu
                         int delId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(delId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 10:
@@ -302,7 +308,7 @@ public class CheckinMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -612,3 +618,4 @@ public class CheckinMenu
         return $"{c.Id.Value} - ticket={ticket} - staff={staff} - seat={seat} - checkedAt={dt} - status={status} - boardingPass={c.BoardingPassNumber.Value} - bag={(c.HasHoldBaggage.Value ? 1 : 0)} - kg={c.BaggageWeightKg.Value:0.00}";
     }
 }
+

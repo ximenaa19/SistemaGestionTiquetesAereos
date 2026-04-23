@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\FlightSeats\UI\FlightSeatMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airlines.Application.UseCases;
 using GestionAerolineas.src.Modules.Airports.Application.UseCases;
 using GestionAerolineas.src.Modules.CabinTypes.Application.UseCases;
@@ -68,16 +74,16 @@ public class FlightSeatMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a flight seat",
-            "List all flight seats",
+            "Crear flight seat",
+            "Listar flight seats",
             "Get flight seat by ID",
             "Get seats by flight_id",
             "Get seat by flight_id + seat_code",
             "Get available seats by flight_id",
             "Get occupied seats by flight_id",
-            "Update a flight seat",
-            "Delete a flight seat",
-            "Exit"
+            "Actualizar flight seat",
+            "Eliminar flight seat",
+            "Salir"
         });
 
         while (true)
@@ -110,7 +116,7 @@ public class FlightSeatMenu
                         bool isOccupied = string.IsNullOrWhiteSpace(occupiedInput) ? false : bool.Parse(occupiedInput);
 
                         await _create.ExecuteAsync(flightId, seatCode, cabinTypeId, locationTypeId, isOccupied);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -204,7 +210,7 @@ public class FlightSeatMenu
                         bool newIsOccupied = bool.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newFlightId, newSeatCode, newCabinTypeId, newLocationTypeId, newIsOccupied);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 8:
@@ -214,7 +220,7 @@ public class FlightSeatMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 9:
@@ -223,7 +229,7 @@ public class FlightSeatMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -404,4 +410,5 @@ public class FlightSeatMenu
         return map.TryGetValue(id, out var display) ? display : $"#{id}";
     }
 }
+
 

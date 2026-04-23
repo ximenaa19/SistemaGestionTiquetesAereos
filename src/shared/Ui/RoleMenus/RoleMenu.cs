@@ -1,5 +1,15 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\shared\Ui\RoleMenus\RoleMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 namespace GestionAerolineas.src.shared.Ui.RoleMenus;
 
+/// <summary>
+/// Componente base de menú navegable por flechas para consola.
+/// Se reutiliza en los distintos menús por rol y submenús del sistema.
+/// </summary>
 public sealed class RoleMenu
 {
     private readonly string _title;
@@ -13,6 +23,9 @@ public sealed class RoleMenu
         _exitLabel = exitLabel;
     }
 
+    /// <summary>
+    /// Inicia el bucle de interacción del menú hasta que el usuario salga o pulse Escape.
+    /// </summary>
     public async Task StartAsync()
     {
         var selected = 0;
@@ -58,6 +71,9 @@ public sealed class RoleMenu
         }
     }
 
+    /// <summary>
+    /// Dibuja título, opciones y ayuda visual según la posición seleccionada.
+    /// </summary>
     private void Render(int selected)
     {
         Console.Clear();
@@ -74,6 +90,9 @@ public sealed class RoleMenu
         Console.ResetColor();
     }
 
+    /// <summary>
+    /// Dibuja el encabezado decorado del menú actual.
+    /// </summary>
     private void DrawTitle()
     {
         var line = new string('═', Math.Max(32, _title.Length + 8));
@@ -87,6 +106,9 @@ public sealed class RoleMenu
         Console.WriteLine();
     }
 
+    /// <summary>
+    /// Dibuja una opción individual, resaltando la opción activa.
+    /// </summary>
     private static void DrawOption(int index, string label, bool selected)
     {
         if (selected)

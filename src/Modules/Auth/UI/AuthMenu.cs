@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Auth\UI\AuthMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Auth.Application.UseCases;
 using GestionAerolineas.src.Modules.Auth.Application.Models;
 using GestionAerolineas.src.Modules.SystemRoles.Application.UseCases;
@@ -5,6 +11,11 @@ using GestionAerolineas.src.Modules.SystemRoles.Domain.Aggregate;
 
 namespace GestionAerolineas.src.Modules.Auth.UI;
 
+/// <summary>
+/// Menú principal de autenticación en consola.
+/// Centraliza el flujo de registro y login para entregar un resultado de sesión
+/// que luego se usa para enrutar al menú por rol.
+/// </summary>
 public class AuthMenu
 {
     private readonly RegisterAuthUserUseCase _register;
@@ -21,13 +32,21 @@ public class AuthMenu
         _getAllRolesUseCase = getAllRolesUseCase;
     }
 
+    /// <summary>
+    /// Muestra el menú de autenticación hasta que el usuario:
+    /// 1) inicia sesión correctamente o
+    /// 2) decide salir.
+    /// </summary>
+    /// <returns>
+    /// Resultado de login cuando la autenticación es exitosa; <c>null</c> si el usuario sale.
+    /// </returns>
     public async Task<AuthLoginResult?> StartAsync()
     {
         var menu = new ConsoleMenu(new[]
         {
             "Register user",
             "Login",
-            "Exit"
+            "Salir"
         });
 
         while (true)
@@ -48,7 +67,7 @@ public class AuthMenu
                         var loginPassword = ReadHiddenRequired("Ingrese contrasenia: ");
 
                         var result = await _login.ExecuteAsync(loginUsername, loginPassword);
-                        Console.WriteLine($"✔ Login exitoso - userId={result.UserId} - roleId={result.RoleId}");
+                        Console.WriteLine($"âœ” Login exitoso - userId={result.UserId} - roleId={result.RoleId}");
                         return result;
 
                     case 2:
@@ -57,7 +76,7 @@ public class AuthMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -65,6 +84,10 @@ public class AuthMenu
         }
     }
 
+    /// <summary>
+    /// Ejecuta el flujo interactivo de registro:
+    /// captura datos, valida contraseña, permite elegir rol y confirma antes de persistir.
+    /// </summary>
     private async Task HandleRegisterAsync()
     {
         while (true)
@@ -85,7 +108,7 @@ public class AuthMenu
             if (decision == 1)
             {
                 await _register.ExecuteAsync(username, password, selectedRole.Id.Value);
-                Console.WriteLine("✔ Registro completado");
+                Console.WriteLine("âœ” Registro completado");
                 return;
             }
 
@@ -97,6 +120,9 @@ public class AuthMenu
         }
     }
 
+    /// <summary>
+    /// Lista roles disponibles en catálogo y obliga a seleccionar uno válido por id.
+    /// </summary>
     private async Task<SystemRole> SelectRoleAsync()
     {
         var roles = (await _getAllRolesUseCase.ExecuteAsync()).ToList();
@@ -113,14 +139,14 @@ public class AuthMenu
             var raw = Console.ReadLine();
             if (!int.TryParse(raw, out var roleId))
             {
-                Console.WriteLine("❌ Debes ingresar un numero valido.");
+                Console.WriteLine("âŒ Debes ingresar un numero valido.");
                 continue;
             }
 
             var selected = roles.FirstOrDefault(r => r.Id.Value == roleId);
             if (selected is null)
             {
-                Console.WriteLine("❌ El rol no existe en la lista. Intenta de nuevo.");
+                Console.WriteLine("âŒ El rol no existe en la lista. Intenta de nuevo.");
                 continue;
             }
 
@@ -128,6 +154,10 @@ public class AuthMenu
         }
     }
 
+    /// <summary>
+    /// Lee contraseña oculta y exige longitud mínima + confirmación.
+    /// Repite únicamente este paso si hay error para no perder el resto del progreso.
+    /// </summary>
     private static string ReadValidPasswordWithConfirmation()
     {
         while (true)
@@ -135,14 +165,14 @@ public class AuthMenu
             var password = ReadHiddenRequired("Ingrese contrasenia (minimo 8 caracteres): ");
             if (password.Length < 8)
             {
-                Console.WriteLine("❌ La contrasenia debe tener minimo 8 caracteres.");
+                Console.WriteLine("âŒ La contrasenia debe tener minimo 8 caracteres.");
                 continue;
             }
 
             var confirm = ReadHiddenRequired("Confirmar contrasenia: ");
             if (password != confirm)
             {
-                Console.WriteLine("❌ Las contrasenias no coinciden.");
+                Console.WriteLine("âŒ Las contrasenias no coinciden.");
                 continue;
             }
 
@@ -150,6 +180,9 @@ public class AuthMenu
         }
     }
 
+    /// <summary>
+    /// Lee la opción final de confirmación del registro (1 confirmar, 2 editar, 3 cancelar).
+    /// </summary>
     private static int ReadConfirmChoice()
     {
         while (true)
@@ -162,10 +195,13 @@ public class AuthMenu
             if (raw is "1" or "2" or "3")
                 return int.Parse(raw);
 
-            Console.WriteLine("❌ Opcion invalida. Debes ingresar 1, 2 o 3.");
+            Console.WriteLine("âŒ Opcion invalida. Debes ingresar 1, 2 o 3.");
         }
     }
 
+    /// <summary>
+    /// Lee un valor oculto obligatorio (ej. contraseña) y falla si llega vacío.
+    /// </summary>
     private static string ReadHiddenRequired(string prompt)
     {
         var value = ReadHiddenLine(prompt);
@@ -174,6 +210,9 @@ public class AuthMenu
         return value;
     }
 
+    /// <summary>
+    /// Lee texto ocultando caracteres en consola con asteriscos.
+    /// </summary>
     private static string ReadHiddenLine(string prompt)
     {
         Console.Write(prompt);
@@ -208,3 +247,4 @@ public class AuthMenu
         return new string(buffer.ToArray());
     }
 }
+

@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Seasons\UI\SeasonMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Seasons.Application.UseCases;
 
 namespace GestionAerolineas.src.Modules.Seasons.UI;
@@ -31,13 +37,13 @@ public class SeasonMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new season",
-            "List all seasons",
+            "Crear season",
+            "Listar seasons",
             "Get season by ID",
             "Get season by name",
-            "Update a season",
-            "Delete a season",
-            "Exit"
+            "Actualizar season",
+            "Eliminar season",
+            "Salir"
         });
 
         while (true)
@@ -140,3 +146,4 @@ public class SeasonMenu
         return value;
     }
 }
+

@@ -1,4 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: Migrations\20260420100009_AddPaymentMethods.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable

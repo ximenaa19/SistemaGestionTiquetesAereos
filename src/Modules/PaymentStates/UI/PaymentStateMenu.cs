@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\PaymentStates\UI\PaymentStateMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.PaymentStates.Application.UseCases;
@@ -32,13 +38,13 @@ public class PaymentStateMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new payment state",
-            "List all payment states",
+            "Crear payment state",
+            "Listar payment states",
             "Get payment state by ID",
             "Get payment state by name",
-            "Update a payment state",
-            "Delete a payment state",
-            "Exit"
+            "Actualizar payment state",
+            "Eliminar payment state",
+            "Salir"
         });
 
         while (true)
@@ -120,3 +126,4 @@ public class PaymentStateMenu
         }
     }
 }
+

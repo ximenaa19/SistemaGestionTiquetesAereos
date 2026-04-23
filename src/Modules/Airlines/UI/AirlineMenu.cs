@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Airlines\UI\AirlineMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airlines.Application.UseCases;
 using GestionAerolineas.src.Modules.Airlines.Domain.Aggregate;
 using GestionAerolineas.src.Modules.Countries.Application.UseCases;
@@ -37,13 +43,13 @@ public class AirlineMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new airline",
-            "List all airlines",
+            "Crear airline",
+            "Listar airlines",
             "Get airline by ID",
             "Get airline by name",
-            "Update an airline",
-            "Delete an airline",
-            "Exit"
+            "Actualizar airline",
+            "Eliminar airline",
+            "Salir"
         });
 
         while (true)
@@ -71,7 +77,7 @@ public class AirlineMenu
                         bool isActive = string.IsNullOrWhiteSpace(activeInput) ? true : bool.Parse(activeInput);
 
                         await _create.ExecuteAsync(name, iataCode, originCountryId, isActive);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -131,7 +137,7 @@ public class AirlineMenu
                         bool newIsActive = bool.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newName, newIataCode, newOriginCountryId, newIsActive);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -139,7 +145,7 @@ public class AirlineMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -148,7 +154,7 @@ public class AirlineMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -183,4 +189,5 @@ public class AirlineMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\RolePermissions\UI\RolePermissionMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Permissions.Application.UseCases;
 using GestionAerolineas.src.Modules.RolePermissions.Application.UseCases;
 using GestionAerolineas.src.Modules.SystemRoles.Application.UseCases;
@@ -37,12 +43,12 @@ public class RolePermissionMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new role permission",
-            "List all role permissions",
+            "Crear role permission",
+            "Listar role permissions",
             "Get role permission by ID",
-            "Update a role permission",
-            "Delete a role permission",
-            "Exit"
+            "Actualizar role permission",
+            "Eliminar role permission",
+            "Salir"
         });
 
         while (true)
@@ -63,7 +69,7 @@ public class RolePermissionMenu
                         int permissionId = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(roleId, permissionId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -94,7 +100,7 @@ public class RolePermissionMenu
                     case 3:
                         await PrintSystemRolesAndPermissionsAsync();
 
-                        Console.Write("\nIngrese el ID de la asignación: ");
+                        Console.Write("\nIngrese el ID de la asignaciÃ³n: ");
                         int updateId = int.Parse(Console.ReadLine()!);
 
                         Console.Write("Ingrese el nuevo ID del rol: ");
@@ -104,7 +110,7 @@ public class RolePermissionMenu
                         int newPermissionId = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newRoleId, newPermissionId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 4:
@@ -112,7 +118,7 @@ public class RolePermissionMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 5:
@@ -121,7 +127,7 @@ public class RolePermissionMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -160,4 +166,5 @@ public class RolePermissionMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

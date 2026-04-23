@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\InvoiceItemTypes\UI\InvoiceItemTypeMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.InvoiceItemTypes.Application.UseCases;
@@ -32,13 +38,13 @@ public class InvoiceItemTypeMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new invoice item type",
-            "List all invoice item types",
+            "Crear invoice item type",
+            "Listar invoice item types",
             "Get invoice item type by ID",
             "Get invoice item type by name",
-            "Update an invoice item type",
-            "Delete an invoice item type",
-            "Exit"
+            "Actualizar invoice item type",
+            "Eliminar invoice item type",
+            "Salir"
         });
 
         while (true)
@@ -120,3 +126,4 @@ public class InvoiceItemTypeMenu
         }
     }
 }
+

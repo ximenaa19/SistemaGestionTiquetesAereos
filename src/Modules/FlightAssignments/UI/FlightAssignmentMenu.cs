@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\FlightAssignments\UI\FlightAssignmentMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airlines.Application.UseCases;
 using GestionAerolineas.src.Modules.Airports.Application.UseCases;
 using GestionAerolineas.src.Modules.FlightAssignments.Application.UseCases;
@@ -76,16 +82,16 @@ public class FlightAssignmentMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a flight assignment",
-            "List all flight assignments",
+            "Crear flight assignment",
+            "Listar flight assignments",
             "Get assignment by ID",
             "Get assignments by flight_id",
             "Get assignments by staff_id",
             "Get assignments by flight_role_id",
             "Get assignment by flight_id + staff_id",
-            "Update an assignment",
-            "Delete an assignment",
-            "Exit"
+            "Actualizar assignment",
+            "Eliminar assignment",
+            "Salir"
         });
 
         while (true)
@@ -111,7 +117,7 @@ public class FlightAssignmentMenu
                         int flightRoleId = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(flightId, staffId, flightRoleId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -200,7 +206,7 @@ public class FlightAssignmentMenu
                         int newFlightRoleId = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newFlightId, newStaffId, newFlightRoleId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 8:
@@ -210,7 +216,7 @@ public class FlightAssignmentMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 9:
@@ -219,7 +225,7 @@ public class FlightAssignmentMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -421,4 +427,5 @@ public class FlightAssignmentMenu
         return map.TryGetValue(id, out var display) ? display : $"#{id}";
     }
 }
+
 

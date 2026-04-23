@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\RouteStops\UI\RouteStopMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airports.Application.UseCases;
 using GestionAerolineas.src.Modules.Routes.Application.UseCases;
 using GestionAerolineas.src.Modules.RouteStops.Application.UseCases;
@@ -44,14 +50,14 @@ public class RouteStopMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new route stop",
-            "List all route stops",
+            "Crear route stop",
+            "Listar route stops",
             "Get route stop by ID",
             "Get route stops by route_id",
             "Get route stop by route_id + order",
-            "Update a route stop",
-            "Delete a route stop",
-            "Exit"
+            "Actualizar route stop",
+            "Eliminar route stop",
+            "Salir"
         });
 
         while (true)
@@ -79,7 +85,7 @@ public class RouteStopMenu
                         int durationMinutes = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(routeId, stopAirportId, order, durationMinutes);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -162,7 +168,7 @@ public class RouteStopMenu
                         int newDurationMinutes = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newRouteId, newStopAirportId, newOrder, newDurationMinutes);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 6:
@@ -170,7 +176,7 @@ public class RouteStopMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 7:
@@ -179,7 +185,7 @@ public class RouteStopMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -251,4 +257,5 @@ public class RouteStopMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

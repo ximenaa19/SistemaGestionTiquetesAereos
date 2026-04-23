@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Users\UserModule.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.People.Application.UseCases;
 using GestionAerolineas.src.Modules.People.Infrastructure.Repository;
 using GestionAerolineas.src.Modules.SystemRoles.Application.UseCases;
@@ -45,5 +51,20 @@ public static class UserModule
             deleteHard,
             getAllPeople,
             getAllRoles);
+    }
+
+    public static AdminCreateUserFlow BuildAdminCreateFlow(AppDbContext context)
+    {
+        var userRepository = new UserRepository(context);
+        var personRepository = new PersonRepository(context);
+        var systemRoleRepository = new SystemRoleRepository(context);
+
+        IUserValidator validator = new UserValidator(userRepository, personRepository, systemRoleRepository);
+
+        var create = new CreateUserUseCase(userRepository, validator);
+        var getAllPeople = new GetAllPeopleUseCase(personRepository);
+        var getAllRoles = new GetAllSystemRolesUseCase(systemRoleRepository);
+
+        return new AdminCreateUserFlow(create, getAllPeople, getAllRoles);
     }
 }

@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\DocumentTypes\UI\DocumentTypeMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.DocumentTypes.Application.UseCases;
 
 namespace GestionAerolineas.src.Modules.DocumentTypes.UI;
@@ -31,13 +37,13 @@ public class DocumentTypeMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new document type",
-            "List all document types",
+            "Crear document type",
+            "Listar document types",
             "Get document type by ID",
             "Get document type by code",
-            "Update a document type",
-            "Delete a document type",
-            "Exit"
+            "Actualizar document type",
+            "Eliminar document type",
+            "Salir"
         });
 
         while (true)
@@ -127,3 +133,4 @@ public class DocumentTypeMenu
         }
     }
 }
+

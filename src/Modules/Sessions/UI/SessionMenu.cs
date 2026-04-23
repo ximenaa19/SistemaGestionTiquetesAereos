@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Sessions\UI\SessionMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System.Globalization;
 using GestionAerolineas.src.Modules.Sessions.Application.UseCases;
 using GestionAerolineas.src.Modules.Sessions.Domain.Aggregate;
@@ -49,17 +55,17 @@ public class SessionMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new session",
-            "List all sessions",
+            "Crear session",
+            "Listar sessions",
             "Get session by ID",
             "Get sessions by user_id",
             "Get active sessions",
             "Get inactive sessions",
             "Get sessions by date range",
-            "Update a session",
+            "Actualizar session",
             "Force end active sessions of another user",
-            "Delete a session",
-            "Exit"
+            "Eliminar session",
+            "Salir"
         });
 
         while (true)
@@ -90,7 +96,7 @@ public class SessionMenu
                         bool isActive = string.IsNullOrWhiteSpace(activeInput) ? true : bool.Parse(activeInput);
 
                         await _create.ExecuteAsync(userId, startedAt, endedAt, ipAddress, isActive);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -163,7 +169,7 @@ public class SessionMenu
                         bool updateIsActive = bool.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, updateUserId, updateStartedAt, updateEndedAt, updateIp, updateIsActive);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 8:
@@ -176,7 +182,7 @@ public class SessionMenu
                         int targetUserId = int.Parse(Console.ReadLine()!);
 
                         int closed = await _forceEnd.ExecuteAsync(actingUserId, targetUserId);
-                        Console.WriteLine($"✔ Sesiones cerradas: {closed}");
+                        Console.WriteLine($"âœ” Sesiones cerradas: {closed}");
                         break;
 
                     case 9:
@@ -186,7 +192,7 @@ public class SessionMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 10:
@@ -195,7 +201,7 @@ public class SessionMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -283,3 +289,4 @@ public class SessionMenu
         return DateTime.Parse(input, CultureInfo.InvariantCulture);
     }
 }
+

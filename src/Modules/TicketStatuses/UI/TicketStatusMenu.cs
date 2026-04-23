@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\TicketStatuses\UI\TicketStatusMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.TicketStatuses.Application.UseCases;
@@ -32,13 +38,13 @@ public class TicketStatusMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new ticket status",
-            "List all ticket statuses",
+            "Crear ticket status",
+            "Listar ticket statuses",
             "Get ticket status by ID",
             "Get ticket status by name",
-            "Update a ticket status",
-            "Delete a ticket status",
-            "Exit"
+            "Actualizar ticket status",
+            "Eliminar ticket status",
+            "Salir"
         });
 
         while (true)
@@ -120,3 +126,4 @@ public class TicketStatusMenu
         }
     }
 }
+

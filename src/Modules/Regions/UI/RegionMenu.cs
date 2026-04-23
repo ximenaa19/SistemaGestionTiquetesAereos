@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Regions\UI\RegionMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Countries.Application.UseCases;
 using GestionAerolineas.src.Modules.Regions.Application.UseCases;
 using GestionAerolineas.src.Modules.Regions.Domain.Aggregate;
@@ -37,13 +43,13 @@ public class RegionMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new region",
-            "List all regions",
+            "Crear region",
+            "Listar regions",
             "Get region by ID",
             "Get region by name",
-            "Update a region",
-            "Delete a region",
-            "Exit"
+            "Actualizar region",
+            "Eliminar region",
+            "Salir"
         });
 
         while (true)
@@ -67,7 +73,7 @@ public class RegionMenu
                         int countryId = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(name, type, countryId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -124,7 +130,7 @@ public class RegionMenu
                         int newCountryId = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newName, newType, newCountryId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -132,7 +138,7 @@ public class RegionMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -141,7 +147,7 @@ public class RegionMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -152,7 +158,7 @@ public class RegionMenu
 
     private async Task PrintCountriesAsync()
     {
-        Console.WriteLine("Países disponibles:");
+        Console.WriteLine("PaÃ­ses disponibles:");
         var countries = await _getAllCountries.ExecuteAsync();
         foreach (var c in countries)
             Console.WriteLine($"{c.Id.Value} - {c.Name.Value} - ISO={c.IsoCode.Value}");
@@ -167,7 +173,7 @@ public class RegionMenu
     private static string Format(Region item, Dictionary<int, string> countryMap)
     {
         string countryDisplay = GetDisplay(countryMap, item.CountryId.Value);
-        return $"{item.Id.Value} - {item.Name.Value} - tipo={item.Type.Value} - país={countryDisplay}";
+        return $"{item.Id.Value} - {item.Name.Value} - tipo={item.Type.Value} - paÃ­s={countryDisplay}";
     }
 
     private static string GetDisplay(Dictionary<int, string> map, int id)
@@ -175,4 +181,5 @@ public class RegionMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

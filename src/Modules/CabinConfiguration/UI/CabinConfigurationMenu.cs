@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\CabinConfiguration\UI\CabinConfigurationMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Aircraft.Application.UseCases;
 using GestionAerolineas.src.Modules.Aircraft.Domain.Aggregate;
 using GestionAerolineas.src.Modules.CabinConfiguration.Application.UseCases;
@@ -46,14 +52,14 @@ public class CabinConfigurationMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new cabin configuration",
-            "List all cabin configurations",
+            "Crear cabin configuration",
+            "Listar cabin configurations",
             "Get cabin configuration by ID",
-            "List cabin configurations by aircraft ID",
+            "Listar configuraciones de cabina por ID de aeronave",
             "Get cabin configuration by aircraft+cabin type",
-            "Update a cabin configuration",
-            "Delete a cabin configuration",
-            "Exit"
+            "Actualizar cabin configuration",
+            "Eliminar cabin configuration",
+            "Salir"
         });
 
         while (true)
@@ -87,7 +93,7 @@ public class CabinConfigurationMenu
                         string seatLetters = Console.ReadLine()!;
 
                         await _create.ExecuteAsync(aircraftId, cabinTypeId, startRow, endRow, seatsPerRow, seatLetters);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -183,7 +189,7 @@ public class CabinConfigurationMenu
                         string newSeatLetters = Console.ReadLine()!;
 
                         await _update.ExecuteAsync(updateId, newAircraftId, newCabinTypeId, newStartRow, newEndRow, newSeatsPerRow, newSeatLetters);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 6:
@@ -191,7 +197,7 @@ public class CabinConfigurationMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 7:
@@ -200,7 +206,7 @@ public class CabinConfigurationMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -261,3 +267,4 @@ public class CabinConfigurationMenu
         return map.TryGetValue(id, out var display) ? display : $"#{id}";
     }
 }
+

@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Airports\UI\AirportMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airports.Application.UseCases;
 using GestionAerolineas.src.Modules.Airports.Domain.Aggregate;
 using GestionAerolineas.src.Modules.Cities.Application.UseCases;
@@ -37,13 +43,13 @@ public class AirportMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new airport",
-            "List all airports",
+            "Crear airport",
+            "Listar airports",
             "Get airport by ID",
             "Get airport by name",
-            "Update an airport",
-            "Delete an airport",
-            "Exit"
+            "Actualizar airport",
+            "Eliminar airport",
+            "Salir"
         });
 
         while (true)
@@ -70,7 +76,7 @@ public class AirportMenu
                         int cityId = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(name, iataCode, icaoCode, cityId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -130,7 +136,7 @@ public class AirportMenu
                         int newCityId = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newName, newIataCode, newIcaoCode, newCityId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -138,7 +144,7 @@ public class AirportMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -147,7 +153,7 @@ public class AirportMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -182,3 +188,4 @@ public class AirportMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+

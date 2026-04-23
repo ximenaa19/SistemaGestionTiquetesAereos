@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\CardIssuers\UI\CardIssuerMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.CardIssuers.Application.UseCases;
 
 namespace GestionAerolineas.src.Modules.CardIssuers.UI;
@@ -31,13 +37,13 @@ public class CardIssuerMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new card issuer",
-            "List all card issuers",
+            "Crear card issuer",
+            "Listar card issuers",
             "Get card issuer by ID",
             "Get card issuer by name",
-            "Update a card issuer",
-            "Delete a card issuer",
-            "Exit"
+            "Actualizar card issuer",
+            "Eliminar card issuer",
+            "Salir"
         });
 
         while (true)
@@ -119,3 +125,4 @@ public class CardIssuerMenu
         }
     }
 }
+

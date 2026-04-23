@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Checkins\Infrastructure\Entity\CheckinEntityConfiguration.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.CheckinStatuses.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.FlightSeats.Infrastructure.Entity;
 using GestionAerolineas.src.Modules.Staff.Infrastructure.Entity;

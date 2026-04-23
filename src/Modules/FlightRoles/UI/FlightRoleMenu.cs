@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\FlightRoles\UI\FlightRoleMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.FlightRoles.Application.UseCases;
 
 namespace GestionAerolineas.src.Modules.FlightRoles.UI;
@@ -31,13 +37,13 @@ public class FlightRoleMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new flight role",
-            "List all flight roles",
+            "Crear flight role",
+            "Listar flight roles",
             "Get flight role by ID",
             "Get flight role by name",
-            "Update a flight role",
-            "Delete a flight role",
-            "Exit"
+            "Actualizar flight role",
+            "Eliminar flight role",
+            "Salir"
         });
 
         while (true)
@@ -53,7 +59,7 @@ public class FlightRoleMenu
                         string name = Console.ReadLine()!;
 
                         await _create.ExecuteAsync(name);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -93,7 +99,7 @@ public class FlightRoleMenu
                         string newName = Console.ReadLine()!;
 
                         await _update.ExecuteAsync(updateId, newName);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -101,7 +107,7 @@ public class FlightRoleMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -110,7 +116,7 @@ public class FlightRoleMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -119,4 +125,5 @@ public class FlightRoleMenu
         }
     }
 }
+
 

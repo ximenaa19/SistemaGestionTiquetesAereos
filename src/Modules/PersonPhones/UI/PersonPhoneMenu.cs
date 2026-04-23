@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\PersonPhones\UI\PersonPhoneMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.People.Application.UseCases;
 using GestionAerolineas.src.Modules.PersonPhones.Application.UseCases;
 using GestionAerolineas.src.Modules.PersonPhones.Domain.Aggregate;
@@ -41,13 +47,13 @@ public class PersonPhoneMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new person phone",
-            "List all person phones",
+            "Crear person phone",
+            "Listar person phones",
             "Get person phone by ID",
             "Get person phone by person+phone",
-            "Update a person phone",
-            "Delete a person phone",
-            "Exit"
+            "Actualizar person phone",
+            "Eliminar person phone",
+            "Salir"
         });
 
         while (true)
@@ -76,7 +82,7 @@ public class PersonPhoneMenu
                         bool isPrimary = string.IsNullOrWhiteSpace(primaryInput) ? false : bool.Parse(primaryInput);
 
                         await _create.ExecuteAsync(personId, phoneCodeId, phoneNumber, isPrimary);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -149,7 +155,7 @@ public class PersonPhoneMenu
                         bool newIsPrimary = bool.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newPersonId, newPhoneCodeId, newPhoneNumber, newIsPrimary);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -157,7 +163,7 @@ public class PersonPhoneMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -166,7 +172,7 @@ public class PersonPhoneMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -225,4 +231,5 @@ public class PersonPhoneMenu
         return map.TryGetValue(id, out var display) ? display : $"#{id}";
     }
 }
+
 

@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: Program.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Addresses;
 using GestionAerolineas.src.Modules.Aircraft;
 using GestionAerolineas.src.Modules.AircraftManufacturers;
@@ -48,6 +54,7 @@ using GestionAerolineas.src.Modules.ReservationStatuses;
 using GestionAerolineas.src.Modules.ReservationStatusTransitions;
 using GestionAerolineas.src.Modules.RoadTypes;
 using GestionAerolineas.src.Modules.RolePermissions;
+using GestionAerolineas.src.Modules.Reports;
 using GestionAerolineas.src.Modules.Routes;
 using GestionAerolineas.src.Modules.RouteStops;
 using GestionAerolineas.src.Modules.Seasons;
@@ -62,6 +69,31 @@ using GestionAerolineas.src.Modules.SystemRoles.Infrastructure.Repository;
 using GestionAerolineas.src.Modules.Tickets;
 using GestionAerolineas.src.Modules.TicketStatuses;
 using GestionAerolineas.src.Modules.Users;
+using GestionAerolineas.src.Modules.Users.Application.UseCases;
+using GestionAerolineas.src.Modules.Users.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.Customers.Application.UseCases;
+using GestionAerolineas.src.Modules.Customers.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.Passengers.Application.UseCases;
+using GestionAerolineas.src.Modules.Passengers.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.Reservations.Application.Services;
+using GestionAerolineas.src.Modules.Reservations.Application.UseCases;
+using GestionAerolineas.src.Modules.Reservations.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.ReservationFlights.Application.UseCases;
+using GestionAerolineas.src.Modules.ReservationFlights.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.ReservationPassengers.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.ReservationStatuses.Application.UseCases;
+using GestionAerolineas.src.Modules.ReservationStatuses.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.ReservationStatusTransitions.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.Tickets.Application.UseCases;
+using GestionAerolineas.src.Modules.Tickets.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.TicketStatuses.Application.UseCases;
+using GestionAerolineas.src.Modules.TicketStatuses.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.Payments.Application.UseCases;
+using GestionAerolineas.src.Modules.Payments.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.PaymentStates.Application.UseCases;
+using GestionAerolineas.src.Modules.PaymentStates.Infrastructure.Repository;
+using GestionAerolineas.src.Modules.PaymentMethods.Application.UseCases;
+using GestionAerolineas.src.Modules.PaymentMethods.Infrastructure.Repository;
 using GestionAerolineas.src.shared.Helpers;
 using GestionAerolineas.src.shared.Seed;
 using GestionAerolineas.src.shared.Ui.RoleMenus;
@@ -135,6 +167,21 @@ try
     var authMenu = AuthModule.Build(context);
     var personMenu = PersonModule.Build(context);
     var adminCreatePersonFlow = PersonModule.BuildAdminCreateFlow(context);
+    var adminUpdatePersonFlow = PersonModule.BuildAdminUpdateFlow(context);
+    var adminDeletePersonFlow = PersonModule.BuildAdminDeleteFlow(context);
+    var adminCreateAirlineFlow = AirlineModule.BuildAdminCreateFlow(context);
+    var adminUpdateAirlineFlow = AirlineModule.BuildAdminUpdateFlow(context);
+    var adminDeleteAirlineFlow = AirlineModule.BuildAdminDeleteFlow(context);
+    var adminCreateAirportFlow = AirportModule.BuildAdminCreateFlow(context);
+    var adminUpdateAirportFlow = AirportModule.BuildAdminUpdateFlow(context);
+    var adminDeleteAirportFlow = AirportModule.BuildAdminDeleteFlow(context);
+    var adminCreateRouteFlow = RouteModule.BuildAdminCreateFlow(context);
+    var adminUpdateRouteFlow = RouteModule.BuildAdminUpdateFlow(context);
+    var adminDeleteRouteFlow = RouteModule.BuildAdminDeleteFlow(context);
+    var adminCreateAircraftFlow = AircraftModule.BuildAdminCreateFlow(context);
+    var adminUpdateAircraftFlow = AircraftModule.BuildAdminUpdateFlow(context);
+    var adminDeleteAircraftFlow = AircraftModule.BuildAdminDeleteFlow(context);
+    var reportsMenu = ReportsModule.Build(context);
     var passengerMenu = PassengerModule.Build(context);
     var cabinTypeMenu = CabinTypeModule.Build(context);
     var cabinConfigurationMenu = CabinConfigurationModule.Build(context);
@@ -151,90 +198,90 @@ try
     var role = await getRoleById.ExecuteAsync(authResult.RoleId);
     var roleName = role?.Name.Value?.Trim() ?? string.Empty;
 
-    var adminAirOperationMenu = new RoleMenu("ADMIN · OPERACION AEREA", new List<RoleMenuOption>
+    var adminAirOperationMenu = new RoleMenu("ADMIN - OPERACION AEREA", new List<RoleMenuOption>
     {
-        new("Flights", () => flightMenu.StartAsync()),
-        new("FlightAssignments", () => flightAssignmentMenu.StartAsync()),
-        new("FlightSeats", () => flightSeatMenu.StartAsync()),
-        new("Routes", () => routeMenu.StartAsync()),
-        new("RouteStops", () => routeStopMenu.StartAsync()),
-        new("Airports", () => airportMenu.StartAsync()),
-        new("AirportAirline", () => airportAirlineMenu.StartAsync()),
-        new("Airlines", () => airlineMenu.StartAsync()),
-        new("Aircraft", () => aircraftMenu.StartAsync()),
-        new("AircraftModels", () => aircraftModelMenu.StartAsync()),
-        new("AircraftManufacturers", () => aircraftManufacturerMenu.StartAsync()),
-        new("CabinConfiguration", () => cabinConfigurationMenu.StartAsync()),
-        new("Fares", () => fareMenu.StartAsync())
+        new("Vuelos", () => flightMenu.StartAsync()),
+        new("Asignaciones de vuelo", () => flightAssignmentMenu.StartAsync()),
+        new("Asientos de vuelo", () => flightSeatMenu.StartAsync()),
+        new("Rutas", () => routeMenu.StartAsync()),
+        new("Escalas de ruta", () => routeStopMenu.StartAsync()),
+        new("Aeropuertos", () => airportMenu.StartAsync()),
+        new("Aeropuerto-Aerolinea", () => airportAirlineMenu.StartAsync()),
+        new("Aerolineas", () => airlineMenu.StartAsync()),
+        new("Aeronaves", () => aircraftMenu.StartAsync()),
+        new("Modelos de aeronave", () => aircraftModelMenu.StartAsync()),
+        new("Fabricantes de aeronave", () => aircraftManufacturerMenu.StartAsync()),
+        new("Configuracion de cabina", () => cabinConfigurationMenu.StartAsync()),
+        new("Tarifas", () => fareMenu.StartAsync())
     }, "Volver");
 
-    var adminCommercialMenu = new RoleMenu("ADMIN · COMERCIAL Y VENTAS", new List<RoleMenuOption>
+    var adminCommercialMenu = new RoleMenu("ADMIN - COMERCIAL Y VENTAS", new List<RoleMenuOption>
     {
-        new("Reservations", () => reservationMenu.StartAsync()),
-        new("ReservationFlights", () => reservationFlightMenu.StartAsync()),
-        new("ReservationPassengers", () => reservationPassengerMenu.StartAsync()),
-        new("Payments", () => paymentMenu.StartAsync()),
-        new("Invoices", () => invoiceMenu.StartAsync()),
-        new("InvoiceItems", () => invoiceItemMenu.StartAsync()),
-        new("Tickets", () => ticketMenu.StartAsync()),
-        new("Checkins", () => checkinMenu.StartAsync())
+        new("Reservas", () => reservationMenu.StartAsync()),
+        new("Reservas por vuelo", () => reservationFlightMenu.StartAsync()),
+        new("Pasajeros por reserva", () => reservationPassengerMenu.StartAsync()),
+        new("Pagos", () => paymentMenu.StartAsync()),
+        new("Facturas", () => invoiceMenu.StartAsync()),
+        new("Items de factura", () => invoiceItemMenu.StartAsync()),
+        new("Tiquetes", () => ticketMenu.StartAsync()),
+        new("Check-ins", () => checkinMenu.StartAsync())
     }, "Volver");
 
-    var adminPeopleMenu = new RoleMenu("ADMIN · PERSONAS Y ORGANIZACION", new List<RoleMenuOption>
+    var adminPeopleMenu = new RoleMenu("ADMIN - PERSONAS Y ORGANIZACION", new List<RoleMenuOption>
     {
-        new("People", () => personMenu.StartAsync()),
-        new("Customers", () => customerMenu.StartAsync()),
-        new("Passengers", () => passengerMenu.StartAsync()),
+        new("Personas", () => personMenu.StartAsync()),
+        new("Clientes", () => customerMenu.StartAsync()),
+        new("Pasajeros", () => passengerMenu.StartAsync()),
         new("Staff", () => staffMenu.StartAsync()),
-        new("StaffAvailability", () => staffAvailabilityMenu.StartAsync()),
-        new("PersonEmails", () => personEmailMenu.StartAsync()),
-        new("PersonPhones", () => personPhoneMenu.StartAsync()),
-        new("Users", () => userMenu.StartAsync()),
-        new("Sessions", () => sessionMenu.StartAsync())
+        new("Disponibilidad de staff", () => staffAvailabilityMenu.StartAsync()),
+        new("Correos de persona", () => personEmailMenu.StartAsync()),
+        new("Telefonos de persona", () => personPhoneMenu.StartAsync()),
+        new("Usuarios", () => userMenu.StartAsync()),
+        new("Sesiones", () => sessionMenu.StartAsync())
     }, "Volver");
 
-    var adminSecurityMenu = new RoleMenu("ADMIN · SEGURIDAD Y PERMISOS", new List<RoleMenuOption>
+    var adminSecurityMenu = new RoleMenu("ADMIN - SEGURIDAD Y PERMISOS", new List<RoleMenuOption>
     {
-        new("SystemRoles", () => systemRoleMenu.StartAsync()),
-        new("Permissions", () => permissionMenu.StartAsync()),
-        new("RolePermissions", () => rolePermissionMenu.StartAsync()),
-        new("StaffRoles", () => staffRoleMenu.StartAsync()),
-        new("FlightRoles", () => flightRoleMenu.StartAsync())
+        new("Roles del sistema", () => systemRoleMenu.StartAsync()),
+        new("Permisos", () => permissionMenu.StartAsync()),
+        new("Permisos por rol", () => rolePermissionMenu.StartAsync()),
+        new("Roles de staff", () => staffRoleMenu.StartAsync()),
+        new("Roles de vuelo", () => flightRoleMenu.StartAsync())
     }, "Volver");
 
-    var adminCatalogMenu = new RoleMenu("ADMIN · CATALOGOS MAESTROS", new List<RoleMenuOption>
+    var adminCatalogMenu = new RoleMenu("ADMIN - CATALOGOS MAESTROS", new List<RoleMenuOption>
     {
-        new("Continents", () => continentMenu.StartAsync()),
-        new("Countries", () => countryMenu.StartAsync()),
-        new("Regions", () => regionMenu.StartAsync()),
-        new("Cities", () => cityMenu.StartAsync()),
-        new("Addresses", () => addressMenu.StartAsync()),
-        new("RoadTypes", () => roadTypeMenu.StartAsync()),
-        new("DocumentTypes", () => documentTypeMenu.StartAsync()),
-        new("PhoneCodes", () => phoneCodeMenu.StartAsync()),
-        new("EmailDomains", () => emailDomainMenu.StartAsync()),
-        new("PassengerTypes", () => passengerTypeMenu.StartAsync()),
-        new("CabinTypes", () => cabinTypeMenu.StartAsync()),
-        new("SeatLocationTypes", () => seatLocationTypeMenu.StartAsync()),
-        new("AvailabilityStatuses", () => availabilityStatusMenu.StartAsync()),
-        new("ReservationStatuses", () => reservationStatusMenu.StartAsync()),
-        new("ReservationStatusTransitions", () => reservationStatusTransitionMenu.StartAsync()),
-        new("FlightStates", () => flightStateMenu.StartAsync()),
-        new("FlightStatusTransitions", () => flightStatusTransitionMenu.StartAsync()),
-        new("TicketStatuses", () => ticketStatusMenu.StartAsync()),
-        new("CheckinStatuses", () => checkinStatusMenu.StartAsync()),
-        new("PaymentStates", () => paymentStateMenu.StartAsync()),
-        new("PaymentMethodTypes", () => paymentMethodTypeMenu.StartAsync()),
-        new("PaymentMethods", () => paymentMethodMenu.StartAsync()),
-        new("CardTypes", () => cardTypeMenu.StartAsync()),
-        new("CardIssuers", () => cardIssuerMenu.StartAsync()),
-        new("InvoiceItemTypes", () => invoiceItemTypeMenu.StartAsync()),
-        new("Seasons", () => seasonMenu.StartAsync())
+        new("Continentes", () => continentMenu.StartAsync()),
+        new("Paises", () => countryMenu.StartAsync()),
+        new("Regiones", () => regionMenu.StartAsync()),
+        new("Ciudades", () => cityMenu.StartAsync()),
+        new("Direcciones", () => addressMenu.StartAsync()),
+        new("Tipos de via", () => roadTypeMenu.StartAsync()),
+        new("Tipos de documento", () => documentTypeMenu.StartAsync()),
+        new("Codigos telefonicos", () => phoneCodeMenu.StartAsync()),
+        new("Dominios de correo", () => emailDomainMenu.StartAsync()),
+        new("Tipos de pasajero", () => passengerTypeMenu.StartAsync()),
+        new("Tipos de cabina", () => cabinTypeMenu.StartAsync()),
+        new("Ubicaciones de asiento", () => seatLocationTypeMenu.StartAsync()),
+        new("Estados de disponibilidad", () => availabilityStatusMenu.StartAsync()),
+        new("Estados de reserva", () => reservationStatusMenu.StartAsync()),
+        new("Transiciones de reserva", () => reservationStatusTransitionMenu.StartAsync()),
+        new("Estados de vuelo", () => flightStateMenu.StartAsync()),
+        new("Transiciones de vuelo", () => flightStatusTransitionMenu.StartAsync()),
+        new("Estados de tiquete", () => ticketStatusMenu.StartAsync()),
+        new("Estados de check-in", () => checkinStatusMenu.StartAsync()),
+        new("Estados de pago", () => paymentStateMenu.StartAsync()),
+        new("Tipos de metodo de pago", () => paymentMethodTypeMenu.StartAsync()),
+        new("Metodos de pago", () => paymentMethodMenu.StartAsync()),
+        new("Tipos de tarjeta", () => cardTypeMenu.StartAsync()),
+        new("Franquicias de tarjeta", () => cardIssuerMenu.StartAsync()),
+        new("Tipos de item de factura", () => invoiceItemTypeMenu.StartAsync()),
+        new("Temporadas", () => seasonMenu.StartAsync())
     }, "Volver");
 
-    var adminSystemMenu = new RoleMenu("ADMIN · SISTEMA", new List<RoleMenuOption>
+    var adminSystemMenu = new RoleMenu("ADMIN - SISTEMA", new List<RoleMenuOption>
     {
-        new("Seed master + catalogs", async () =>
+        new("Ejecutar seed maestros y catalogos", async () =>
         {
             await SeedRunner.SeedMasterAndCatalogsAsync(context);
             Console.ForegroundColor = ConsoleColor.Green;
@@ -245,38 +292,91 @@ try
         })
     }, "Volver");
 
-    var adminMenu = new AdminRoleMenu(new List<RoleMenuOption>
+    var adminPersonCrudMenu = new RoleMenu("ADMIN - PERSONA", new List<RoleMenuOption>
     {
         new("Crear persona", () => adminCreatePersonFlow.StartAsync()),
+        new("Actualizar persona", () => adminUpdatePersonFlow.StartAsync()),
+        new("Eliminar persona", () => adminDeletePersonFlow.StartAsync())
+    }, "Volver");
+
+    var adminAirlineCrudMenu = new RoleMenu("ADMIN - AEREOLINEA", new List<RoleMenuOption>
+    {
+        new("Crear aerolinea", () => adminCreateAirlineFlow.StartAsync()),
+        new("Actualizar aerolinea", () => adminUpdateAirlineFlow.StartAsync()),
+        new("Eliminar aerolinea", () => adminDeleteAirlineFlow.StartAsync())
+    }, "Volver");
+
+    var adminAirportCrudMenu = new RoleMenu("ADMIN - AEROPUERTO", new List<RoleMenuOption>
+    {
+        new("Crear aeropuerto", () => adminCreateAirportFlow.StartAsync()),
+        new("Actualizar aeropuerto", () => adminUpdateAirportFlow.StartAsync()),
+        new("Eliminar aeropuerto", () => adminDeleteAirportFlow.StartAsync())
+    }, "Volver");
+
+    var adminRouteCrudMenu = new RoleMenu("ADMIN - RUTA", new List<RoleMenuOption>
+    {
+        new("Crear ruta", () => adminCreateRouteFlow.StartAsync()),
+        new("Actualizar ruta", () => adminUpdateRouteFlow.StartAsync()),
+        new("Eliminar ruta", () => adminDeleteRouteFlow.StartAsync())
+    }, "Volver");
+
+    var adminAircraftCrudMenu = new RoleMenu("ADMIN - AERONAVE", new List<RoleMenuOption>
+    {
+        new("Crear aeronave", () => adminCreateAircraftFlow.StartAsync()),
+        new("Actualizar aeronave", () => adminUpdateAircraftFlow.StartAsync()),
+        new("Eliminar aeronave", () => adminDeleteAircraftFlow.StartAsync())
+    }, "Volver");
+
+    var adminSecondaryMenu = new RoleMenu("ADMIN - MENU SECUNDARIO", new List<RoleMenuOption>
+    {
         new("Operacion aerea", () => adminAirOperationMenu.StartAsync()),
         new("Comercial y ventas", () => adminCommercialMenu.StartAsync()),
         new("Personas y organizacion", () => adminPeopleMenu.StartAsync()),
         new("Seguridad y permisos", () => adminSecurityMenu.StartAsync()),
         new("Catalogos maestros", () => adminCatalogMenu.StartAsync()),
         new("Sistema", () => adminSystemMenu.StartAsync())
+    }, "Volver");
+
+    var adminMenu = new AdminRoleMenu(new List<RoleMenuOption>
+    {
+        new("Persona", () => adminPersonCrudMenu.StartAsync()),
+        new("Aereolinea", () => adminAirlineCrudMenu.StartAsync()),
+        new("Aeropuerto", () => adminAirportCrudMenu.StartAsync()),
+        new("Ruta", () => adminRouteCrudMenu.StartAsync()),
+        new("Aeronave", () => adminAircraftCrudMenu.StartAsync()),
+        new("Reportes (LINQ)", () => reportsMenu.StartAsync()),
+        new("Menu secundario", () => adminSecondaryMenu.StartAsync())
     });
 
     var staffRoleMenuUi = new StaffRoleMenu(new List<RoleMenuOption>
     {
-        new("Flights", () => flightMenu.StartAsync()),
-        new("Reservations", () => reservationMenu.StartAsync()),
-        new("ReservationFlights", () => reservationFlightMenu.StartAsync()),
-        new("ReservationPassengers", () => reservationPassengerMenu.StartAsync()),
-        new("Checkins", () => checkinMenu.StartAsync()),
-        new("Payments", () => paymentMenu.StartAsync()),
-        new("Tickets", () => ticketMenu.StartAsync()),
-        new("Sessions", () => sessionMenu.StartAsync())
+        new("Vuelos", () => flightMenu.StartAsync()),
+        new("Reservas", () => reservationMenu.StartAsync()),
+        new("Reservas por vuelo", () => reservationFlightMenu.StartAsync()),
+        new("Pasajeros por reserva", () => reservationPassengerMenu.StartAsync()),
+        new("Check-ins", () => checkinMenu.StartAsync()),
+        new("Pagos", () => paymentMenu.StartAsync()),
+        new("Tiquetes", () => ticketMenu.StartAsync()),
+        new("Sesiones", () => sessionMenu.StartAsync())
     });
 
-    var customerRoleMenuUi = new CustomerRoleMenu(new List<RoleMenuOption>
+    var customerSecondaryMenu = new RoleMenu("CLIENTE - MENU SECUNDARIO", new List<RoleMenuOption>
     {
-        new("Flights", () => flightMenu.StartAsync()),
-        new("Reservations", () => reservationMenu.StartAsync()),
-        new("ReservationFlights", () => reservationFlightMenu.StartAsync()),
-        new("ReservationPassengers", () => reservationPassengerMenu.StartAsync()),
-        new("Tickets", () => ticketMenu.StartAsync()),
-        new("Payments", () => paymentMenu.StartAsync())
-    });
+        new("Vuelos", () => flightMenu.StartAsync()),
+        new("Reservas (modulo completo)", () => reservationMenu.StartAsync()),
+        new("Reservas por vuelo", () => reservationFlightMenu.StartAsync()),
+        new("Pasajeros por reserva", () => reservationPassengerMenu.StartAsync()),
+        new("Tiquetes (modulo completo)", () => ticketMenu.StartAsync()),
+        new("Pagos (modulo completo)", () => paymentMenu.StartAsync()),
+        new("Check-ins (modulo completo)", () => checkinMenu.StartAsync()),
+        new("Clientes (modulo completo)", () => customerMenu.StartAsync())
+    }, "Volver");
+
+    var customerProfileMenu = new RoleMenu("CLIENTE - PERFIL BASICO", new List<RoleMenuOption>
+    {
+        new("Gestionar correos", () => personEmailMenu.StartAsync()),
+        new("Gestionar telefonos", () => personPhoneMenu.StartAsync())
+    }, "Volver");
 
     if (roleName.Equals("Admin", StringComparison.OrdinalIgnoreCase))
     {
@@ -290,7 +390,88 @@ try
     else if (roleName.Equals("Cliente", StringComparison.OrdinalIgnoreCase) ||
              roleName.Equals("Customer", StringComparison.OrdinalIgnoreCase))
     {
-        await customerRoleMenuUi.StartAsync();
+        var userRepository = new UserRepository(context);
+        var customerRepository = new CustomerRepository(context);
+        var passengerRepository = new PassengerRepository(context);
+
+        var getUserById = new GetUserByIdUseCase(userRepository);
+        var getCustomerByPersonId = new GetCustomerByPersonIdUseCase(customerRepository);
+        var getPassengerByPersonId = new GetPassengerByPersonIdUseCase(passengerRepository);
+
+        var user = await getUserById.ExecuteAsync(authResult.UserId);
+        if (user is null || !user.PersonId.Value.HasValue)
+        {
+            Console.WriteLine("No se encontro persona asociada al usuario cliente.");
+            Console.WriteLine("Presiona una tecla para salir...");
+            Console.ReadKey();
+            return;
+        }
+
+        var personId = user.PersonId.Value.Value;
+        var customer = await getCustomerByPersonId.ExecuteAsync(personId);
+        if (customer is null)
+        {
+            Console.WriteLine("La persona del usuario no tiene registro en customers.");
+            Console.WriteLine("Presiona una tecla para salir...");
+            Console.ReadKey();
+            return;
+        }
+
+        var passenger = await getPassengerByPersonId.ExecuteAsync(personId);
+
+        var reservationRepository = new ReservationRepository(context);
+        var reservationFlightRepository = new ReservationFlightRepository(context);
+        var reservationPassengerRepository = new ReservationPassengerRepository(context);
+        var reservationStatusRepository = new ReservationStatusRepository(context);
+        var reservationStatusTransitionRepository = new ReservationStatusTransitionRepository(context);
+        var ticketRepository = new TicketRepository(context);
+        var ticketStatusRepository = new TicketStatusRepository(context);
+        var paymentRepository = new PaymentRepository(context);
+        var paymentStateRepository = new PaymentStateRepository(context);
+        var paymentMethodRepository = new PaymentMethodRepository(context);
+
+        var getReservationsByCustomerId = new GetReservationsByCustomerIdUseCase(reservationRepository);
+        var getReservationDetailsById = new GetReservationDetailsByIdUseCase(
+            reservationRepository,
+            reservationFlightRepository,
+            reservationPassengerRepository);
+        var getTicketsByReservationCode = new GetTicketsByReservationCodeUseCase(ticketRepository);
+        var getPaymentsByReservationCode = new GetPaymentsByReservationCodeUseCase(reservationRepository, paymentRepository);
+        var getAllReservationStatuses = new GetAllReservationStatusesUseCase(reservationStatusRepository);
+        var getAllTicketStatuses = new GetAllTicketStatusesUseCase(ticketStatusRepository);
+        var getAllPaymentStates = new GetAllPaymentStatesUseCase(paymentStateRepository);
+        var getAllPaymentMethods = new GetAllPaymentMethodsUseCase(paymentMethodRepository);
+
+        var reservationValidator = new ReservationValidator(
+            reservationRepository,
+            customerRepository,
+            reservationStatusRepository,
+            reservationStatusTransitionRepository);
+        var updateReservationStatus = new GestionAerolineas.src.Modules.Reservations.Application.UseCases.UpdateReservationStatusUseCase(
+            reservationRepository,
+            reservationValidator);
+
+        var customerSelfServiceMenu = new CustomerSelfServiceMenu(
+            customer.Id.Value,
+            personId,
+            passenger?.Id.Value,
+            authResult.Username,
+            getReservationsByCustomerId,
+            getReservationDetailsById,
+            getTicketsByReservationCode,
+            getPaymentsByReservationCode,
+            getAllReservationStatuses,
+            getAllTicketStatuses,
+            getAllPaymentStates,
+            getAllPaymentMethods,
+            updateReservationStatus,
+            () => flightMenu.StartAsync(),
+            () => reservationMenu.StartAsync(),
+            () => checkinMenu.StartAsync(),
+            () => customerProfileMenu.StartAsync(),
+            () => customerSecondaryMenu.StartAsync());
+
+        await customerSelfServiceMenu.StartAsync();
     }
     else
     {

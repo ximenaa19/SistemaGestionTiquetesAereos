@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Invoices\InvoiceModule.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Customers.Application.UseCases;
 using GestionAerolineas.src.Modules.Customers.Infrastructure.Repository;
 using GestionAerolineas.src.Modules.InvoiceItemTypes.Infrastructure.Repository;

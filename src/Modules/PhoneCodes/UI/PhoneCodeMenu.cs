@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\PhoneCodes\UI\PhoneCodeMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.PhoneCodes.Application.UseCases;
@@ -33,13 +39,13 @@ public class PhoneCodeMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new phone code",
-            "List all phone codes",
+            "Crear phone code",
+            "Listar phone codes",
             "Get phone code by ID",
             "Get phone code by country",
-            "Update a phone code",
-            "Delete a phone code",
-            "Exit"
+            "Actualizar phone code",
+            "Eliminar phone code",
+            "Salir"
         });
 
         while (true)
@@ -127,4 +133,5 @@ public class PhoneCodeMenu
         }
     }
 }
+
 

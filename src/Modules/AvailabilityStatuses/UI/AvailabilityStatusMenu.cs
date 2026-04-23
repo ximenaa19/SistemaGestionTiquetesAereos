@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\AvailabilityStatuses\UI\AvailabilityStatusMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.AvailabilityStatuses.Application.UseCases;
@@ -33,13 +39,13 @@ public class AvailabilityStatusMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new availability status",
-            "List all availability statuses",
+            "Crear availability status",
+            "Listar availability statuses",
             "Get availability status by ID",
             "Get availability status by name",
-            "Update an availability status",
-            "Delete an availability status",
-            "Exit"
+            "Actualizar availability status",
+            "Eliminar availability status",
+            "Salir"
         });
 
         while (true)
@@ -121,3 +127,4 @@ public class AvailabilityStatusMenu
         }
     }
 }
+

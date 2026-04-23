@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\StaffRoles\UI\StaffRoleMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.StaffRoles.Application.UseCases;
 
 namespace GestionAerolineas.src.Modules.StaffRoles.UI;
@@ -31,13 +37,13 @@ public class StaffRoleMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new staff role",
-            "List all staff roles",
+            "Crear staff role",
+            "Listar staff roles",
             "Get staff role by ID",
             "Get staff role by name",
-            "Update a staff role",
-            "Delete a staff role",
-            "Exit"
+            "Actualizar staff role",
+            "Eliminar staff role",
+            "Salir"
         });
 
         while (true)
@@ -119,3 +125,4 @@ public class StaffRoleMenu
         }
     }
 }
+

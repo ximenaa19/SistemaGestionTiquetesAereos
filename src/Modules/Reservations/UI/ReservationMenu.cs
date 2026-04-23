@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Reservations\UI\ReservationMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airlines.Application.UseCases;
 using GestionAerolineas.src.Modules.Customers.Application.UseCases;
 using GestionAerolineas.src.Modules.Flights.Application.UseCases;
@@ -89,17 +95,17 @@ public class ReservationMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create reservation (wizard)",
-            "List all reservations",
+            "Crear reserva (asistente)",
+            "Listar reservations",
             "Get reservation by ID",
             "Get reservation by code (PNR)",
             "Get reservations by customer_id",
             "Get reservations by status_id",
             "Get reservations by date range",
             "Get reservation details by ID",
-            "Update reservation status",
-            "Delete reservation (hard)",
-            "Exit"
+            "Actualizar estado de reserva",
+            "Eliminar reserva (hard)",
+            "Salir"
         });
 
         while (true)
@@ -167,14 +173,14 @@ public class ReservationMenu
                         Console.Write("\nIngrese new_status_id: ");
                         int newStatusId = int.Parse(Console.ReadLine()!);
                         await _updateStatus.ExecuteAsync(reservationId, newStatusId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 9:
                         Console.Write("Ingrese reservation_id: ");
                         int deleteId = int.Parse(Console.ReadLine()!);
                         var deleted = await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine(deleted ? "✔ Eliminado" : "No encontrado");
+                        Console.WriteLine(deleted ? "âœ” Eliminado" : "No encontrado");
                         break;
 
                     case 10:
@@ -183,7 +189,7 @@ public class ReservationMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -211,7 +217,7 @@ public class ReservationMenu
 
         var reservation = await _createReservation.ExecuteAsync(customerId, statusId, expiresAt);
 
-        Console.WriteLine($"\n✔ Reserva creada: id={reservation.Id.Value}, code={(reservation.Code?.Value ?? "NULL")}");
+        Console.WriteLine($"\nâœ” Reserva creada: id={reservation.Id.Value}, code={(reservation.Code?.Value ?? "NULL")}");
 
         Console.WriteLine("\nAgrega vuelos a la reserva. Deja vuelo_id vacio para terminar.");
         while (true)
@@ -228,7 +234,7 @@ public class ReservationMenu
             decimal partial = decimal.Parse(Console.ReadLine()!);
 
             var reservationFlight = await _createReservationFlight.ExecuteAsync(reservation.Id.Value, flightId, partial);
-            Console.WriteLine($"✔ Agregado vuelo a reserva: reserva_vuelo_id={reservationFlight.Id.Value}");
+            Console.WriteLine($"âœ” Agregado vuelo a reserva: reserva_vuelo_id={reservationFlight.Id.Value}");
 
             Console.WriteLine("\nAgrega pasajeros para este vuelo. Deja pasajero_id vacio para terminar.");
             while (true)
@@ -241,11 +247,11 @@ public class ReservationMenu
 
                 int passengerId = int.Parse(passengerInput);
                 await _createReservationPassenger.ExecuteAsync(reservationFlight.Id.Value, passengerId);
-                Console.WriteLine("✔ Pasajero agregado (se decrementa asientos_disponibles)");
+                Console.WriteLine("âœ” Pasajero agregado (se decrementa asientos_disponibles)");
             }
         }
 
-        Console.WriteLine("\n✔ Wizard finalizado. Puedes ver el detalle con 'Get reservation details by ID'.");
+        Console.WriteLine("\nâœ” Wizard finalizado. Puedes ver el detalle con 'Get reservation details by ID'.");
     }
 
     private async Task<int> ResolveDefaultStatusIdAsync(string? statusInput)
@@ -483,3 +489,4 @@ public class ReservationMenu
         return map.TryGetValue(id, out var display) ? display : $"#{id}";
     }
 }
+

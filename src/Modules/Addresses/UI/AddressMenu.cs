@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Addresses\UI\AddressMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Addresses.Application.UseCases;
 using GestionAerolineas.src.Modules.Addresses.Domain.Aggregate;
 using GestionAerolineas.src.Modules.Cities.Application.UseCases;
@@ -42,12 +48,12 @@ public class AddressMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new address",
-            "List all addresses",
+            "Crear address",
+            "Listar addresses",
             "Get address by ID",
-            "Update an address",
-            "Delete an address",
-            "Exit"
+            "Actualizar address",
+            "Eliminar address",
+            "Salir"
         });
 
         while (true)
@@ -81,7 +87,7 @@ public class AddressMenu
                         string? postal = Console.ReadLine();
 
                         await _create.ExecuteAsync(roadTypeId, roadName, number, complement, cityId, postal);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -135,7 +141,7 @@ public class AddressMenu
                         string? newPostal = Console.ReadLine();
 
                         await _update.ExecuteAsync(updateId, newRoadTypeId, newRoadName, newNumber, newComplement, newCityId, newPostal);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 4:
@@ -143,7 +149,7 @@ public class AddressMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 5:
@@ -152,7 +158,7 @@ public class AddressMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -163,7 +169,7 @@ public class AddressMenu
 
     private async Task PrintRoadTypesAsync()
     {
-        Console.WriteLine("Tipos de vía disponibles:");
+        Console.WriteLine("Tipos de vÃ­a disponibles:");
         var roadTypes = await _getAllRoadTypes.ExecuteAsync();
         foreach (var rt in roadTypes)
             Console.WriteLine($"{rt.Id.Value} - {rt.Name.Value}");
@@ -218,4 +224,5 @@ public class AddressMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

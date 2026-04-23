@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Payments\UI\PaymentMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Customers.Application.UseCases;
 using GestionAerolineas.src.Modules.PaymentMethods.Application.UseCases;
 using GestionAerolineas.src.Modules.PaymentStates.Application.UseCases;
@@ -71,17 +77,17 @@ public class PaymentMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a payment",
-            "List all payments",
+            "Crear payment",
+            "Listar payments",
             "Get payment by ID",
             "Get payments by reserva_id",
             "Get payments by reservation code (PNR)",
             "Get payments by estado_pago_id",
             "Get payments by metodo_pago_id",
             "Get payments by fecha_pago range",
-            "Update a payment",
-            "Delete a payment",
-            "Exit"
+            "Actualizar payment",
+            "Eliminar payment",
+            "Salir"
         });
 
         while (true)
@@ -114,7 +120,7 @@ public class PaymentMenu
                         int methodId = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(reservationId, amount, paidAt, stateId, methodId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -186,14 +192,14 @@ public class PaymentMenu
                         int newMethodId = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newReservationId, newAmount, newPaidAt, newStateId, newMethodId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 9:
                         Console.Write("Ingrese el ID: ");
                         int deleteId = int.Parse(Console.ReadLine()!);
                         var deleted = await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine(deleted ? "✔ Eliminado" : "No encontrado");
+                        Console.WriteLine(deleted ? "âœ” Eliminado" : "No encontrado");
                         break;
 
                     case 10:
@@ -202,7 +208,7 @@ public class PaymentMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -361,4 +367,5 @@ public class PaymentMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

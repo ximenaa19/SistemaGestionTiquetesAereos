@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Users\UI\UserMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System.Globalization;
 using GestionAerolineas.src.Modules.People.Application.UseCases;
 using GestionAerolineas.src.Modules.SystemRoles.Application.UseCases;
@@ -48,15 +54,15 @@ public class UserMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a user",
-            "List all users",
+            "Crear user",
+            "Listar users",
             "Get user by ID",
             "Get user by username",
             "Get users by rol_id",
-            "Update a user",
+            "Actualizar user",
             "Deactivate/Activate a user (soft)",
-            "Delete a user (hard)",
-            "Exit"
+            "Eliminar user (hard)",
+            "Salir"
         });
 
         while (true)
@@ -77,7 +83,7 @@ public class UserMenu
                         string password = ReadHiddenRequired("Ingrese password: ");
                         string confirm = ReadHiddenRequired("Confirmar password: ");
                         if (password != confirm)
-                            throw new Exception("Las contraseñas no coinciden");
+                            throw new Exception("Las contraseÃ±as no coinciden");
 
                         Console.Write("Ingrese person_id [opcional]: ");
                         int? personId = ReadNullableInt(Console.ReadLine());
@@ -86,7 +92,7 @@ public class UserMenu
                         int roleId = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(username, password, personId, roleId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -148,7 +154,7 @@ public class UserMenu
                         {
                             var confirmNew = ReadHiddenRequired("Confirmar nuevo password: ");
                             if (newPassword != confirmNew)
-                                throw new Exception("Las contraseñas no coinciden");
+                                throw new Exception("Las contraseÃ±as no coinciden");
                         }
 
                         Console.Write("Ingrese person_id [opcional]: ");
@@ -158,7 +164,7 @@ public class UserMenu
                         int newRoleId = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newUsername, newPassword, newPersonId, newRoleId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 6:
@@ -178,7 +184,7 @@ public class UserMenu
                         }
 
                         await _setActive.ExecuteAsync(toggleId, isActive, actingUsername);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 7:
@@ -193,7 +199,7 @@ public class UserMenu
                             break;
 
                         await _deleteHard.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 8:
@@ -202,7 +208,7 @@ public class UserMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -413,3 +419,4 @@ public class UserMenu
         return new string(buffer.ToArray());
     }
 }
+

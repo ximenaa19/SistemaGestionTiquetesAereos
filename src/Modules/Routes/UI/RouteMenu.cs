@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Routes\UI\RouteMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airports.Application.UseCases;
 using GestionAerolineas.src.Modules.Routes.Application.UseCases;
 using GestionAerolineas.src.Modules.Routes.Domain.Aggregate;
@@ -37,13 +43,13 @@ public class RouteMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new route",
-            "List all routes",
+            "Crear route",
+            "Listar routes",
             "Get route by ID",
             "Get route by origin+destination",
-            "Update a route",
-            "Delete a route",
-            "Exit"
+            "Actualizar route",
+            "Eliminar route",
+            "Salir"
         });
 
         while (true)
@@ -72,7 +78,7 @@ public class RouteMenu
                         int? durationMin = string.IsNullOrWhiteSpace(durationInput) ? null : int.Parse(durationInput!);
 
                         await _create.ExecuteAsync(originId, destinationId, distanceKm, durationMin);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -139,7 +145,7 @@ public class RouteMenu
                         int? newDurationMin = string.IsNullOrWhiteSpace(newDurationInput) ? null : int.Parse(newDurationInput!);
 
                         await _update.ExecuteAsync(updateId, newOriginId, newDestinationId, newDistanceKm, newDurationMin);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -147,7 +153,7 @@ public class RouteMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -156,7 +162,7 @@ public class RouteMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -198,4 +204,5 @@ public class RouteMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

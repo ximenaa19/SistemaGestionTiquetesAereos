@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Cities\UI\CityMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Cities.Application.UseCases;
 using GestionAerolineas.src.Modules.Cities.Domain.Aggregate;
 using GestionAerolineas.src.Modules.Regions.Application.UseCases;
@@ -37,13 +43,13 @@ public class CityMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new city",
-            "List all cities",
+            "Crear city",
+            "Listar cities",
             "Get city by ID",
             "Get city by name",
-            "Update a city",
-            "Delete a city",
-            "Exit"
+            "Actualizar city",
+            "Eliminar city",
+            "Salir"
         });
 
         while (true)
@@ -64,7 +70,7 @@ public class CityMenu
                         int regionId = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(name, regionId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -118,7 +124,7 @@ public class CityMenu
                         int newRegionId = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newName, newRegionId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -126,7 +132,7 @@ public class CityMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -135,7 +141,7 @@ public class CityMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -169,3 +175,4 @@ public class CityMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+

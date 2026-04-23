@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\ReservationFlights\UI\ReservationFlightMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airlines.Application.UseCases;
 using GestionAerolineas.src.Modules.Airports.Application.UseCases;
 using GestionAerolineas.src.Modules.Customers.Application.UseCases;
@@ -77,16 +83,16 @@ public class ReservationFlightMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a reservation flight",
-            "List all reservation flights",
+            "Crear reservation flight",
+            "Listar reservation flights",
             "Get reservation flight by ID",
             "Get reservation flights by reservation_id",
             "Get reservation flights by flight_id",
             "Get reservation flight by reservation_id + flight_id",
             "Get reservation flights by reservation code (PNR)",
-            "Update a reservation flight",
-            "Delete a reservation flight",
-            "Exit"
+            "Actualizar reservation flight",
+            "Eliminar reservation flight",
+            "Salir"
         });
 
         while (true)
@@ -111,7 +117,7 @@ public class ReservationFlightMenu
                         decimal partial = decimal.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(reservationId, flightId, partial);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -174,14 +180,14 @@ public class ReservationFlightMenu
                         decimal newPartial = decimal.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newReservationId, newFlightId, newPartial);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 8:
                         Console.Write("Ingrese el ID: ");
                         int deleteId = int.Parse(Console.ReadLine()!);
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 9:
@@ -190,7 +196,7 @@ public class ReservationFlightMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -344,4 +350,5 @@ public class ReservationFlightMenu
         return map.TryGetValue(id, out var display) ? display : $"#{id}";
     }
 }
+
 

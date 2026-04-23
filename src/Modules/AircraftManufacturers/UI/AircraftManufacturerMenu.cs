@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\AircraftManufacturers\UI\AircraftManufacturerMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.AircraftManufacturers.Application.UseCases;
 using GestionAerolineas.src.Modules.Countries.Application.UseCases;
 
@@ -36,13 +42,13 @@ public class AircraftManufacturerMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new aircraft manufacturer",
-            "List all aircraft manufacturers",
+            "Crear aircraft manufacturer",
+            "Listar aircraft manufacturers",
             "Get aircraft manufacturer by ID",
             "Get aircraft manufacturer by name",
-            "Update an aircraft manufacturer",
-            "Delete an aircraft manufacturer",
-            "Exit"
+            "Actualizar aircraft manufacturer",
+            "Eliminar aircraft manufacturer",
+            "Salir"
         });
 
         while (true)
@@ -59,11 +65,11 @@ public class AircraftManufacturerMenu
                         Console.Write("\nIngrese el nombre: ");
                         string name = Console.ReadLine()!;
 
-                        Console.Write("Ingrese el ID del país: ");
+                        Console.Write("Ingrese el ID del paÃ­s: ");
                         int countryId = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(name, countryId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -71,7 +77,7 @@ public class AircraftManufacturerMenu
                         var list = await _getAll.ExecuteAsync();
 
                         foreach (var item in list)
-                            Console.WriteLine($"{item.Id.Value} - {item.Name.Value} - País = {GetDisplay(countryMap, item.CountryId.Value)}");
+                            Console.WriteLine($"{item.Id.Value} - {item.Name.Value} - PaÃ­s = {GetDisplay(countryMap, item.CountryId.Value)}");
                         break;
 
                     case 2:
@@ -86,7 +92,7 @@ public class AircraftManufacturerMenu
                         }
 
                         var countryMapById = await GetCountryDisplayMapAsync();
-                        Console.WriteLine($"{byId.Id.Value} - {byId.Name.Value} - País ={GetDisplay(countryMapById, byId.CountryId.Value)}");
+                        Console.WriteLine($"{byId.Id.Value} - {byId.Name.Value} - PaÃ­s ={GetDisplay(countryMapById, byId.CountryId.Value)}");
                         break;
 
                     case 3:
@@ -101,7 +107,7 @@ public class AircraftManufacturerMenu
                         }
 
                         var countryMapByName = await GetCountryDisplayMapAsync();
-                        Console.WriteLine($"{byName.Id.Value} - {byName.Name.Value} - País = {GetDisplay(countryMapByName, byName.CountryId.Value)}");
+                        Console.WriteLine($"{byName.Id.Value} - {byName.Name.Value} - PaÃ­s = {GetDisplay(countryMapByName, byName.CountryId.Value)}");
                         break;
 
                     case 4:
@@ -113,11 +119,11 @@ public class AircraftManufacturerMenu
                         Console.Write("Ingrese el nuevo nombre: ");
                         string newName = Console.ReadLine()!;
 
-                        Console.Write("Ingrese el nuevo ID del país: ");
+                        Console.Write("Ingrese el nuevo ID del paÃ­s: ");
                         int newCountryId = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newName, newCountryId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -125,7 +131,7 @@ public class AircraftManufacturerMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -134,7 +140,7 @@ public class AircraftManufacturerMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -145,7 +151,7 @@ public class AircraftManufacturerMenu
 
     private async Task PrintCountriesAsync()
     {
-        Console.WriteLine("Países disponibles:");
+        Console.WriteLine("PaÃ­ses disponibles:");
         var countries = await _getAllCountries.ExecuteAsync();
         foreach (var c in countries)
             Console.WriteLine($"{c.Id.Value} - {c.Name.Value} - ISO={c.IsoCode.Value}");
@@ -162,4 +168,5 @@ public class AircraftManufacturerMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

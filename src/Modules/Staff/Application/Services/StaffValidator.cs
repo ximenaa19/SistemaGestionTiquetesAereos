@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Staff\Application\Services\StaffValidator.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airlines.Domain.ValueObject;
 using GestionAerolineas.src.Modules.Airlines.Infrastructure.Repository;
 using GestionAerolineas.src.Modules.Airports.Domain.ValueObject;

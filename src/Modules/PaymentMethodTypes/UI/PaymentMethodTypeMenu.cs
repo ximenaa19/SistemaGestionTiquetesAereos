@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\PaymentMethodTypes\UI\PaymentMethodTypeMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.PaymentMethodTypes.Application.UseCases;
 
 namespace GestionAerolineas.src.Modules.PaymentMethodTypes.UI;
@@ -31,13 +37,13 @@ public class PaymentMethodTypeMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new payment method type",
-            "List all payment method types",
+            "Crear payment method type",
+            "Listar payment method types",
             "Get payment method type by ID",
             "Get payment method type by name",
-            "Update a payment method type",
-            "Delete a payment method type",
-            "Exit"
+            "Actualizar payment method type",
+            "Eliminar payment method type",
+            "Salir"
         });
 
         while (true)
@@ -119,3 +125,4 @@ public class PaymentMethodTypeMenu
         }
     }
 }
+

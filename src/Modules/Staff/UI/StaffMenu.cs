@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Staff\UI\StaffMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airlines.Application.UseCases;
 using GestionAerolineas.src.Modules.Airports.Application.UseCases;
 using GestionAerolineas.src.Modules.People.Application.UseCases;
@@ -61,17 +67,17 @@ public class StaffMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new staff member",
-            "List all staff",
+            "Crear staff member",
+            "Listar staff",
             "Get staff by ID",
             "Get staff by person_id",
             "Get staff by role_id",
-            "Search staff by name/last name",
+            "Buscar staff por nombre/apellido",
             "Get active staff",
             "Get inactive staff",
-            "Update a staff member",
-            "Delete a staff member",
-            "Exit"
+            "Actualizar staff member",
+            "Eliminar staff member",
+            "Salir"
         });
 
         while (true)
@@ -108,7 +114,7 @@ public class StaffMenu
                         bool isActive = string.IsNullOrWhiteSpace(activeInput) ? true : bool.Parse(activeInput);
 
                         await _create.ExecuteAsync(personId, roleId, airlineId, airportId, hireDate, isActive);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -202,7 +208,7 @@ public class StaffMenu
                         bool newIsActive = bool.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newPersonId, newRoleId, newAirlineId, newAirportId, newHireDate, newIsActive);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 9:
@@ -212,7 +218,7 @@ public class StaffMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 10:
@@ -221,7 +227,7 @@ public class StaffMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -377,4 +383,5 @@ public class StaffMenu
         return int.Parse(input);
     }
 }
+
 

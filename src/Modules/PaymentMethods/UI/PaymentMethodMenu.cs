@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\PaymentMethods\UI\PaymentMethodMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.CardIssuers.Application.UseCases;
 using GestionAerolineas.src.Modules.CardTypes.Application.UseCases;
 using GestionAerolineas.src.Modules.PaymentMethods.Application.UseCases;
@@ -44,13 +50,13 @@ public class PaymentMethodMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new payment method",
-            "List all payment methods",
+            "Crear payment method",
+            "Listar payment methods",
             "Get payment method by ID",
             "Get payment method by commercial name",
-            "Update a payment method",
-            "Delete a payment method",
-            "Exit"
+            "Actualizar payment method",
+            "Eliminar payment method",
+            "Salir"
         });
 
         while (true)
@@ -74,7 +80,7 @@ public class PaymentMethodMenu
                         string commercialName = Console.ReadLine()!;
 
                         await _create.ExecuteAsync(paymentMethodTypeId, cardTypeId, cardIssuerId, commercialName);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -139,7 +145,7 @@ public class PaymentMethodMenu
                         string newCommercialName = Console.ReadLine()!;
 
                         await _update.ExecuteAsync(updateId, newPaymentMethodTypeId, newCardTypeId, newCardIssuerId, newCommercialName);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -147,7 +153,7 @@ public class PaymentMethodMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -156,7 +162,7 @@ public class PaymentMethodMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -232,9 +238,10 @@ public class PaymentMethodMenu
             return null;
 
         if (!int.TryParse(input, out var value))
-            throw new Exception("Valor inválido");
+            throw new Exception("Valor invÃ¡lido");
 
         return value;
     }
 }
+
 

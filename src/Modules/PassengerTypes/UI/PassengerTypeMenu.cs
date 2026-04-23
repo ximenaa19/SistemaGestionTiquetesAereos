@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\PassengerTypes\UI\PassengerTypeMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.PassengerTypes.Application.UseCases;
@@ -32,13 +38,13 @@ public class PassengerTypeMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new passenger type",
-            "List all passenger types",
+            "Crear passenger type",
+            "Listar passenger types",
             "Get passenger type by ID",
             "Get passenger type by name",
-            "Update a passenger type",
-            "Delete a passenger type",
-            "Exit"
+            "Actualizar passenger type",
+            "Eliminar passenger type",
+            "Salir"
         });
 
         while (true)
@@ -57,7 +63,7 @@ public class PassengerTypeMenu
                         int? ageMax = ReadNullableInt("Ingrese edad_max (opcional): ");
 
                         await _create.ExecuteAsync(name, ageMin, ageMax);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -100,7 +106,7 @@ public class PassengerTypeMenu
                         int? newAgeMax = ReadNullableInt("Ingrese edad_max (opcional): ");
 
                         await _update.ExecuteAsync(updateId, newName, newAgeMin, newAgeMax);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -108,7 +114,7 @@ public class PassengerTypeMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -117,7 +123,7 @@ public class PassengerTypeMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -135,9 +141,10 @@ public class PassengerTypeMenu
             return null;
 
         if (!int.TryParse(input, out var value))
-            throw new Exception("Valor inválido");
+            throw new Exception("Valor invÃ¡lido");
 
         return value;
     }
 }
+
 

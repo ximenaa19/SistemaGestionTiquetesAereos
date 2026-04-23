@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Aircraft\UI\AircraftMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Aircraft.Application.UseCases;
 using GestionAerolineas.src.Modules.Aircraft.Domain.Aggregate;
 using GestionAerolineas.src.Modules.AircraftModels.Application.UseCases;
@@ -41,13 +47,13 @@ public class AircraftMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new aircraft",
-            "List all aircraft",
+            "Crear aircraft",
+            "Listar aircraft",
             "Get aircraft by ID",
             "Get aircraft by registration",
-            "Update an aircraft",
-            "Delete an aircraft",
-            "Exit"
+            "Actualizar aircraft",
+            "Eliminar aircraft",
+            "Salir"
         });
 
         while (true)
@@ -82,7 +88,7 @@ public class AircraftMenu
                         bool isActive = string.IsNullOrWhiteSpace(activeInput) ? true : bool.Parse(activeInput);
 
                         await _create.ExecuteAsync(modelId, airlineId, registration, manufactureDate, isActive);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -152,7 +158,7 @@ public class AircraftMenu
                         bool newIsActive = bool.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newModelId, newAirlineId, newRegistration, newManufactureDate, newIsActive);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -160,7 +166,7 @@ public class AircraftMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -169,7 +175,7 @@ public class AircraftMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -227,3 +233,4 @@ public class AircraftMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+

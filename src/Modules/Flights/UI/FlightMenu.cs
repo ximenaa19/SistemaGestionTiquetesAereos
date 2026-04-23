@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Flights\UI\FlightMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Aircraft.Application.UseCases;
 using GestionAerolineas.src.Modules.Airlines.Application.UseCases;
 using GestionAerolineas.src.Modules.Airports.Application.UseCases;
@@ -67,17 +73,17 @@ public class FlightMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new flight",
-            "List all flights",
+            "Crear flight",
+            "Listar flights",
             "Get flight by ID",
             "Get flight by code",
             "Get flights by airline_id",
             "Get flights by route_id",
             "Get flights by departure date range",
             "Get flights by state_id",
-            "Update a flight",
-            "Delete a flight",
-            "Exit"
+            "Actualizar flight",
+            "Eliminar flight",
+            "Salir"
         });
 
         while (true)
@@ -128,7 +134,7 @@ public class FlightMenu
                         DateTime? rescheduledAt = string.IsNullOrWhiteSpace(resInput) ? null : DateTime.Parse(resInput!);
 
                         await _create.ExecuteAsync(code, airlineId, routeId, aircraftId, departure, arrival, totalCapacity, availableSeats, stateId, rescheduledAt);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -242,7 +248,7 @@ public class FlightMenu
                         DateTime? newRescheduledAt = string.IsNullOrWhiteSpace(newResInput) ? null : DateTime.Parse(newResInput!);
 
                         await _update.ExecuteAsync(updateId, newCode, newAirlineId, newRouteId, newAircraftId, newDeparture, newArrival, newTotalCapacity, newAvailableSeats, newStateId, newRescheduledAt);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 9:
@@ -251,7 +257,7 @@ public class FlightMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 10:
@@ -260,7 +266,7 @@ public class FlightMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -483,4 +489,5 @@ public class FlightMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

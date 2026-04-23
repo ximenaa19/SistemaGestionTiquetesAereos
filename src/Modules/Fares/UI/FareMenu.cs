@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Fares\UI\FareMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System.Globalization;
 using GestionAerolineas.src.Modules.Airports.Application.UseCases;
 using GestionAerolineas.src.Modules.CabinTypes.Application.UseCases;
@@ -57,14 +63,14 @@ public class FareMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new fare",
-            "List all fares",
+            "Crear fare",
+            "Listar fares",
             "Get fare by ID",
             "Get fares by route_id",
             "Get fare by route+cabin+passenger+season",
-            "Update a fare",
-            "Delete a fare",
-            "Exit"
+            "Actualizar fare",
+            "Eliminar fare",
+            "Salir"
         });
 
         while (true)
@@ -105,7 +111,7 @@ public class FareMenu
                         DateTime? validUntil = string.IsNullOrWhiteSpace(untilInput) ? null : DateTime.Parse(untilInput!);
 
                         await _create.ExecuteAsync(routeId, cabinTypeId, passengerTypeId, seasonId, basePrice, validFrom, validUntil);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -218,7 +224,7 @@ public class FareMenu
                         DateTime? newValidUntil = string.IsNullOrWhiteSpace(newUntilInput) ? null : DateTime.Parse(newUntilInput!);
 
                         await _update.ExecuteAsync(updateId, newRouteId, newCabinTypeId, newPassengerTypeId, newSeasonId, newBasePrice, newValidFrom, newValidUntil);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 6:
@@ -226,7 +232,7 @@ public class FareMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 7:
@@ -235,7 +241,7 @@ public class FareMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -368,3 +374,4 @@ public class FareMenu
         return decimal.Parse(normalized, NumberStyles.Number, CultureInfo.InvariantCulture);
     }
 }
+

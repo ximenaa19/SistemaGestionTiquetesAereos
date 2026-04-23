@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\SeatLocationTypes\UI\SeatLocationTypeMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.SeatLocationTypes.Application.UseCases;
@@ -33,13 +39,13 @@ public class SeatLocationTypeMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new seat location type",
-            "List all seat location types",
+            "Crear seat location type",
+            "Listar seat location types",
             "Get seat location type by ID",
             "Get seat location type by name",
-            "Update a seat location type",
-            "Delete a seat location type",
-            "Exit"
+            "Actualizar seat location type",
+            "Eliminar seat location type",
+            "Salir"
         });
 
         while (true)
@@ -55,7 +61,7 @@ public class SeatLocationTypeMenu
                         string name = Console.ReadLine()!;
 
                         await _create.ExecuteAsync(name);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -95,7 +101,7 @@ public class SeatLocationTypeMenu
                         string newName = Console.ReadLine()!;
 
                         await _update.ExecuteAsync(updateId, newName);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -103,7 +109,7 @@ public class SeatLocationTypeMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -112,7 +118,7 @@ public class SeatLocationTypeMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -121,4 +127,5 @@ public class SeatLocationTypeMenu
         }
     }
 }
+
 

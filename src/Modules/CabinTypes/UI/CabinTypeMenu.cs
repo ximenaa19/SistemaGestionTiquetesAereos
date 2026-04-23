@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\CabinTypes\UI\CabinTypeMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.CabinTypes.Application.UseCases;
@@ -33,13 +39,13 @@ public class CabinTypeMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new cabin type",
-            "List all cabin types",
+            "Crear cabin type",
+            "Listar cabin types",
             "Get cabin type by ID",
             "Get cabin type by name",
-            "Update a cabin type",
-            "Delete a cabin type",
-            "Exit"
+            "Actualizar cabin type",
+            "Eliminar cabin type",
+            "Salir"
         });
 
         while (true)
@@ -126,3 +132,4 @@ public class CabinTypeMenu
         }
     }
 }
+

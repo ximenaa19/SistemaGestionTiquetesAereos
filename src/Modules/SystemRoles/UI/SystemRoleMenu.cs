@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\SystemRoles\UI\SystemRoleMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.SystemRoles.Application.UseCases;
 
 namespace GestionAerolineas.src.Modules.SystemRoles.UI;
@@ -31,13 +37,13 @@ public class SystemRoleMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new system role",
-            "List all system roles",
+            "Crear system role",
+            "Listar system roles",
             "Get system role by ID",
             "Get system role by name",
-            "Update a system role",
-            "Delete a system role",
-            "Exit"
+            "Actualizar system role",
+            "Eliminar system role",
+            "Salir"
         });
 
         while (true)
@@ -125,3 +131,4 @@ public class SystemRoleMenu
         }
     }
 }
+

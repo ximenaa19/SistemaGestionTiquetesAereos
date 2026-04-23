@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\ReservationStatuses\UI\ReservationStatusMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.ReservationStatuses.Application.UseCases;
@@ -32,13 +38,13 @@ public class ReservationStatusMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new reservation status",
-            "List all reservation statuses",
+            "Crear reservation status",
+            "Listar reservation statuses",
             "Get reservation status by ID",
             "Get reservation status by name",
-            "Update a reservation status",
-            "Delete a reservation status",
-            "Exit"
+            "Actualizar reservation status",
+            "Eliminar reservation status",
+            "Salir"
         });
 
         while (true)
@@ -54,7 +60,7 @@ public class ReservationStatusMenu
                         string name = Console.ReadLine()!;
 
                         await _create.ExecuteAsync(name);
-                        Console.WriteLine("âœ” Creado");
+                        Console.WriteLine("Ã¢Å“â€ Creado");
                         break;
 
                     case 1:
@@ -94,7 +100,7 @@ public class ReservationStatusMenu
                         string newName = Console.ReadLine()!;
 
                         await _update.ExecuteAsync(updateId, newName);
-                        Console.WriteLine("âœ” Actualizado");
+                        Console.WriteLine("Ã¢Å“â€ Actualizado");
                         break;
 
                     case 5:
@@ -102,7 +108,7 @@ public class ReservationStatusMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("âœ” Eliminado");
+                        Console.WriteLine("Ã¢Å“â€ Eliminado");
                         break;
 
                     case 6:
@@ -111,7 +117,7 @@ public class ReservationStatusMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"Ã¢ÂÅ’ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -120,3 +126,4 @@ public class ReservationStatusMenu
         }
     }
 }
+

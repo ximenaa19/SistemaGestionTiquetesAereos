@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\PersonEmails\UI\PersonEmailMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.EmailDomains.Application.UseCases;
 using GestionAerolineas.src.Modules.People.Application.UseCases;
 using GestionAerolineas.src.Modules.PersonEmails.Application.UseCases;
@@ -41,13 +47,13 @@ public class PersonEmailMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new person email",
-            "List all person emails",
+            "Crear person email",
+            "Listar person emails",
             "Get person email by ID",
             "Get person email by person+email",
-            "Update a person email",
-            "Delete a person email",
-            "Exit"
+            "Actualizar person email",
+            "Eliminar person email",
+            "Salir"
         });
 
         while (true)
@@ -76,7 +82,7 @@ public class PersonEmailMenu
                         bool isPrimary = string.IsNullOrWhiteSpace(primaryInput) ? false : bool.Parse(primaryInput);
 
                         await _create.ExecuteAsync(personId, user, domainId, isPrimary);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -149,7 +155,7 @@ public class PersonEmailMenu
                         bool newIsPrimary = bool.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newPersonId, newUser, newDomainId, newIsPrimary);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -157,7 +163,7 @@ public class PersonEmailMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -166,7 +172,7 @@ public class PersonEmailMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -225,4 +231,5 @@ public class PersonEmailMenu
         return map.TryGetValue(id, out var display) ? display : $"#{id}";
     }
 }
+
 

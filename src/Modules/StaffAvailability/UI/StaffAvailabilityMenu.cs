@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\StaffAvailability\UI\StaffAvailabilityMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airlines.Application.UseCases;
 using GestionAerolineas.src.Modules.Airports.Application.UseCases;
 using GestionAerolineas.src.Modules.AvailabilityStatuses.Application.UseCases;
@@ -63,15 +69,15 @@ public class StaffAvailabilityMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a staff availability block",
-            "List all staff availability",
+            "Crear staff availability block",
+            "Listar staff availability",
             "Get availability by ID",
             "Get availability by staff_id",
             "Get availability by status_id",
             "Get active availability NOW by staff_id",
-            "Update an availability block",
-            "Delete an availability block",
-            "Exit"
+            "Actualizar availability block",
+            "Eliminar availability block",
+            "Salir"
         });
 
         while (true)
@@ -102,7 +108,7 @@ public class StaffAvailabilityMenu
                         var observation = Console.ReadLine();
 
                         await _create.ExecuteAsync(staffId, statusId, start, end, observation);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -186,7 +192,7 @@ public class StaffAvailabilityMenu
                         var newObs = Console.ReadLine();
 
                         await _update.ExecuteAsync(updateId, newStaffId, newStatusId, newStart, newEnd, newObs);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 7:
@@ -196,7 +202,7 @@ public class StaffAvailabilityMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 8:
@@ -205,7 +211,7 @@ public class StaffAvailabilityMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -325,3 +331,4 @@ public class StaffAvailabilityMenu
         return map.TryGetValue(id, out var display) ? display : $"#{id}";
     }
 }
+

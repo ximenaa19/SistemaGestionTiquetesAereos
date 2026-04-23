@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Auth\Application\UseCases\LoginUserUseCase.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Auth.Application.Models;
 using GestionAerolineas.src.Modules.Sessions.Application.UseCases;
 using GestionAerolineas.src.Modules.Users.Application.Services;
@@ -8,6 +14,10 @@ using GestionAerolineas.src.Modules.Users.Domain.ValueObject;
 
 namespace GestionAerolineas.src.Modules.Auth.Application.UseCases;
 
+/// <summary>
+/// Caso de uso de autenticación.
+/// Valida credenciales, verifica estado activo, actualiza último acceso y registra sesión.
+/// </summary>
 public class LoginUserUseCase
 {
     private readonly GetUserByUsernameUseCase _getUserByUsernameUseCase;
@@ -24,6 +34,13 @@ public class LoginUserUseCase
         _createSessionUseCase = createSessionUseCase;
     }
 
+    /// <summary>
+    /// Ejecuta el login completo de un usuario.
+    /// </summary>
+    /// <param name="username">Nombre de usuario ingresado en consola.</param>
+    /// <param name="plainPassword">Contraseña en texto plano para verificación.</param>
+    /// <param name="ipAddress">IP opcional para auditoría de sesión.</param>
+    /// <returns>Resultado con datos mínimos del usuario autenticado.</returns>
     public async Task<AuthLoginResult> ExecuteAsync(string username, string plainPassword, string? ipAddress = null)
     {
         var user = await _getUserByUsernameUseCase.ExecuteAsync(username);
@@ -47,6 +64,9 @@ public class LoginUserUseCase
             user.IsActive.Value);
     }
 
+    /// <summary>
+    /// Actualiza la marca de último acceso para dejar trazabilidad de actividad del usuario.
+    /// </summary>
     private async Task TouchLastAccessAsync(User user)
     {
         var updated = User.Create(

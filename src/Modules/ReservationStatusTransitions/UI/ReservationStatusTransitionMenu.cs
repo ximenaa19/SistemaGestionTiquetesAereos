@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\ReservationStatusTransitions\UI\ReservationStatusTransitionMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.ReservationStatuses.Application.UseCases;
 using GestionAerolineas.src.Modules.ReservationStatusTransitions.Application.UseCases;
 
@@ -36,13 +42,13 @@ public class ReservationStatusTransitionMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new reservation status transition",
-            "List all reservation status transitions",
+            "Crear reservation status transition",
+            "Listar reservation status transitions",
             "Get transition by ID",
             "Get transition by origin/destination (IDs)",
-            "Update a transition",
-            "Delete a transition",
-            "Exit"
+            "Actualizar transition",
+            "Eliminar transition",
+            "Salir"
         });
 
         while (true)
@@ -61,7 +67,7 @@ public class ReservationStatusTransitionMenu
                         int destinationId = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(originId, destinationId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -106,7 +112,7 @@ public class ReservationStatusTransitionMenu
                         break;
 
                     case 4:
-                        Console.Write("Ingrese el ID de la transición: ");
+                        Console.Write("Ingrese el ID de la transiciÃ³n: ");
                         int updateId = int.Parse(Console.ReadLine()!);
 
                         Console.Write("Ingrese el nuevo ID del estado ORIGEN: ");
@@ -116,7 +122,7 @@ public class ReservationStatusTransitionMenu
                         int newDestinationId = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newOriginId, newDestinationId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -124,7 +130,7 @@ public class ReservationStatusTransitionMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -133,7 +139,7 @@ public class ReservationStatusTransitionMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -153,4 +159,5 @@ public class ReservationStatusTransitionMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

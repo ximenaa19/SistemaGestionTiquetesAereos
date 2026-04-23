@@ -1,4 +1,10 @@
-﻿using System;
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: Migrations\20260422073344_TicketsAdd.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
+using System;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 

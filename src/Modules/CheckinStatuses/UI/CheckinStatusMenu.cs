@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\CheckinStatuses\UI\CheckinStatusMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.CheckinStatuses.Application.UseCases;
@@ -33,13 +39,13 @@ public class CheckinStatusMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new checkin status",
-            "List all checkin statuses",
+            "Crear checkin status",
+            "Listar checkin statuses",
             "Get checkin status by ID",
             "Get checkin status by name",
-            "Update a checkin status",
-            "Delete a checkin status",
-            "Exit"
+            "Actualizar checkin status",
+            "Eliminar checkin status",
+            "Salir"
         });
 
         while (true)
@@ -121,3 +127,4 @@ public class CheckinStatusMenu
         }
     }
 }
+

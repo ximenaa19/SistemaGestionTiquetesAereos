@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\RoadTypes\UI\RoadTypeMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System;
 using System.Threading.Tasks;
 using GestionAerolineas.src.Modules.RoadTypes.Application.UseCases;
@@ -33,13 +39,13 @@ public class RoadTypeMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new road type",
-            "List all road types",
+            "Crear road type",
+            "Listar road types",
             "Get road type by ID",
             "Get road type by name",
-            "Update a road type",
-            "Delete a road type",
-            "Exit"
+            "Actualizar road type",
+            "Eliminar road type",
+            "Salir"
            
         });
 
@@ -59,7 +65,7 @@ public class RoadTypeMenu
                         string name = Console.ReadLine()!;
 
                         await _create.ExecuteAsync(id, name);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -99,7 +105,7 @@ public class RoadTypeMenu
                         string newName = Console.ReadLine()!;
 
                         await _update.ExecuteAsync(updateId, newName);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -107,7 +113,7 @@ public class RoadTypeMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -116,7 +122,7 @@ public class RoadTypeMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.Message}");
+                Console.WriteLine($"âŒ Error: {ex.Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");

@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\AircraftModels\UI\AircraftModelMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using System.Globalization;
 using GestionAerolineas.src.Modules.AircraftManufacturers.Application.UseCases;
 using GestionAerolineas.src.Modules.AircraftModels.Application.UseCases;
@@ -38,13 +44,13 @@ public class AircraftModelMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new aircraft model",
-            "List all aircraft models",
+            "Crear aircraft model",
+            "Listar aircraft models",
             "Get aircraft model by ID",
             "Get aircraft model by name",
-            "Update an aircraft model",
-            "Delete an aircraft model",
-            "Exit"
+            "Actualizar aircraft model",
+            "Eliminar aircraft model",
+            "Salir"
         });
 
         while (true)
@@ -73,7 +79,7 @@ public class AircraftModelMenu
                         int? altitude = ReadNullableInt("Ingrese altitud_crucero_ft (opcional): ");
 
                         await _create.ExecuteAsync(manufacturerId, modelName, maxCapacity, mtow, fuel, speed, altitude);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -135,7 +141,7 @@ public class AircraftModelMenu
                         int? newAltitude = ReadNullableInt("Ingrese nueva altitud_crucero_ft (opcional): ");
 
                         await _update.ExecuteAsync(updateId, newManufacturerId, newModelName, newMaxCapacity, newMtow, newFuel, newSpeed, newAltitude);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -143,7 +149,7 @@ public class AircraftModelMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -152,7 +158,7 @@ public class AircraftModelMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -200,7 +206,7 @@ public class AircraftModelMenu
             return null;
 
         if (!int.TryParse(input, out var value))
-            throw new Exception("Valor inválido");
+            throw new Exception("Valor invÃ¡lido");
 
         return value;
     }
@@ -219,6 +225,7 @@ public class AircraftModelMenu
         if (decimal.TryParse(input, NumberStyles.Number, CultureInfo.InvariantCulture, out var invariant))
             return invariant;
 
-        throw new Exception("Valor inválido");
+        throw new Exception("Valor invÃ¡lido");
     }
 }
+

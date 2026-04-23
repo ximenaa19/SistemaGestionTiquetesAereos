@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\EmailDomains\UI\EmailDomainMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.EmailDomains.Application.UseCases;
 
 namespace GestionAerolineas.src.Modules.EmailDomains.UI;
@@ -31,13 +37,13 @@ public class EmailDomainMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new email domain",
-            "List all email domains",
+            "Crear email domain",
+            "Listar email domains",
             "Get email domain by ID",
             "Get email domain by domain",
-            "Update an email domain",
-            "Delete an email domain",
-            "Exit"
+            "Actualizar email domain",
+            "Eliminar email domain",
+            "Salir"
         });
 
         while (true)
@@ -53,7 +59,7 @@ public class EmailDomainMenu
                         string domain = Console.ReadLine()!;
 
                         await _create.ExecuteAsync(domain);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -93,7 +99,7 @@ public class EmailDomainMenu
                         string newDomain = Console.ReadLine()!;
 
                         await _update.ExecuteAsync(updateId, newDomain);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 5:
@@ -101,7 +107,7 @@ public class EmailDomainMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 6:
@@ -110,7 +116,7 @@ public class EmailDomainMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -119,4 +125,5 @@ public class EmailDomainMenu
         }
     }
 }
+
 

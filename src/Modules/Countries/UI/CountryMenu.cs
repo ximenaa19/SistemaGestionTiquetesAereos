@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Countries\UI\CountryMenu.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Continents.Application.UseCases;
 using GestionAerolineas.src.Modules.Countries.Application.UseCases;
 
@@ -39,14 +45,14 @@ public class CountryMenu
     {
         var menu = new ConsoleMenu(new[]
         {
-            "Create a new country",
-            "List all countries",
+            "Crear country",
+            "Listar countries",
             "Get country by ID",
             "Get country by name",
             "Get country by ISO code",
-            "Update a country",
-            "Delete a country",
-            "Exit"
+            "Actualizar country",
+            "Eliminar country",
+            "Salir"
         });
 
         while (true)
@@ -63,14 +69,14 @@ public class CountryMenu
                         Console.Write("\nIngrese el nombre: ");
                         string name = Console.ReadLine()!;
 
-                        Console.Write("Ingrese el código ISO (3 letras): ");
+                        Console.Write("Ingrese el cÃ³digo ISO (3 letras): ");
                         string isoCode = Console.ReadLine()!;
 
                         Console.Write("Ingrese el ID del continente: ");
                         int continentId = int.Parse(Console.ReadLine()!);
 
                         await _create.ExecuteAsync(name, isoCode, continentId);
-                        Console.WriteLine("✔ Creado");
+                        Console.WriteLine("âœ” Creado");
                         break;
 
                     case 1:
@@ -112,7 +118,7 @@ public class CountryMenu
                         break;
 
                     case 4:
-                        Console.Write("Ingrese el código ISO: ");
+                        Console.Write("Ingrese el cÃ³digo ISO: ");
                         string searchIso = Console.ReadLine()!;
 
                         var byIso = await _getByIso.ExecuteAsync(searchIso);
@@ -135,14 +141,14 @@ public class CountryMenu
                         Console.Write("Ingrese el nuevo nombre: ");
                         string newName = Console.ReadLine()!;
 
-                        Console.Write("Ingrese el nuevo código ISO (3 letras): ");
+                        Console.Write("Ingrese el nuevo cÃ³digo ISO (3 letras): ");
                         string newIso = Console.ReadLine()!;
 
                         Console.Write("Ingrese el nuevo ID del continente: ");
                         int newContinentId = int.Parse(Console.ReadLine()!);
 
                         await _update.ExecuteAsync(updateId, newName, newIso, newContinentId);
-                        Console.WriteLine("✔ Actualizado");
+                        Console.WriteLine("âœ” Actualizado");
                         break;
 
                     case 6:
@@ -150,7 +156,7 @@ public class CountryMenu
                         int deleteId = int.Parse(Console.ReadLine()!);
 
                         await _delete.ExecuteAsync(deleteId);
-                        Console.WriteLine("✔ Eliminado");
+                        Console.WriteLine("âœ” Eliminado");
                         break;
 
                     case 7:
@@ -159,7 +165,7 @@ public class CountryMenu
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error: {ex.GetBaseException().Message}");
+                Console.WriteLine($"âŒ Error: {ex.GetBaseException().Message}");
             }
 
             Console.WriteLine("\nPresiona una tecla para continuar...");
@@ -187,4 +193,5 @@ public class CountryMenu
         return map.TryGetValue(id, out var display) ? $"{display} [{id}]" : $"#{id}";
     }
 }
+
 

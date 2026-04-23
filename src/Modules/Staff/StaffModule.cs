@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Staff\StaffModule.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using GestionAerolineas.src.Modules.Airlines.Application.UseCases;
 using GestionAerolineas.src.Modules.Airlines.Infrastructure.Repository;
 using GestionAerolineas.src.Modules.Airports.Application.UseCases;
@@ -60,5 +66,24 @@ public static class StaffModule
             getAllAirlines,
             getAllAirports);
     }
-}
 
+    public static AdminCreateStaffFlow BuildAdminCreateFlow(AppDbContext context)
+    {
+        var repository = new StaffRepository(context);
+
+        var personRepository = new PersonRepository(context);
+        var staffRoleRepository = new StaffRoleRepository(context);
+        var airlineRepository = new AirlineRepository(context);
+        var airportRepository = new AirportRepository(context);
+
+        IStaffValidator validator = new StaffValidator(repository, personRepository, staffRoleRepository, airlineRepository, airportRepository);
+
+        var create = new CreateStaffUseCase(repository, validator);
+        var getAllPeople = new GetAllPeopleUseCase(personRepository);
+        var getAllStaffRoles = new GetAllStaffRolesUseCase(staffRoleRepository);
+        var getAllAirlines = new GetAllAirlinesUseCase(airlineRepository);
+        var getAllAirports = new GetAllAirportsUseCase(airportRepository);
+
+        return new AdminCreateStaffFlow(create, getAllPeople, getAllStaffRoles, getAllAirlines, getAllAirports);
+    }
+}
