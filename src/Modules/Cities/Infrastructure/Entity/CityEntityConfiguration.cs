@@ -1,3 +1,9 @@
+// [DocHeader]
+// M?dulo: General
+// Capa: General
+// Archivo: src\Modules\Cities\Infrastructure\Entity\CityEntityConfiguration.cs
+// Responsabilidad: Agrupa l?gica espec?fica del m?dulo respetando la arquitectura por capas del proyecto.
+// Flujo: Participa en el flujo general de construcci?n y ejecuci?n del sistema de gesti?n a?rea.
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using GestionAerolineas.src.Modules.Regions.Infrastructure.Entity;
@@ -20,7 +26,7 @@ public sealed class CityEntityConfiguration : IEntityTypeConfiguration<CityEntit
 
         builder
             .Property(x => x.Name)
-            .HasColumnName("name")
+            .HasColumnName("nombre")
             .HasColumnType("varchar(100)")
             .IsRequired();
 
@@ -36,4 +42,5 @@ public sealed class CityEntityConfiguration : IEntityTypeConfiguration<CityEntit
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
+
 

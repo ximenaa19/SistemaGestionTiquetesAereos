@@ -13,7 +13,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.*">
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.15">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -27,6 +28,10 @@
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="temp_build_output\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,23 +68,6 @@
     <Folder Include="src\Modules\Cities\Domain\Repositories\" />
     <Folder Include="src\Modules\Cities\Infrastructure\Repository\" />
     <Folder Include="src\Modules\Cities\UI\" />
-    <Folder Include="src\Modules\Clients\" />
-    <Folder Include="src\Modules\Clients\Application\" />
-    <Folder Include="src\Modules\Clients\Application\Interfaces\" />
-    <Folder Include="src\Modules\Clients\Application\Services\" />
-    <Folder Include="src\Modules\Clients\Application\UseCases\" />
-    <Folder Include="src\Modules\Clients\Domain\" />
-    <Folder Include="src\Modules\Clients\Domain\Aggregate\" />
-    <Folder Include="src\Modules\Clients\Domain\Repositories\" />
-    <Folder Include="src\Modules\Clients\Domain\ValueObject\" />
-    <Folder Include="src\Modules\Clients\Infrastructure\" />
-    <Folder Include="src\Modules\Clients\Infrastructure\Entity\" />
-    <Folder Include="src\Modules\Clients\Infrastructure\Repository\" />
-    <Folder Include="src\Modules\Clients\UI\" />
-    <Folder Include="src\Modules\Continents\Application\" />
-    <Folder Include="src\Modules\Continents\Application\Interfaces\" />
-    <Folder Include="src\Modules\Continents\Application\Services\" />
-    <Folder Include="src\Modules\Continents\Application\UseCases\" />
     <Folder Include="src\Modules\Continents\Domain\Repositories\" />
     <Folder Include="src\Modules\Continents\Infrastructure\Repository\" />
     <Folder Include="src\Modules\Continents\UI\" />
@@ -175,11 +163,8 @@
     <Folder Include="src\Modules\Regions\Domain\Repositories\" />
     <Folder Include="src\Modules\Regions\Infrastructure\Repository\" />
     <Folder Include="src\Modules\Regions\UI\" />
-    <Folder Include="src\Modules\RoadTypes\" />
-    <Folder Include="src\Modules\RoadTypes\Application\" />
     <Folder Include="src\Modules\RoadTypes\Application\Interfaces\" />
     <Folder Include="src\Modules\RoadTypes\Application\Services\" />
-    <Folder Include="src\Modules\RoadTypes\Application\UseCases\" />
     <Folder Include="src\Modules\RoadTypes\Domain\" />
     <Folder Include="src\Modules\RoadTypes\Domain\Aggregate\" />
     <Folder Include="src\Modules\RoadTypes\Domain\Repositories\" />
