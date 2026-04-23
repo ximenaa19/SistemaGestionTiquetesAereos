@@ -13,6 +13,7 @@ Aplicación de consola en `.NET` para gestionar operación aérea, comercial y a
 - [Migraciones y base de datos](#migraciones-y-base-de-datos)
 - [Ejecución](#ejecución)
 - [Manual de usuario (consola)](#manual-de-usuario-consola)
+- [Guia exhaustiva del menu cliente](#guia-exhaustiva-del-menu-cliente)
 - [Reportes LINQ](#reportes-linq)
 - [Guía técnica para desarrollo](#guía-técnica-para-desarrollo)
 - [Troubleshooting](#troubleshooting)
@@ -210,6 +211,196 @@ dotnet run --project .\GestionAerolineas.csproj
 
 ### 5) Seeders desde el sistema
 - En `Admin -> Sistema` puedes ejecutar seed de maestros y catálogos.
+
+## Guia del menu cliente
+
+Esta guia describe TODO el flujo que puede seguir un usuario con rol `Cliente`.
+
+### 0) Requisito obligatorio antes de entrar
+- El usuario debe existir en `users`.
+- Ese usuario debe tener `persona_id` valido.
+- Esa persona debe tener registro en `customers`.
+- Si falta alguno, veras: `No se encontro persona asociada...` o `...no tiene registro en customers`.
+
+### 1) Como entrar al menu cliente
+1. Ejecuta el proyecto:
+   - `dotnet run --project .\GestionAerolineas.csproj`
+2. En menu inicial elige `Login`.
+3. Ingresa `username` y `contrasenia`.
+4. Si el rol es `Cliente/Customer`, el sistema abre `MENU CLIENTE`.
+
+### 2) Opciones del MENU CLIENTE (una por una)
+
+#### 2.1 Ver vuelos disponibles
+- Que hace: abre el modulo de vuelos para consulta.
+- Cuando usarlo: para revisar oferta antes de reservar.
+- Resultado esperado: listado de vuelos existentes segun datos cargados.
+
+#### 2.2 Crear reserva (wizard simple)
+- Que hace: te redirige al modulo de reservas.
+- Importante: el sistema te muestra tu `customer_id`; usa ese valor cuando el formulario lo pida.
+- Flujo recomendado:
+  1. Crear reserva base.
+  2. Asociar vuelo(s) a la reserva (`reservation_flights`).
+  3. Asociar pasajero(s) (`reservation_passengers`).
+- Si te pide busqueda de pasajero:
+  - `Buscar pasajero` es texto (nombre/apellido), no id.
+  - `Ingrese pasajero_id` si es el id numerico real de `passengers.id`.
+  - Dejar vacio en `pasajero_id` finaliza la carga de pasajeros.
+
+#### 2.3 Mis reservas
+- Que hace: lista solo reservas del cliente logueado.
+- Muestra: `id`, `PNR`, estado, total y fecha.
+- Si no hay reservas: muestra mensaje de lista vacia.
+
+#### 2.4 Ver detalle de reserva
+- Que hace: muestra detalle de una reserva puntual.
+- Entrada: `reservation_id`.
+- Validacion clave: solo permite ver reservas que sean tuyas.
+- Muestra: datos de reserva, cantidad de vuelos asociados, cantidad de pasajeros asociados.
+
+#### 2.5 Mis tiquetes
+- Que hace: lista tiquetes asociados a tus reservas.
+- Base de busqueda: PNR/codigo de reserva propio.
+- Muestra: `ticket_id`, codigo de tiquete, estado, fecha de emision, PNR.
+
+#### 2.6 Mis pagos
+- Que hace: lista pagos asociados a tus reservas.
+- Muestra: `payment_id`, monto, estado de pago, metodo de pago, fecha y PNR.
+
+#### 2.7 Hacer check-in
+- Que hace: abre modulo de check-in.
+- Si hay `passenger_id` vinculado, el menu muestra ese contexto para facilitar el flujo.
+- Si no hay `passenger_id`, aun puedes entrar al modulo general y operar manualmente.
+
+#### 2.8 Cancelar reserva
+- Que hace: intenta cambiar estado de una reserva propia a `Cancelada`.
+- Flujo:
+  1. Lista tus reservas.
+  2. Pide `reservation_id`.
+  3. Valida que la reserva sea tuya.
+  4. Busca estado `Cancelada` en catalogos y ejecuta transicion.
+- Posibles bloqueos:
+  - No existe estado `Cancelada`.
+  - La transicion de estados no esta permitida por reglas.
+  - Reserva no pertenece al cliente.
+
+#### 2.9 Actualizar mi perfil basico
+- Que hace: abre submenu de perfil para mantener datos de contacto.
+- Submenu esperado:
+  - Gestionar correos (tabla `personemails`)
+  - Gestionar telefonos (tabla `personphones`)
+- Importante: usa siempre tu `person_id` cuando el flujo lo solicite.
+
+##### 2.9.1 Dentro de "Gestionar correos"
+- Flujo comun del modulo:
+  1. Crear correo: pide `person_id`, usuario de correo y dominio.
+  2. Listar correos: muestra los registros existentes.
+  3. Buscar/filtrar (si aplica): por id o por persona.
+  4. Actualizar: seleccionas id y cambias datos.
+  5. Eliminar: seleccionas id y confirmas.
+- Recomendacion: mantener solo un correo principal activo por persona, si el flujo te permite marcar principal.
+
+##### 2.9.2 Dentro de "Gestionar telefonos"
+- Flujo comun del modulo:
+  1. Crear telefono: pide `person_id`, codigo de pais y numero.
+  2. Listar telefonos por persona.
+  3. Actualizar telefono existente por id.
+  4. Eliminar telefono por id.
+- Recomendacion: validar que el numero quede sin espacios y con formato consistente.
+
+#### 2.10 Menu secundario
+- Que hace: abre accesos secundarios del rol cliente (modulos completos expuestos para pruebas/uso extendido).
+- Nota: aqui veras modulos adicionales; la ruta principal recomendada sigue siendo el menu cliente base.
+
+##### 2.10.1 Vuelos
+- Permite consultar/listar vuelos del sistema.
+- En algunos flujos puedes filtrar por estado, origen, destino o fecha (segun datos disponibles del modulo).
+
+##### 2.10.2 Reservas (modulo completo)
+- CRUD completo de reservas.
+- Flujo tecnico recomendado:
+  1. Crear reserva base (`reservations`).
+  2. Relacionar vuelo(s) en `reservation_flights`.
+  3. Relacionar pasajero(s) en `reservation_passengers`.
+  4. Confirmar estado y total.
+- Si el modulo pide `customer_id`, usa el que muestra tu contexto de cliente.
+
+##### 2.10.3 Reservas por vuelo
+- Gestiona relaciones `reservation_flights`.
+- Lo que pasa dentro:
+  - Crear relacion reserva-vuelo (`reservation_id`, `flight_id`, `valor_parcial`).
+  - Consultar/listar por reserva o por vuelo.
+  - Actualizar o eliminar relacion existente.
+
+##### 2.10.4 Pasajeros por reserva
+- Gestiona relaciones `reservation_passengers`.
+- Lo que pasa dentro:
+  - Asociar pasajero a `reservation_flight_id`.
+  - Listar pasajeros de una reserva o de un vuelo de reserva.
+  - Actualizar estado/datos de relacion (si el modulo lo expone).
+  - Eliminar asociacion.
+- Importante: `Buscar pasajero` usa texto; `pasajero_id` usa id numerico real.
+
+##### 2.10.5 Tiquetes (modulo completo)
+- CRUD de tiquetes asociados a reservas/pasajeros.
+- Acciones comunes:
+  - Crear tiquete (con `reserva_pasajero_id`, estado y fecha de emision).
+  - Consultar/listar tiquetes.
+  - Actualizar estado de tiquete.
+  - Eliminar/anular segun reglas del modulo.
+
+##### 2.10.6 Pagos (modulo completo)
+- CRUD de pagos.
+- Acciones comunes:
+  - Crear pago (`reserva_id` o PNR, metodo, estado, monto, fecha).
+  - Listar pagos.
+  - Actualizar estado/metodo/monto.
+  - Eliminar registro (si permitido).
+
+##### 2.10.7 Check-ins (modulo completo)
+- Gestion de check-ins por pasajero/reserva.
+- Acciones comunes:
+  - Crear check-in.
+  - Consultar check-ins.
+  - Cambiar estado de check-in.
+  - Eliminar check-in (si permitido).
+
+##### 2.10.8 Clientes (modulo completo)
+- Modulo administrativo de clientes.
+- Desde perfil cliente normalmente se usa para consulta; evita editar registros de terceros.
+- Si haces pruebas, usa solo tu `customer_id` para no mezclar datos.
+
+### 2.11 Flujo completo recomendado (cliente, de inicio a fin)
+1. Login como cliente.
+2. `Ver vuelos disponibles` y anotar `flight_id`.
+3. `Crear reserva` con tu `customer_id`.
+4. Entrar a `Reservas por vuelo` y asociar el vuelo a la reserva.
+5. Entrar a `Pasajeros por reserva` y asociar pasajero(s) al `reservation_flight_id`.
+6. Verificar en `Mis reservas` y `Detalle de reserva`.
+7. Registrar pago y verificar en `Mis pagos`.
+8. Revisar/emitir tiquete y verificar en `Mis tiquetes`.
+9. Hacer check-in cuando aplique.
+10. Si corresponde, cancelar reserva y validar cambio de estado.
+
+### 3) Atajos y navegacion
+- En menus con flechas:
+  - `↑` y `↓` para mover seleccion.
+  - `Enter` para ejecutar opcion.
+  - `Esc` para volver/salir.
+- En formularios:
+  - Sigue mensajes de validacion.
+  - Cuando una validacion falla, normalmente se repite solo ese campo.
+
+### 4) Mini checklist de prueba funcional del cliente
+1. Login cliente exitoso.
+2. Ver vuelos disponibles.
+3. Crear una reserva completa (reserva + vuelo + pasajero).
+4. Verla en `Mis reservas`.
+5. Consultar `Detalle de reserva`.
+6. Revisar `Mis tiquetes` y `Mis pagos`.
+7. Probar `Cancelar reserva`.
+8. Actualizar correo/telefono en `Perfil basico`.
 
 ## Reportes LINQ
 
